@@ -1,0 +1,170 @@
+5ed30e19dfae46161c5f1292
+
+query{
+camps{name,project{name}}
+}
+
+query{
+designations{
+_id,
+name,
+}
+}
+query{
+  units{
+    _id
+  }
+}
+query{
+  offices{
+    name
+  }
+}
+
+query{
+  suppliertypes{
+    name
+  }
+}
+
+query{
+  itemcategories{
+    _id,name
+  }
+}
+
+query{
+  worktypes{
+    name,
+    unit{
+      name
+    }
+  }
+}
+
+mutation{
+  createProject(projectInput:{name:"Test Project 1",status:"Open"}) {
+   name,
+   status
+  }
+}
+
+mutation{
+  updateProject(_id:"",name:"Test Project 1",status:"Terminated") {
+   name,
+   status
+  }
+}
+
+mutation{
+  createCamp(campInput:{name:"Test Camp 1",status:"Active",project:""}) {
+   name,
+   project{
+    _id,name
+  }
+  }
+}
+
+mutation{
+  updateCamp(_id:"5ed346a947fb761b68c148aa",name:"Test Camp 1-Updated",status:"Inactive",project:"5ed347dfd8e4182e8c1f3d23") {
+   name,
+   status,
+   project{
+    _id,name
+  }
+  }
+}
+
+
+
+mutation{
+  createDesignation(designationInput:{name:"SITE MANAGER"}){
+    _id,
+    name,
+    createdAt,
+    updatedAt
+  }
+}
+
+mutation{
+  updateDesignation(_id:"5ed436f23317ae406cb1deb1",name:"HR MANAGER 1"){
+    _id,
+    name
+  }
+}
+
+mutation{
+  createUnit(unitInput:{name:"KG"}){
+    _id,
+    name,
+    createdAt
+  }
+}
+
+mutation{
+  updateUnit(_id:"5ed43bec8be0114984e95ea7",name:"LBS"){
+    _id,
+    name
+  }
+}
+
+mutation{
+  createOffice(officeInput:{name:"HEAD OFfice Blore",phone1:"8977119266",email:"abc@skandacivicon.com"}){
+    name,
+    phone1,
+    email
+  }
+}
+
+mutation{
+  updateOffice(_id:"5ed44163de456230ac793278",name:"HEAD OFfice Hyderabad",phone1:"8977009266",email:"abc@skandacivicon.com"){
+    name,
+    phone1,
+    email
+  }
+}
+
+mutation{
+  createSupplierType(supplierTypeInput:{name:"SAND"}){
+    _id,
+    name
+  }
+}
+
+mutation{
+  updateSupplierType(_id:"5ed445fc520f0046fc0c1df7",name:"CEMENT"){
+    _id,
+    name
+  }
+}
+
+mutation{
+  createItemCategory(itemCategoryInput:{name:"MATERIAL"}){
+    _id,
+    name
+  }
+}
+
+mutation{
+  updateItemCategory(_id:"5ed448d4777ee83e50b2b563",name:"LABOUR"){
+    _id,
+    name
+  }
+}
+
+mutation{
+  createWorkType(workTypeInput:{name:"WORKTYPE NAME",unit:"5ed43bec8be0114984e95ea7"}){
+    _id,
+    name
+  }
+}
+
+mutation{
+  updateWorkType(_id:"5ed45bf30d7e7c4ce4894dd6",name:"UPDATED NAME",unit:"5ed43bec8be0114984e95ea7"){
+    _id,
+    name,
+    unit{
+      name
+    }
+  }
+}
