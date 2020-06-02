@@ -7,6 +7,10 @@ const supplierTypeResolver = require('./suppliertype');
 const itemCategoryResolver = require('./itemcategory');
 const workTypeResolver = require('./worktype');
 const supplierResolver = require('./supplier');
+const itemResolver = require('./item');
+const roleResolver = require('./role');
+const moduleResolver = require('./module');
+const userResolver = require('./user');
 
 const rootResolver = {
     ...projectResolver,
@@ -17,7 +21,11 @@ const rootResolver = {
     ...supplierTypeResolver,
     ...itemCategoryResolver,
     ...workTypeResolver,
-    ...supplierResolver
+    ...supplierResolver,
+    ...itemResolver,
+    ...roleResolver,
+    ...moduleResolver,
+    ...userResolver
   };
   
   module.exports = rootResolver;

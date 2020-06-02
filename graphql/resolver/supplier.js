@@ -39,7 +39,7 @@ module.exports = {
         accountIIFSCCode: args.supplierInput.accountIIFSCCode,
         accountHolderName: args.supplierInput.accountHolderName,
         accountPaymentFavour: args.supplierInput.accountPaymentFavour,
-        supplierType: args.supplierInput.supplierType
+        supplierTypes: args.supplierInput.supplierTypes
       });
 
       let createdSupplier;
@@ -85,7 +85,7 @@ module.exports = {
             accountIIFSCCode: args.accountIIFSCCode,
             accountHolderName: args.accountHolderName,
             accountPaymentFavour: args.accountPaymentFavour,
-            supplierType: args.supplierType
+            supplierTypes: args.supplierTypes
             } },
           { new: true } //returns new document else will return document before update
         ).exec();

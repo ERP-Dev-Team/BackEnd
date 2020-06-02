@@ -168,3 +168,97 @@ mutation{
     }
   }
 }
+
+mutation{
+  createSupplier(supplierInput:{name:"PSM 4",supplierTypes:["5ed445fc520f0046fc0c1df7","5ed46be746f9fb2eec9f7230"]}){
+    name,
+    supplierTypes{
+      _id,
+      name
+    }
+  }
+}
+
+query{
+  suppliers{
+    name,
+    supplierTypes{
+      name
+    }
+  }
+}
+mutation{
+  updateSupplier(_id:"5ed5982eb85ab54f08e371e7",name:"updated",supplierTypes:["5ed46be746f9fb2eec9f7230","5ed46bef46f9fb2eec9f7231"]){
+    name,
+    supplierTypes{
+      name
+    }
+  }
+}
+
+query{
+  items{
+    name,
+    unit{
+      name
+    },
+    itemCategory{
+      name
+    }
+  }
+}
+
+mutation{
+  createItem(itemInput:{name:"SAND 3",itemCode:"SAND KAL 2",unit:"5ed43bec8be0114984e95ea7",itemCategory:"5ed448d4777ee83e50b2b563"}){
+    name,
+    unit{name},
+    itemCategory{name}
+  }
+}
+
+mutation{
+  updateItem(_id:"5ed5a281897c1334c0da3632",name:"SAND K",itemCode:"SAND OK",unit:"5ed43bec8be0114984e95ea7",itemCategory:"5ed448d4777ee83e50b2b563"){
+    name,itemCode,
+    unit{name},
+    itemCategory{name}
+  }
+}
+
+query{
+  roles{name}
+}
+
+mutation{
+  createRole(roleInput:{name:"SITE SUPERVISOR"}){name}
+}
+
+mutation{
+  updateRole(_id:"5ed5abddda31bd4c609de238",name:"SITE HEAD"){
+    _id,name
+    
+    
+  }
+}
+
+query{
+  modules{name,
+    rolesAllowed{name}
+  }
+}
+
+mutation{
+  createModule(moduleInput:{name:"ATTEANDANCE",rolesAllowed:["5ed5abddda31bd4c609de238"]}){
+    _id,name,rolesAllowed{_id,name}
+  }
+}
+
+mutation{
+ updateModule(_id:"5ed5bd2ebe7a3b51b09fea45",name:"ATTEND",rolesAllowed:["5ed5abfada31bd4c609de239"]){name,rolesAllowed{name}}
+}
+
+mutation{
+  createUser(userInput:{userName:"testUser",password:"password123",firstName:"Test User",loginAllowed:true,IMEIAllowed:false}){
+    userName,
+    firstName
+  }
+}

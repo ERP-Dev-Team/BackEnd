@@ -99,7 +99,81 @@ module.exports = buildSchema(`
         accountIIFSCCode: String
         accountHolderName: String
         accountPaymentFavour: String
-        supplierType: [SupplierType!]
+        supplierTypes: [SupplierType!]
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type Item{
+        _id: ID!
+        name: String!
+        description: String
+        partNumber: String
+        unit: Unit
+        hsnNumber: String
+        itemCode: String!
+        itemCategory: ItemCategory
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type Role{
+        _id: ID!
+        name: String!
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type Module{
+        _id: ID!
+        name: String!
+        rolesAllowed: [Role!]
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type User{
+        _id: ID!
+        userName: String!
+        password: String!
+        firstName: String!
+        lastName: String
+        email: String
+        phone1: String
+        phone2: String
+        phoneIMEI: String
+        address1: String
+        address2: String
+        city: String
+        state: String
+        country: String
+        zipcode: String
+        joiningPlace: String
+        joiningDate: String
+        dateOfBirth: String
+        qualification: String
+        salary: String
+        batta: String
+        salaryEffectiveDate: String
+        salaryOld: String
+        battaOld: String
+        loginAllowed: Boolean
+        lastLogin: String
+        lastLoginDevice: String
+        refPerson: String
+        refPersonPhone: String
+        refPersonAddress: String
+        IMEIAllowed: Boolean
+        bankAccountNumber: String
+        bankName: String
+        bankBranchName: String
+        bankBranchCity: String
+        bankIIFSCCode: String
+        bankAccountHolderName: String
+        designation: Designation
+        rolesAllowed: [Role!]
+        modulesAllowed: [Module!]
+        campAllowed: [Camp!]
         createdAt: String!
         updatedAt: String!
     }
@@ -176,7 +250,69 @@ module.exports = buildSchema(`
         accountIIFSCCode: String
         accountHolderName: String
         accountPaymentFavour: String
-        supplierType: ID!
+        supplierTypes: [ID!]
+    }
+
+    input ItemInput{
+        name: String!
+        description: String
+        partNumber: String
+        unit: ID
+        hsnNumber: String
+        itemCode: String!
+        itemCategory: ID
+    }
+
+    input RoleInput{
+        name: String!
+    }
+
+    input ModuleInput{
+        name: String!
+        rolesAllowed: [ID!]
+    }
+
+    input UserInput{
+        userName: String!
+        password: String!
+        firstName: String!
+        lastName: String
+        email: String
+        phone1: String
+        phone2: String
+        phoneIMEI: String
+        address1: String
+        address2: String
+        city: String
+        state: String
+        country: String
+        zipcode: String
+        joiningPlace: String
+        joiningDate: String
+        dateOfBirth: String
+        qualification: String
+        salary: String
+        batta: String
+        salaryEffectiveDate: String
+        salaryOld: String
+        battaOld: String
+        loginAllowed: Boolean!
+        lastLogin: String
+        lastLoginDevice: String
+        refPerson: String
+        refPersonPhone: String
+        refPersonAddress: String
+        IMEIAllowed: Boolean!
+        bankAccountNumber: String
+        bankName: String
+        bankBranchName: String
+        bankBranchCity: String
+        bankIIFSCCode: String
+        bankAccountHolderName: String
+        designation: ID
+        rolesAllowed: [ID!]
+        modulesAllowed: [ID!]
+        campAllowed: [ID!]
     }
 
     type RootQuery{
@@ -189,6 +325,10 @@ module.exports = buildSchema(`
         itemcategories:[ItemCategory!]
         worktypes:[WorkType!]
         suppliers:[Supplier!]
+        items:[Item!]
+        roles:[Role!]
+        modules:[Module!]
+        users:[User!]
     }
 
     type RootMutation{
@@ -217,7 +357,18 @@ module.exports = buildSchema(`
         updateWorkType(_id: ID!, name:String, unit: ID): WorkType
 
         createSupplier(supplierInput: SupplierInput): Supplier,
-        updateSupplier(_id: ID!, name:String, contactName:String, email:String, phone1:String,phone2:String, address1:String, address2: String,city: String,state: String, country:String, zipcode:String, panNumber:String,gstNumber:String,cstNumber:String,accountBankName:String,accountBranchName:String,accountBranchCity:String,accountNumber:String,accountIIFSCCode:String,accountHolderName:String,accountPaymentFavour:String,supplierType:[ID!]): Supplier
+        updateSupplier(_id: ID!, name:String, contactName:String, email:String, phone1:String,phone2:String, address1:String, address2: String,city: String,state: String, country:String, zipcode:String, panNumber:String,gstNumber:String,cstNumber:String,accountBankName:String,accountBranchName:String,accountBranchCity:String,accountNumber:String,accountIIFSCCode:String,accountHolderName:String,accountPaymentFavour:String,supplierTypes:[ID!]): Supplier,
+
+        createItem(itemInput: ItemInput): Item,
+        updateItem(_id: ID!, name:String, description: String, partNumber: String, unit:ID, hsnNumber: String, itemCode: String, itemCategory:ID): Item
+
+        createRole(roleInput: RoleInput): Role,
+        updateRole(_id: ID!, name:String): Role,
+
+        createModule(moduleInput: ModuleInput): Module,
+        updateModule(_id: ID!, name:String, rolesAllowed:[ID]): Module,
+
+        createUser(userInput: UserInput): User
     }
 
     schema{

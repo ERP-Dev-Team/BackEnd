@@ -28,7 +28,7 @@ const itemSchema = new Schema({
     itemCode: {
         type: String,
         unique: true,
-        required: false
+        required: true
     },
     itemCategory: {
         type: Schema.Types.ObjectId,

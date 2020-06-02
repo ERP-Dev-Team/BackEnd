@@ -148,13 +148,17 @@ const userSchema = new Schema({
         type: String,
         required: false
     },
-    designation:[{
+    designation:{
         type: Schema.Types.ObjectId,
         ref: 'Designation'
-    }],
+    },
     rolesAllowed:[{
         type: Schema.Types.ObjectId,
         ref: 'Role'
+    }],
+    modulesAllowed:[{
+        type: Schema.Types.ObjectId,
+        ref: 'Module'
     }],
     campsAllowed:[{
         type: Schema.Types.ObjectId,
