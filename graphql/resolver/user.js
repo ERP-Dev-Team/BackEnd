@@ -1,4 +1,5 @@
 const User = require('../../models/user');
+const bcrypt = require('bcrypt')
 
 const { transformUser } = require('./merge');
 
@@ -16,9 +17,11 @@ module.exports = {
       },
       createUser: async(args) => {
         try{
+          const passwordHashed = await bcrypt.hash(args.userInput.password, 12);
+
           const user = new User({
               userName: args.userInput.userName,
-              password: args.userInput.password,
+              password: passwordHashed,
               firstName: args.userInput.firstName,
               lastName: args.userInput.lastName,
               email: args.userInput.email,
@@ -56,7 +59,8 @@ module.exports = {
               designation: args.userInput.designation,
               rolesAllowed: args.userInput.rolesAllowed,
               modulesAllowed: args.userInput.modulesAllowed,
-              campsAllowed: args.userInput.campsAllowed
+              campsAllowed: args.userInput.campsAllowed,
+              superRole: args.userInput.superRole
             });
           
             let createdUser;
@@ -81,7 +85,7 @@ module.exports = {
           try{
             userUpdated=await User.findOneAndUpdate(
               {"_id": args._id},
-              { "$set":{name: args.name, status: args.status,project: args.project,startDate: args.startDate, endDate: args.endDate}},
+              { "$set":{firstName: args.firstName, lastName: args.lastName,email: args.email,phone1: args.phone1, phone2: args.phone2, phoneIMEI: args.phoneIMEI, address1:args.address1, address2:args.address2, city: args.city, state: args.state, country: args.country, zipcode:args.zipcode, joiningPlace:args.joiningPlace,joiningDate:args.joiningDate, dateOfBirth:args.dateOfBirth, qualification:args.qualification, salary:args.salary, batta:args.batta, salaryEffectiveDate:args.salaryEffectiveDate, salaryOld:args.salaryOld, battaOld:args.battaOld,loginAllowed:args.loginAllowed,refPerson: args.refPerson, refPersonPhone: args.refPersonPhone, refPersonAddress: args.refPersonAddress, IMEIAllowed: args.IMEIAllowed,bankAccountNumber: args.bankAccountNumber,bankName: args.bankName, bankBranchName: args.bankBranchName, bankBranchCity: args.bankBranchCity, bankIIFSCCode: args.bankIIFSCCode, bankAccountHolderName: args.bankAccountHolderName, designation:args.designation, rolesAllowed:args.rolesAllowed,modulesAllowed:args.modulesAllowed,campAllowed:args.campsAllowed, superRole:args.superRole }},
               {"new": true} //returns new document else will return document before update
           ).exec();
           }catch(err){

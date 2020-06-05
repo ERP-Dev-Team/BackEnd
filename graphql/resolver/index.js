@@ -11,6 +11,7 @@ const itemResolver = require('./item');
 const roleResolver = require('./role');
 const moduleResolver = require('./module');
 const userResolver = require('./user');
+const authResolver = require('./auth');
 
 const rootResolver = {
     ...projectResolver,
@@ -25,7 +26,8 @@ const rootResolver = {
     ...itemResolver,
     ...roleResolver,
     ...moduleResolver,
-    ...userResolver
+    ...userResolver,
+    ...authResolver
   };
   
   module.exports = rootResolver;

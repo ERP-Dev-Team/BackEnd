@@ -257,8 +257,9 @@ mutation{
 }
 
 mutation{
-  createUser(userInput:{userName:"testUser",password:"password123",firstName:"Test User",loginAllowed:true,IMEIAllowed:false}){
+  createUser(userInput:{userName:"admin",password:"admin1234",firstName:"Admin",loginAllowed:true,IMEIAllowed:false,superRole:"SUPERADMIN"}){
     userName,
+    password,
     firstName
   }
 }
