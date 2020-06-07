@@ -163,12 +163,7 @@ const userSchema = new Schema({
     campsAllowed:[{
         type: Schema.Types.ObjectId,
         ref: 'Camp'
-    }],
-    superRole:{
-        type: String,
-        enum: ['SUPERADMIN', 'ADMIN','SUPERMANAGER','MANAGER','NOROLE'],
-        required: true
-    },
+    }]
     
 
 } ,  { timestamps: true });

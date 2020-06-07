@@ -263,3 +263,60 @@ mutation{
     firstName
   }
 }
+
+query{
+  caveds{
+    _id,
+    create{name},
+    approval{name},
+    view{name},
+    edit{name},
+    delete{name}
+  }
+}
+
+mutation{
+  createCaved(cavedInput:{create:["5edc3a1fb383ce3120071c11"],approval:[],view:["5edc3a1fb383ce3120071c11"],edit:["5edc3a1fb383ce3120071c11"],delete:["5edc3a1fb383ce3120071c11"]}){
+    _id
+    create{name},
+    approval{name},
+    view{name},
+    edit{name},
+    delete{name}
+  }
+}
+
+mutation{
+  updateCaved(_id:"",create:["5edc3a1fb383ce3120071c11"],approval:[],view:["5edc3a1fb383ce3120071c11"],edit:["5edc3a1fb383ce3120071c11"],delete:["5edc3a1fb383ce3120071c11"]){
+    _id
+    create{name},
+    approval{name},
+    view{name},
+    edit{name},
+    delete{name}
+  }
+}
+
+mutation{
+  updateCaved(_id:"5edc3d973cd3052fb0682156",create:["5edc3a1fb383ce3120071c11","5edc3a29b383ce3120071c12"],approval:[],view:["5edc3a1fb383ce3120071c11","5edc3a29b383ce3120071c12"],edit:["5edc3a1fb383ce3120071c11"],delete:["5edc3a1fb383ce3120071c11"]){
+    _id
+    create{name},
+    approval{name},
+    view{name},
+    edit{name},
+    delete{name}
+  }
+}
+
+query{
+  permissions{
+    user{create{name}},
+    worktype{create{name}}
+  }
+}
+
+mutation{
+  createPermission(permissionInput:{user:"5edc3d973cd3052fb0682156",worktype:"5edc3d973cd3052fb0682156",supplier:"5edc3d973cd3052fb0682156",suppliertype:"5edc3d973cd3052fb0682156",item:"5edc3d973cd3052fb0682156",vehicletype:"5edc3d973cd3052fb0682156",role:"5edc3d973cd3052fb0682156",itemcategory:"5edc3d973cd3052fb0682156"}){
+    user{create{name}}
+  }
+}

@@ -12,6 +12,8 @@ const roleResolver = require('./role');
 const moduleResolver = require('./module');
 const userResolver = require('./user');
 const authResolver = require('./auth');
+const cavedResolver = require('./caved');
+const permissionResolver = require('./permission');
 
 const rootResolver = {
     ...projectResolver,
@@ -27,7 +29,9 @@ const rootResolver = {
     ...roleResolver,
     ...moduleResolver,
     ...userResolver,
-    ...authResolver
+    ...authResolver,
+    ...cavedResolver,
+    ...permissionResolver
   };
   
   module.exports = rootResolver;

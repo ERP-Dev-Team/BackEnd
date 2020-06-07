@@ -60,7 +60,6 @@ module.exports = {
               rolesAllowed: args.userInput.rolesAllowed,
               modulesAllowed: args.userInput.modulesAllowed,
               campsAllowed: args.userInput.campsAllowed,
-              superRole: args.userInput.superRole
             });
           
             let createdUser;
@@ -85,7 +84,7 @@ module.exports = {
           try{
             userUpdated=await User.findOneAndUpdate(
               {"_id": args._id},
-              { "$set":{firstName: args.firstName, lastName: args.lastName,email: args.email,phone1: args.phone1, phone2: args.phone2, phoneIMEI: args.phoneIMEI, address1:args.address1, address2:args.address2, city: args.city, state: args.state, country: args.country, zipcode:args.zipcode, joiningPlace:args.joiningPlace,joiningDate:args.joiningDate, dateOfBirth:args.dateOfBirth, qualification:args.qualification, salary:args.salary, batta:args.batta, salaryEffectiveDate:args.salaryEffectiveDate, salaryOld:args.salaryOld, battaOld:args.battaOld,loginAllowed:args.loginAllowed,refPerson: args.refPerson, refPersonPhone: args.refPersonPhone, refPersonAddress: args.refPersonAddress, IMEIAllowed: args.IMEIAllowed,bankAccountNumber: args.bankAccountNumber,bankName: args.bankName, bankBranchName: args.bankBranchName, bankBranchCity: args.bankBranchCity, bankIIFSCCode: args.bankIIFSCCode, bankAccountHolderName: args.bankAccountHolderName, designation:args.designation, rolesAllowed:args.rolesAllowed,modulesAllowed:args.modulesAllowed,campAllowed:args.campsAllowed, superRole:args.superRole }},
+              { "$set":{firstName: args.firstName, lastName: args.lastName,email: args.email,phone1: args.phone1, phone2: args.phone2, phoneIMEI: args.phoneIMEI, address1:args.address1, address2:args.address2, city: args.city, state: args.state, country: args.country, zipcode:args.zipcode, joiningPlace:args.joiningPlace,joiningDate:args.joiningDate, dateOfBirth:args.dateOfBirth, qualification:args.qualification, salary:args.salary, batta:args.batta, salaryEffectiveDate:args.salaryEffectiveDate, salaryOld:args.salaryOld, battaOld:args.battaOld,loginAllowed:args.loginAllowed,refPerson: args.refPerson, refPersonPhone: args.refPersonPhone, refPersonAddress: args.refPersonAddress, IMEIAllowed: args.IMEIAllowed,bankAccountNumber: args.bankAccountNumber,bankName: args.bankName, bankBranchName: args.bankBranchName, bankBranchCity: args.bankBranchCity, bankIIFSCCode: args.bankIIFSCCode, bankAccountHolderName: args.bankAccountHolderName, designation:args.designation, rolesAllowed:args.rolesAllowed,modulesAllowed:args.modulesAllowed,campAllowed:args.campsAllowed }},
               {"new": true} //returns new document else will return document before update
           ).exec();
           }catch(err){

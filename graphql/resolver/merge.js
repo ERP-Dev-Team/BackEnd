@@ -6,6 +6,7 @@ const Role = require('../../models/role');
 const Designation = require('../../models/designation');
 const Module = require('../../models/module');
 const Camp = require('../../models/camp');
+const Caved = require('../../models/caved');
 const {convertISODateToTimestamp} = require('../../helper/timestamp');
 
 const project = async projectId => {
@@ -96,7 +97,24 @@ const project = async projectId => {
     }
   };
 
-  
+  const caved = async cavedId => {
+    try {
+      const caved = await Caved.findOne({ _id: cavedId  });
+        return {
+          ...caved._doc,
+          _id: caved.id,
+          create: roles.bind(this,caved._doc.create),
+          approval: roles.bind(this,caved._doc.approval),
+          view: roles.bind(this,caved._doc.view),
+          edit: roles.bind(this,caved._doc.edit),
+          delete: roles.bind(this,caved._doc.delete),
+          createdAt: convertISODateToTimestamp(caved._doc.createdAt),
+          updatedAt: convertISODateToTimestamp(caved._doc.updatedAt)
+        };
+    } catch (err) {
+      throw err;
+    }
+  };
 
   const suppliertypes = async supplierTypeIds => {
     try {
@@ -257,6 +275,37 @@ const transformProject = project => {
       };
   };
 
+  const transformPermission = permission => {
+    return {
+        ...permission._doc,
+        _id: permission.id,
+        user: caved.bind(this,permission._doc.user),
+        worktype: caved.bind(this,permission._doc.worktype),
+        supplier: caved.bind(this,permission._doc.supplier),
+        suppliertype: caved.bind(this,permission._doc.suppliertype),
+        item: caved.bind(this,permission._doc.item),
+        vehicletype: caved.bind(this,permission._doc.vehicletype),
+        role: caved.bind(this,permission._doc.role),
+        itemcategory: caved.bind(this,permission._doc.itemcategory),
+        createdAt: convertISODateToTimestamp(permission._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(permission._doc.updatedAt)
+      };
+  };
+
+  const transformCaved = caved => {
+    return {
+        ...caved._doc,
+        _id: caved.id,
+        create: roles.bind(this,caved._doc.create),
+        approval: roles.bind(this,caved._doc.approval),
+        view: roles.bind(this,caved._doc.view),
+        edit: roles.bind(this,caved._doc.edit),
+        delete: roles.bind(this,caved._doc.delete),
+        createdAt: convertISODateToTimestamp(caved._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(caved._doc.updatedAt)
+      };
+  };
+
 exports.transformProject = transformProject;
 exports.transformCamp = transformCamp;
 exports.transformDesignation = transformDesignation;
@@ -270,3 +319,5 @@ exports.transformItem = transformItem;
 exports.transformRole = transformRole;
 exports.transformModule = transformModule;
 exports.transformUser = transformUser;
+exports.transformCaved = transformCaved;
+exports.transformPermission = transformPermission;
