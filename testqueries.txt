@@ -320,3 +320,49 @@ mutation{
     user{create{name}}
   }
 }
+
+query{
+  vehicletypes{
+    name
+  }
+}
+
+mutation{
+  createVehicleType(vehicleTypeInput:{name:"TRACTOR"}){
+    name,
+    _id
+  }
+}
+
+mutation{
+  updateVehicleType(_id:"5edd00724c948f1b2c9ea85f",name:"TRACTOR UPDAATED"){
+    name,
+    _id
+  }
+}
+
+query{
+  vehicles{
+    _id,
+		registrationNumber,
+    vehicleType{name},
+    ownerStatus,
+  }
+}
+
+mutation{
+  createVehicle(vehicleInput:{registrationNumber:"KA08BA8989",vehicleType:"5edd00694c948f1b2c9ea85e",ownerStatus:"OWN"}){
+    registrationNumber,
+    vehicleType{name},
+    ownerStatus,
+  }
+}
+
+mutation{
+  updateVehicle(_id:"5edd0cec3ca26224bcbf88b0",registrationNumber:"KA08BA8055",vehicleType:"5edd00694c948f1b2c9ea85e",ownerStatus:"OWN"){
+    registrationNumber,
+    vehicleType{name},
+    ownerStatus,
+  }
+}
+

@@ -209,6 +209,24 @@ module.exports = buildSchema(`
         updatedAt: String!
     }
 
+    type VehicleType {
+        _id: ID!
+        name: String!
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type Vehicle {
+        _id: ID!
+        registrationNumber: String!
+        vin: String
+        vehicleType: VehicleType!
+        make: String
+        ownerStatus: String!
+        createdAt: String!
+        updatedAt: String!
+    }
+
     input ProjectInput {
         name: String!
         status: String!
@@ -365,6 +383,18 @@ module.exports = buildSchema(`
         itemcategory: ID!
     }
 
+    input VehicleTypeInput {
+        name: String!
+    }
+
+    input VehicleInput {
+        registrationNumber: String!
+        vin: String
+        vehicleType: ID!
+        make: String
+        ownerStatus: String!
+    }
+
     type RootQuery{
         camps: [Camp!]
         projects: [Project!]
@@ -381,6 +411,8 @@ module.exports = buildSchema(`
         users:[User!]
         caveds:[Caved!]
         permissions:[Permission]
+        vehicletypes:[VehicleType!]
+        vehicles:[Vehicle!]
 
         login(userName: String!, password: String!): AuthData!
     }
@@ -428,7 +460,13 @@ module.exports = buildSchema(`
         createCaved(cavedInput: CavedInput): Caved,
         updateCaved(_id:ID!,create: [ID!]!, approval: [ID!], view: [ID!]!, edit: [ID!], delete:[ID!]): Caved
     
-        createPermission(permissionInput: PermissionInput): Permission
+        createPermission(permissionInput: PermissionInput): Permission,
+
+        createVehicleType(vehicleTypeInput: VehicleTypeInput): VehicleType,
+        updateVehicleType(_id:ID!, name: String!): VehicleType,
+
+        createVehicle(vehicleInput: VehicleInput): Vehicle,
+        updateVehicle(_id:ID!, registrationNumber: String!, vin: String, vehicleType: ID!, make: String, ownerStatus: String!): Vehicle
     }
 
     schema{

@@ -14,6 +14,8 @@ const userResolver = require('./user');
 const authResolver = require('./auth');
 const cavedResolver = require('./caved');
 const permissionResolver = require('./permission');
+const vehicleTypeResolver = require('./vehicletype');
+const vehicleResolver = require('./vehicle');
 
 const rootResolver = {
     ...projectResolver,
@@ -31,7 +33,9 @@ const rootResolver = {
     ...userResolver,
     ...authResolver,
     ...cavedResolver,
-    ...permissionResolver
+    ...permissionResolver,
+    ...vehicleTypeResolver,
+    ...vehicleResolver
   };
   
   module.exports = rootResolver;

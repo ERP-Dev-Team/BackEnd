@@ -7,6 +7,7 @@ const Designation = require('../../models/designation');
 const Module = require('../../models/module');
 const Camp = require('../../models/camp');
 const Caved = require('../../models/caved');
+const VehicleType = require('../../models/vehicletype');
 const {convertISODateToTimestamp} = require('../../helper/timestamp');
 
 const project = async projectId => {
@@ -91,6 +92,20 @@ const project = async projectId => {
           _id: itemCategory.id,
           createdAt: convertISODateToTimestamp(itemCategory._doc.createdAt),
           updatedAt: convertISODateToTimestamp(itemCategory._doc.updatedAt)
+        };
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  const vehicleType = async vehicleTypeId => {
+    try {
+      const vehicleType = await VehicleType.findOne({ _id: vehicleTypeId  });
+        return {
+          ...vehicleType._doc,
+          _id: vehicleType.id,
+          createdAt: convertISODateToTimestamp(vehicleType._doc.createdAt),
+          updatedAt: convertISODateToTimestamp(vehicleType._doc.updatedAt)
         };
     } catch (err) {
       throw err;
@@ -306,6 +321,25 @@ const transformProject = project => {
       };
   };
 
+  const transformVehicleType = vehicleType => {
+    return {
+        ...vehicleType._doc,
+        _id: vehicleType.id,
+        createdAt: convertISODateToTimestamp(vehicleType._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(vehicleType._doc.updatedAt)
+      };
+  };
+
+  const transformVehicle = vehicle => {
+    return {
+        ...vehicle._doc,
+        _id: vehicle.id,
+        vehicleType: vehicleType.bind(this,vehicle._doc.vehicleType),
+        createdAt: convertISODateToTimestamp(vehicle._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(vehicle._doc.updatedAt)
+      };
+  };
+
 exports.transformProject = transformProject;
 exports.transformCamp = transformCamp;
 exports.transformDesignation = transformDesignation;
@@ -321,3 +355,5 @@ exports.transformModule = transformModule;
 exports.transformUser = transformUser;
 exports.transformCaved = transformCaved;
 exports.transformPermission = transformPermission;
+exports.transformVehicleType = transformVehicleType;
+exports.transformVehicle = transformVehicle;
