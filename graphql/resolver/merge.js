@@ -340,6 +340,24 @@ const transformProject = project => {
       };
   };
 
+  const transformBankDetails = bankDetails => {
+    return {
+        ...bankDetails._doc,
+        _id: bankDetails.id,
+        createdAt: convertISODateToTimestamp(bankDetails._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(bankDetails._doc.updatedAt)
+      };
+  };
+
+  const transformBillingDetails = billingDetails => {
+    return {
+        ...billingDetails._doc,
+        _id: billingDetails.id,
+        createdAt: convertISODateToTimestamp(billingDetails._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(billingDetails._doc.updatedAt)
+      };
+  };
+
 exports.transformProject = transformProject;
 exports.transformCamp = transformCamp;
 exports.transformDesignation = transformDesignation;
@@ -357,3 +375,5 @@ exports.transformCaved = transformCaved;
 exports.transformPermission = transformPermission;
 exports.transformVehicleType = transformVehicleType;
 exports.transformVehicle = transformVehicle;
+exports.transformBankDetails = transformBankDetails;
+exports.transformBillingDetails = transformBillingDetails;

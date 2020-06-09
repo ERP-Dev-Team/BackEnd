@@ -25,7 +25,6 @@ module.exports = {
         IIFSCCode: args.bankDetailsInput.IIFSCCode,
         branch: args.bankDetailsInput.branch,
         branchCity: args.bankDetailsInput.branchCity,
-        accountHolderName: args.bankDetailsInput.accountHolderName,
         paymentFavour: args.bankDetailsInput.paymentFavour
       });
 
@@ -58,7 +57,6 @@ module.exports = {
             IIFSCCode: args.IIFSCCode,
             branch: args.branch,
             branchCity: args.branchCity,
-            accountHolderName: args.accountHolderName,
             paymentFavour: args.paymentFavour
             } },
           { new: true } //returns new document else will return document before update

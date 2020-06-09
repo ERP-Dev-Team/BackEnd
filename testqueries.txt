@@ -366,3 +366,66 @@ mutation{
   }
 }
 
+query{
+  bankdetails{
+    _id,
+    bankName,
+    accountNumber,
+    accountHolderName
+  }
+}
+
+mutation{
+  updateBankDetails(_id:"5edede10eb553f2be05b747c",bankName:"Andhra Bank",accountNumber:"AB00001",accountHolderName:"VAMSI KOTHAPALLI"){
+    bankName,
+    accountNumber,
+    accountHolderName
+  }
+}
+
+query{
+  billingdetails{
+    _id,
+    billingName,
+    address,
+    gstin,
+    phone1,
+    phone2,
+    email,
+    website,
+    createdAt,
+    updatedAt
+  }
+}
+
+mutation{
+  createBillingDetails(billingDetailsInput:{billingName:"VAMSI KRISHNA KOTHAPALLI",address:"3001 S KING DR",gstin:"1234",phone1:"8977119266",phone2:"9885345199",email:"vkothapalli@hawk.iit.edu",website:"https://vamzi.github.io"}){
+    _id,
+    billingName,
+    address,
+    gstin,
+    phone1,
+    phone2,
+    email,
+    website,
+    createdAt,
+    updatedAt
+  }
+}
+
+mutation{
+  updateBillingDetails(_id:"5edee2865bb5042580ef6a0d",billingName:"VAMSI KRISHNA KOTHAPALLI",address:"3001 S KING DR APT 217",gstin:"1234",phone1:"8977119266",phone2:"9885345199",email:"kothapallivamsikrishna@gmail.com",website:"https://vamzi.github.io"){
+    _id,
+    billingName,
+    address,
+    gstin,
+    phone1,
+    phone2,
+    email,
+    website,
+    createdAt,
+    updatedAt
+  }
+}
+
+

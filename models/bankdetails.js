@@ -28,10 +28,6 @@ const bankDetailsSchema = new Schema({
         type: String,
         required: false
     },
-    accountHolderName:{
-        type: String,
-        required: false
-    },
     paymentFavour:{
         type: String,
         required: false
