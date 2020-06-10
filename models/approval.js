@@ -13,10 +13,6 @@ const approvalSchema = new Schema({
         type: String,
         required: false
     },
-    project:{
-        type: Schema.Types.ObjectId,
-        ref: 'Project'
-    },
     camp:{
         type: Schema.Types.ObjectId,
         ref: 'Camp'

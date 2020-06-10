@@ -253,6 +253,16 @@ module.exports = buildSchema(`
         updatedAt: String!
     }
 
+    type Approval {
+        _id: ID!
+        role: Role!
+        note: String
+        camp: Camp
+        isApproved: Boolean!
+        createdAt: String!
+        updatedAt: String!
+    }
+
     input ProjectInput {
         name: String!
         status: String!
@@ -441,6 +451,13 @@ module.exports = buildSchema(`
         website: String
     }
 
+    input ApprovalInput {
+        role: ID!
+        note: String
+        camp: ID
+        isApproved: Boolean!
+    }
+
     type RootQuery{
         camps: [Camp!]
         projects: [Project!]
@@ -520,7 +537,9 @@ module.exports = buildSchema(`
         updateBankDetails(_id:ID!, bankName: String!, accountNumber: String!, accountHolderName: String!, IIFSCCode: String, branch: String, branchCity: String, paymentFavour: String): BankDetails,
 
         createBillingDetails(billingDetailsInput: BillingDetailsInput): BillingDetails,
-        updateBillingDetails(_id:ID!, billingName: String!, address: String!, gstin: String!, phone1: String, phone2: String, email: String, website: String): BillingDetails
+        updateBillingDetails(_id:ID!, billingName: String!, address: String!, gstin: String!, phone1: String, phone2: String, email: String, website: String): BillingDetails,
+
+        createApproval(approvalInput: ApprovalInput): Approval
     }
 
     schema{

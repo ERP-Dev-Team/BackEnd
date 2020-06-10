@@ -18,6 +18,7 @@ const vehicleTypeResolver = require('./vehicletype');
 const vehicleResolver = require('./vehicle');
 const bankDetailsResolver = require('./bankdetails');
 const billingDetailsResolver = require('./billingdetails');
+const approvalResolver = require('./approval');
 
 const rootResolver = {
     ...projectResolver,
@@ -39,7 +40,8 @@ const rootResolver = {
     ...vehicleTypeResolver,
     ...vehicleResolver,
     ...bankDetailsResolver,
-    ...billingDetailsResolver
+    ...billingDetailsResolver,
+    ...approvalResolver
   };
   
   module.exports = rootResolver;

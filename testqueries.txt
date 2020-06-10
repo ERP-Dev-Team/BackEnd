@@ -429,3 +429,9 @@ mutation{
 }
 
 
+mutation{
+ createApproval(approvalInput:{role:"5ee06d100b9d731de8a3dece",note:"Test Note",camp:"5ee06c7f0b9d731de8a3decc",isApproved:false}){
+  _id
+}
+}
+

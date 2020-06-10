@@ -17,9 +17,9 @@ module.exports = {
         }
       },
       createProject: async(args,req) =>{
-        if(!req.isAuth){
+        /*if(!req.isAuth){
           throw new Error('Not authorized');
-        }
+        }*/
         try{
           const project = new Project({
               name: args.projectInput.name,

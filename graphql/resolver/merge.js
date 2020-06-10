@@ -40,6 +40,21 @@ const project = async projectId => {
     }
   };
 
+  const camp = async campId => {
+    try {
+      const camp = await Camp.find({ _id:  campId   });
+        return {
+          ...camp._doc,
+          _id: camp.id,
+          project: project.bind(this,camp._doc.project),
+          createdAt: convertISODateToTimestamp(camp._doc.createdAt),
+          updatedAt: convertISODateToTimestamp(camp._doc.updatedAt)
+        };
+    } catch (err) {
+      throw err;
+    }
+  };
+
   const designation = async designationId => {
     try {
       const designation = await Designation.findOne({ _id: designationId  });
@@ -79,6 +94,20 @@ const project = async projectId => {
           updatedAt: convertISODateToTimestamp(role._doc.updatedAt)
         };
       });
+    } catch (err) {
+      throw err;
+    }
+  };
+
+  const role = async roleId => {
+    try {
+      const role = await Role.find({ _id:roleId  });
+        return {
+          ...role._doc,
+          _id: role.id,
+          createdAt: convertISODateToTimestamp(role._doc.createdAt),
+          updatedAt: convertISODateToTimestamp(role._doc.updatedAt)
+        };
     } catch (err) {
       throw err;
     }
@@ -358,6 +387,17 @@ const transformProject = project => {
       };
   };
 
+  const transformApproval = approvalDetails => {
+    return {
+        ...approvalDetails._doc,
+        _id: approvalDetails.id,
+        role: role.bind(this,approvalDetails._doc.role),
+        camp: camp.bind(this,approvalDetails._doc.camp),
+        createdAt: convertISODateToTimestamp(approvalDetails._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(approvalDetails._doc.updatedAt)
+      };
+  };
+
 exports.transformProject = transformProject;
 exports.transformCamp = transformCamp;
 exports.transformDesignation = transformDesignation;
@@ -377,3 +417,4 @@ exports.transformVehicleType = transformVehicleType;
 exports.transformVehicle = transformVehicle;
 exports.transformBankDetails = transformBankDetails;
 exports.transformBillingDetails = transformBillingDetails;
+exports.transformApproval = transformApproval;
