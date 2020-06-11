@@ -263,6 +263,27 @@ module.exports = buildSchema(`
         updatedAt: String!
     }
 
+    type ItemObject {
+        _id: ID!
+        item: Item!
+        quantity: Float
+        cost: Float
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type mmRequisition {
+        _id: ID!
+        status: String!
+        createdByUser: User!
+        description: String!
+        camp: Camp
+        items: [ItemObject!]
+        approvalsNeeded: [Approval!]
+        createdAt: String!
+        updatedAt: String!
+    }
+
     input ProjectInput {
         name: String!
         status: String!
@@ -458,6 +479,21 @@ module.exports = buildSchema(`
         isApproved: Boolean!
     }
 
+    input ItemObjectInput {
+        item: ID!
+        quantity: Float
+        cost: Float
+    }
+
+    input mmRequisitionInput {
+        status: String!
+        createdByUser: ID!
+        description: String!
+        camp: ID
+        items: [ID!]
+        approvalsNeeded: [ID!]
+    }
+
     type RootQuery{
         camps: [Camp!]
         projects: [Project!]
@@ -478,6 +514,7 @@ module.exports = buildSchema(`
         vehicles:[Vehicle!]
         bankdetails:[BankDetails!]
         billingdetails:[BillingDetails!]
+        mmrequisitions:[mmRequisition!]
 
         login(userName: String!, password: String!): AuthData!
     }
@@ -539,7 +576,16 @@ module.exports = buildSchema(`
         createBillingDetails(billingDetailsInput: BillingDetailsInput): BillingDetails,
         updateBillingDetails(_id:ID!, billingName: String!, address: String!, gstin: String!, phone1: String, phone2: String, email: String, website: String): BillingDetails,
 
-        createApproval(approvalInput: ApprovalInput): Approval
+        createApproval(approvalInput: ApprovalInput): Approval,
+        updateApproval(_id:ID!,note: String, isApproved: Boolean!): Approval,
+
+        createItemObject(itemObjectInput:ItemObjectInput): ItemObject,
+        updateItemObject(_id:ID!,item:ID!,quantity: Float!,cost: Float): ItemObject,
+
+        createmmRequisition(mmrequisitionInput:mmRequisitionInput):mmRequisition,
+        updatemmRequisition(_id:ID!,camp:ID!,description:String!,items:[ID!]):mmRequisition,
+
+
     }
 
     schema{

@@ -257,7 +257,7 @@ mutation{
 }
 
 mutation{
-  createUser(userInput:{userName:"admin",password:"admin1234",firstName:"Admin",loginAllowed:true,IMEIAllowed:false,superRole:"SUPERADMIN"}){
+  createUser(userInput:{userName:"admin",password:"admin1234",firstName:"Admin",loginAllowed:true,IMEIAllowed:false){
     userName,
     password,
     firstName
@@ -433,5 +433,37 @@ mutation{
  createApproval(approvalInput:{role:"5ee06d100b9d731de8a3dece",note:"Test Note",camp:"5ee06c7f0b9d731de8a3decc",isApproved:false}){
   _id
 }
+}
+
+
+mutation{
+  createItemObject(itemObjectInput:{quantity:100.50,item:"5ee1a1010b3b610b8ca743d2"}){
+    _id,
+    item{name},
+    quantity
+  }
+}
+
+query{
+  mmrequisitions{_id,status,createdByUser{userName,designation{name}},camp{name,project{name}},items{item{name}}}
+}
+
+mutation{
+  createmmRequisition(mmrequisitionInput:{status:"CREATED",createdByUser:"5ee1a4286f28061ba443854f",description:"Test Description",camp:"5ee06cda0b9d731de8a3decd",items:["5ee1a220ec3bb435486c5e0c"]}){
+    _id,
+    status,
+    createdByUser{userName},
+    items{item{name},quantity},
+    camp{name}
+  }
+}
+
+mutation{
+  updatemmRequisition(_id:"5ee1a52292262f1610e851f0",camp:"5ee06cda0b9d731de8a3decd",description:"UPDATED",items:"5ee1a220ec3bb435486c5e0c"){
+    _id,
+    createdByUser{userName},
+    camp{name},
+    items{item{name},quantity},description
+  }
 }
 
