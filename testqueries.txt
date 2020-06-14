@@ -78,7 +78,7 @@ mutation{
 
 
 mutation{
-  createDesignation(designationInput:{name:"SITE MANAGER"}){
+  createDesignation(designationInput:{name:"ADMIN"}){
     _id,
     name,
     createdAt,
@@ -94,7 +94,7 @@ mutation{
 }
 
 mutation{
-  createUnit(unitInput:{name:"KG"}){
+  createUnit(unitInput:{name:"TON"}){
     _id,
     name,
     createdAt
@@ -467,3 +467,28 @@ mutation{
   }
 }
 
+query{
+  mminternalindents{status,createdByUser{firstName},indentNumber,camp{name},items{item{name},quantity},requisition{description}}
+}
+
+mutation {
+  createmmInternalIndent(mminternalIndentInput: {status: "CREATED", createdByUser: "5ee5696d2ac1e8416062a2de", camp: "5ee5685b2ac1e8416062a2d6", items: "5ee569c52ac1e8416062a2df", requisition: "5ee56a452ac1e8416062a2e0", approvalsNeeded: []}) {
+    status
+    createdByUser {
+      firstName
+    }
+    indentNumber
+    camp {
+      name
+    }
+    items {
+      item {
+        name
+      }
+      quantity
+    }
+    requisition {
+      description
+    }
+  }
+}

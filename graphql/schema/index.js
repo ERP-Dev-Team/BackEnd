@@ -284,6 +284,24 @@ module.exports = buildSchema(`
         updatedAt: String!
     }
 
+    type mmInternalIndent {
+        _id: ID!
+        status: String!
+        createdByUser: User!
+        indentNumber: Int!
+        camp: Camp
+        items: [ItemObject!]
+        requisition: mmRequisition!
+        approvalsNeeded: [Approval!]
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type Counter { 
+        name: String!
+        value: Int!
+    }
+
     input ProjectInput {
         name: String!
         status: String!
@@ -494,6 +512,15 @@ module.exports = buildSchema(`
         approvalsNeeded: [ID!]
     }
 
+    input mmInternalIndentInput {
+        status: String!
+        createdByUser: ID!
+        camp: ID
+        items: [ID!]
+        requisition: ID!
+        approvalsNeeded: [ID!]
+    }
+
     type RootQuery{
         camps: [Camp!]
         projects: [Project!]
@@ -515,6 +542,8 @@ module.exports = buildSchema(`
         bankdetails:[BankDetails!]
         billingdetails:[BillingDetails!]
         mmrequisitions:[mmRequisition!]
+        mminternalindents:[mmInternalIndent!]
+        counters: [Counter!]
 
         login(userName: String!, password: String!): AuthData!
     }
@@ -585,6 +614,8 @@ module.exports = buildSchema(`
         createmmRequisition(mmrequisitionInput:mmRequisitionInput):mmRequisition,
         updatemmRequisition(_id:ID!,camp:ID!,description:String!,items:[ID!]):mmRequisition,
 
+        createmmInternalIndent(mminternalIndentInput:mmInternalIndentInput):mmInternalIndent,
+        updatemmInternalIndent(_id:ID!,status:String!,camp:ID!,items:[ID!]):mmInternalIndent,
 
     }
 

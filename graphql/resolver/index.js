@@ -21,6 +21,8 @@ const billingDetailsResolver = require("./billingdetails");
 const approvalResolver = require("./approval");
 const itemObjectResolver = require("./itemobject");
 const mmRequisitionResolver = require("./mmrequisition");
+const mmInternalIndentResolver = require("./mminternalindent");
+const counterResolver = require("./counter");
 
 const rootResolver = {
   ...projectResolver,
@@ -46,6 +48,8 @@ const rootResolver = {
   ...approvalResolver,
   ...itemObjectResolver,
   ...mmRequisitionResolver,
+  ...mmInternalIndentResolver,
+  ...counterResolver,
 };
 
 module.exports = rootResolver;

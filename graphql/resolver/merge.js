@@ -12,6 +12,7 @@ const Camp = require("../../models/camp");
 const Caved = require("../../models/caved");
 const VehicleType = require("../../models/vehicletype");
 const Approval = require("../../models/approval");
+const mmRequisition = require("../../models/mmrequisition");
 const { convertISODateToTimestamp } = require("../../helper/timestamp");
 
 const project = async (projectId) => {
@@ -306,6 +307,26 @@ const itemobjects = async (itemObjectIds) => {
   }
 };
 
+const mmrequisition = async (mmrequisitionId) => {
+  try {
+    const mmrequisition = await mmRequisition.findOne({
+      _id: mmrequisitionId,
+    });
+    return {
+      ...mmrequisition._doc,
+      _id: mmrequisition.id,
+      camp: camp.bind(this, mmrequisition._doc.camp),
+      items: itemobjects.bind(this, mmrequisition._doc.items),
+      createdByUser: user.bind(this, mmrequisition._doc.createdByUser),
+      approvalsNeeded: approvals.bind(this, mmrequisition._doc.approvalsNeeded),
+      createdAt: convertISODateToTimestamp(mmrequisition._doc.createdAt),
+      updatedAt: convertISODateToTimestamp(mmrequisition._doc.updatedAt),
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+
 const transformProject = (project) => {
   return {
     ...project._doc,
@@ -534,6 +555,23 @@ const transformmmRequisition = (mmRequisition) => {
   };
 };
 
+const transformmmInternalIndent = (mmInternalIndent) => {
+  return {
+    ...mmInternalIndent._doc,
+    _id: mmInternalIndent.id,
+    camp: camp.bind(this, mmInternalIndent._doc.camp),
+    items: itemobjects.bind(this, mmInternalIndent._doc.items),
+    createdByUser: user.bind(this, mmInternalIndent._doc.createdByUser),
+    approvalsNeeded: approvals.bind(
+      this,
+      mmInternalIndent._doc.approvalsNeeded
+    ),
+    requisition: mmrequisition.bind(this, mmInternalIndent._doc.requisition),
+    createdAt: convertISODateToTimestamp(mmInternalIndent._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(mmInternalIndent._doc.updatedAt),
+  };
+};
+
 exports.transformProject = transformProject;
 exports.transformCamp = transformCamp;
 exports.transformDesignation = transformDesignation;
@@ -556,3 +594,4 @@ exports.transformBillingDetails = transformBillingDetails;
 exports.transformApproval = transformApproval;
 exports.transformItemObject = transformItemObject;
 exports.transformmmRequisition = transformmmRequisition;
+exports.transformmmInternalIndent = transformmmInternalIndent;

@@ -1,37 +1,48 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const mmInternalIndentSchema = new Schema({
-
-    status:{
-        type: String,
-        enum: ['CREATED', 'APPROVED'],
-        required: true
+const mmInternalIndentSchema = new Schema(
+  {
+    status: {
+      type: String,
+      enum: ["CREATED", "APPROVED"],
+      required: true,
     },
     createdByUser: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     indentNumber: {
-        type: String,
-        required: true
+      type: Schema.Types.Number,
+      unique: true,
+      required: true,
     },
-    camp:{
-        type: Schema.Types.ObjectId,
-        ref: 'Camp',
-        required: true
+    camp: {
+      type: Schema.Types.ObjectId,
+      ref: "Camp",
+      required: true,
     },
-    items:[{
+    items: [
+      {
         type: Schema.Types.ObjectId,
-        ref: 'ItemObject'
-    }],
-    approvalsNeeded:[{
+        ref: "ItemObject",
+      },
+    ],
+    requisition: {
+      type: Schema.Types.ObjectId,
+      ref: "mmRequisition",
+      required: true,
+    },
+    approvalsNeeded: [
+      {
         type: Schema.Types.ObjectId,
-        ref: 'Approval'
-    }]
+        ref: "Approval",
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-} ,  { timestamps: true });
-
-module.exports = mongoose.model('mmInternalIndent', mmInternalIndentSchema);
+module.exports = mongoose.model("mmInternalIndent", mmInternalIndentSchema);
