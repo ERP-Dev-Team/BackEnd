@@ -89,7 +89,7 @@ const supplierSchema = new Schema({
         type: String,
         required: false
     },
-    supplierType: [{
+    supplierTypes: [{
         type: Schema.Types.ObjectId,
         ref: 'SupplierType'
     }]

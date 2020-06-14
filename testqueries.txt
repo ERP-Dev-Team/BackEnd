@@ -78,7 +78,7 @@ mutation{
 
 
 mutation{
-  createDesignation(designationInput:{name:"SITE MANAGER"}){
+  createDesignation(designationInput:{name:"ADMIN"}){
     _id,
     name,
     createdAt,
@@ -94,7 +94,7 @@ mutation{
 }
 
 mutation{
-  createUnit(unitInput:{name:"KG"}){
+  createUnit(unitInput:{name:"TON"}){
     _id,
     name,
     createdAt
@@ -165,6 +165,330 @@ mutation{
     name,
     unit{
       name
+    }
+  }
+}
+
+mutation{
+  createSupplier(supplierInput:{name:"PSM 4",supplierTypes:["5ed445fc520f0046fc0c1df7","5ed46be746f9fb2eec9f7230"]}){
+    name,
+    supplierTypes{
+      _id,
+      name
+    }
+  }
+}
+
+query{
+  suppliers{
+    name,
+    supplierTypes{
+      name
+    }
+  }
+}
+mutation{
+  updateSupplier(_id:"5ed5982eb85ab54f08e371e7",name:"updated",supplierTypes:["5ed46be746f9fb2eec9f7230","5ed46bef46f9fb2eec9f7231"]){
+    name,
+    supplierTypes{
+      name
+    }
+  }
+}
+
+query{
+  items{
+    name,
+    unit{
+      name
+    },
+    itemCategory{
+      name
+    }
+  }
+}
+
+mutation{
+  createItem(itemInput:{name:"SAND 3",itemCode:"SAND KAL 2",unit:"5ed43bec8be0114984e95ea7",itemCategory:"5ed448d4777ee83e50b2b563"}){
+    name,
+    unit{name},
+    itemCategory{name}
+  }
+}
+
+mutation{
+  updateItem(_id:"5ed5a281897c1334c0da3632",name:"SAND K",itemCode:"SAND OK",unit:"5ed43bec8be0114984e95ea7",itemCategory:"5ed448d4777ee83e50b2b563"){
+    name,itemCode,
+    unit{name},
+    itemCategory{name}
+  }
+}
+
+query{
+  roles{name}
+}
+
+mutation{
+  createRole(roleInput:{name:"SITE SUPERVISOR"}){name}
+}
+
+mutation{
+  updateRole(_id:"5ed5abddda31bd4c609de238",name:"SITE HEAD"){
+    _id,name
+    
+    
+  }
+}
+
+query{
+  modules{name,
+    rolesAllowed{name}
+  }
+}
+
+mutation{
+  createModule(moduleInput:{name:"ATTEANDANCE",rolesAllowed:["5ed5abddda31bd4c609de238"]}){
+    _id,name,rolesAllowed{_id,name}
+  }
+}
+
+mutation{
+ updateModule(_id:"5ed5bd2ebe7a3b51b09fea45",name:"ATTEND",rolesAllowed:["5ed5abfada31bd4c609de239"]){name,rolesAllowed{name}}
+}
+
+mutation{
+  createUser(userInput:{userName:"admin",password:"admin1234",firstName:"Admin",loginAllowed:true,IMEIAllowed:false){
+    userName,
+    password,
+    firstName
+  }
+}
+
+query{
+  caveds{
+    _id,
+    create{name},
+    approval{name},
+    view{name},
+    edit{name},
+    delete{name}
+  }
+}
+
+mutation{
+  createCaved(cavedInput:{create:["5edc3a1fb383ce3120071c11"],approval:[],view:["5edc3a1fb383ce3120071c11"],edit:["5edc3a1fb383ce3120071c11"],delete:["5edc3a1fb383ce3120071c11"]}){
+    _id
+    create{name},
+    approval{name},
+    view{name},
+    edit{name},
+    delete{name}
+  }
+}
+
+mutation{
+  updateCaved(_id:"",create:["5edc3a1fb383ce3120071c11"],approval:[],view:["5edc3a1fb383ce3120071c11"],edit:["5edc3a1fb383ce3120071c11"],delete:["5edc3a1fb383ce3120071c11"]){
+    _id
+    create{name},
+    approval{name},
+    view{name},
+    edit{name},
+    delete{name}
+  }
+}
+
+mutation{
+  updateCaved(_id:"5edc3d973cd3052fb0682156",create:["5edc3a1fb383ce3120071c11","5edc3a29b383ce3120071c12"],approval:[],view:["5edc3a1fb383ce3120071c11","5edc3a29b383ce3120071c12"],edit:["5edc3a1fb383ce3120071c11"],delete:["5edc3a1fb383ce3120071c11"]){
+    _id
+    create{name},
+    approval{name},
+    view{name},
+    edit{name},
+    delete{name}
+  }
+}
+
+query{
+  permissions{
+    user{create{name}},
+    worktype{create{name}}
+  }
+}
+
+mutation{
+  createPermission(permissionInput:{user:"5edc3d973cd3052fb0682156",worktype:"5edc3d973cd3052fb0682156",supplier:"5edc3d973cd3052fb0682156",suppliertype:"5edc3d973cd3052fb0682156",item:"5edc3d973cd3052fb0682156",vehicletype:"5edc3d973cd3052fb0682156",role:"5edc3d973cd3052fb0682156",itemcategory:"5edc3d973cd3052fb0682156"}){
+    user{create{name}}
+  }
+}
+
+query{
+  vehicletypes{
+    name
+  }
+}
+
+mutation{
+  createVehicleType(vehicleTypeInput:{name:"TRACTOR"}){
+    name,
+    _id
+  }
+}
+
+mutation{
+  updateVehicleType(_id:"5edd00724c948f1b2c9ea85f",name:"TRACTOR UPDAATED"){
+    name,
+    _id
+  }
+}
+
+query{
+  vehicles{
+    _id,
+		registrationNumber,
+    vehicleType{name},
+    ownerStatus,
+  }
+}
+
+mutation{
+  createVehicle(vehicleInput:{registrationNumber:"KA08BA8989",vehicleType:"5edd00694c948f1b2c9ea85e",ownerStatus:"OWN"}){
+    registrationNumber,
+    vehicleType{name},
+    ownerStatus,
+  }
+}
+
+mutation{
+  updateVehicle(_id:"5edd0cec3ca26224bcbf88b0",registrationNumber:"KA08BA8055",vehicleType:"5edd00694c948f1b2c9ea85e",ownerStatus:"OWN"){
+    registrationNumber,
+    vehicleType{name},
+    ownerStatus,
+  }
+}
+
+query{
+  bankdetails{
+    _id,
+    bankName,
+    accountNumber,
+    accountHolderName
+  }
+}
+
+mutation{
+  updateBankDetails(_id:"5edede10eb553f2be05b747c",bankName:"Andhra Bank",accountNumber:"AB00001",accountHolderName:"VAMSI KOTHAPALLI"){
+    bankName,
+    accountNumber,
+    accountHolderName
+  }
+}
+
+query{
+  billingdetails{
+    _id,
+    billingName,
+    address,
+    gstin,
+    phone1,
+    phone2,
+    email,
+    website,
+    createdAt,
+    updatedAt
+  }
+}
+
+mutation{
+  createBillingDetails(billingDetailsInput:{billingName:"VAMSI KRISHNA KOTHAPALLI",address:"3001 S KING DR",gstin:"1234",phone1:"8977119266",phone2:"9885345199",email:"vkothapalli@hawk.iit.edu",website:"https://vamzi.github.io"}){
+    _id,
+    billingName,
+    address,
+    gstin,
+    phone1,
+    phone2,
+    email,
+    website,
+    createdAt,
+    updatedAt
+  }
+}
+
+mutation{
+  updateBillingDetails(_id:"5edee2865bb5042580ef6a0d",billingName:"VAMSI KRISHNA KOTHAPALLI",address:"3001 S KING DR APT 217",gstin:"1234",phone1:"8977119266",phone2:"9885345199",email:"kothapallivamsikrishna@gmail.com",website:"https://vamzi.github.io"){
+    _id,
+    billingName,
+    address,
+    gstin,
+    phone1,
+    phone2,
+    email,
+    website,
+    createdAt,
+    updatedAt
+  }
+}
+
+
+mutation{
+ createApproval(approvalInput:{role:"5ee06d100b9d731de8a3dece",note:"Test Note",camp:"5ee06c7f0b9d731de8a3decc",isApproved:false}){
+  _id
+}
+}
+
+
+mutation{
+  createItemObject(itemObjectInput:{quantity:100.50,item:"5ee1a1010b3b610b8ca743d2"}){
+    _id,
+    item{name},
+    quantity
+  }
+}
+
+query{
+  mmrequisitions{_id,status,createdByUser{userName,designation{name}},camp{name,project{name}},items{item{name}}}
+}
+
+mutation{
+  createmmRequisition(mmrequisitionInput:{status:"CREATED",createdByUser:"5ee1a4286f28061ba443854f",description:"Test Description",camp:"5ee06cda0b9d731de8a3decd",items:["5ee1a220ec3bb435486c5e0c"]}){
+    _id,
+    status,
+    createdByUser{userName},
+    items{item{name},quantity},
+    camp{name}
+  }
+}
+
+mutation{
+  updatemmRequisition(_id:"5ee1a52292262f1610e851f0",camp:"5ee06cda0b9d731de8a3decd",description:"UPDATED",items:"5ee1a220ec3bb435486c5e0c"){
+    _id,
+    createdByUser{userName},
+    camp{name},
+    items{item{name},quantity},description
+  }
+}
+
+query{
+  mminternalindents{status,createdByUser{firstName},indentNumber,camp{name},items{item{name},quantity},requisition{description}}
+}
+
+mutation {
+  createmmInternalIndent(mminternalIndentInput: {status: "CREATED", createdByUser: "5ee5696d2ac1e8416062a2de", camp: "5ee5685b2ac1e8416062a2d6", items: "5ee569c52ac1e8416062a2df", requisition: "5ee56a452ac1e8416062a2e0", approvalsNeeded: []}) {
+    status
+    createdByUser {
+      firstName
+    }
+    indentNumber
+    camp {
+      name
+    }
+    items {
+      item {
+        name
+      }
+      quantity
+    }
+    requisition {
+      description
     }
   }
 }
