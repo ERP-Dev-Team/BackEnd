@@ -444,6 +444,14 @@ mutation{
   }
 }
 
+mutation{
+ updateItemObject(_id:"5ee569c52ac1e8416062a2df",item:"5ee569232ac1e8416062a2dc",quantity:150.52,cost:1200){
+  item{name},
+  quantity,
+  cost
+}
+}
+
 query{
   mmrequisitions{_id,status,createdByUser{userName,designation{name}},camp{name,project{name}},items{item{name}}}
 }
@@ -492,3 +500,27 @@ mutation {
     }
   }
 }
+
+query{mmpurchaseorders{status,createdByUser{firstName},purchaseOrderNumber,supplier{name},camp{name},items{item{name},quantity,cost}}}
+
+mutation {
+  createmmPurchaseOrder(mmpurchaseOrderInput: {status: "CREATED",createdByUser:"5ee5696d2ac1e8416062a2de",supplier:"5ee568ee2ac1e8416062a2db",camp:"5ee5685b2ac1e8416062a2d6",items:["5ee569c52ac1e8416062a2df"],internalIndent:"5ee5819ae61a41467c690d40",approvalsNeeded:[""]}) {
+    status,
+    createdByUser{firstName},
+    purchaseOrderNumber,
+    supplier{name,supplierTypes{name}},
+    camp{name}
+  }
+}
+
+mutation{
+  updatemmPurchaseOrder(_id:"5ee6b6f40dfae947d86278a9",status:"PENDING FOR APPROVAL",camp:"5ee5685b2ac1e8416062a2d6",items:["5ee569c52ac1e8416062a2df"],supplier:"5ee568ee2ac1e8416062a2db"){
+    status,
+    createdByUser{firstName},
+    camp{name},
+    supplier{name},
+    items{item{name},quantity,cost}
+  }
+}
+
+

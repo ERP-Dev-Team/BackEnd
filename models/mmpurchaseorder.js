@@ -1,41 +1,52 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const Schema = mongoose.Schema;
 
-const mmPurchaseOrderSchema = new Schema({
-
-    status:{
-        type: String,
-        enum: ['CREATED', 'PENDING FOR APPROVAL','ORDER CONFIRMED'],
-        required: true
+const mmPurchaseOrderSchema = new Schema(
+  {
+    status: {
+      type: String,
+      enum: ["CREATED", "PENDING FOR APPROVAL", "ORDER CONFIRMED"],
+      required: true,
     },
     createdByUser: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
-        required: true
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     purchaseOrderNumber: {
-        type: String,
-        required: true
+      type: Schema.Types.Number,
+      unique: true,
+      required: true,
     },
-    camp:{
-        type: Schema.Types.ObjectId,
-        ref: 'Camp',
-        required: true
+    camp: {
+      type: Schema.Types.ObjectId,
+      ref: "Camp",
+      required: true,
     },
-    supplier:{
-        type: Schema.Types.ObjectId,
-        ref: 'Supplier',
+    supplier: {
+      type: Schema.Types.ObjectId,
+      ref: "Supplier",
     },
-    items:[{
+    items: [
+      {
         type: Schema.Types.ObjectId,
-        ref: 'ItemObject'
-    }],
-    approvalsNeeded:[{
+        ref: "ItemObject",
+      },
+    ],
+    internalIndent: {
+      type: Schema.Types.ObjectId,
+      ref: "mmInternalIndent",
+      required: true,
+    },
+    approvalsNeeded: [
+      {
         type: Schema.Types.ObjectId,
-        ref: 'Approval'
-    }]
+        ref: "Approval",
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
-} ,  { timestamps: true });
-
-module.exports = mongoose.model('mmInternalIndent', mmInternalIndentSchema);
+module.exports = mongoose.model("mmPurchaseOrder", mmPurchaseOrderSchema);

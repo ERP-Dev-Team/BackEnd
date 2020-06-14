@@ -23,6 +23,7 @@ const itemObjectResolver = require("./itemobject");
 const mmRequisitionResolver = require("./mmrequisition");
 const mmInternalIndentResolver = require("./mminternalindent");
 const counterResolver = require("./counter");
+const mmPurchaseOrderResolver = require("./mmpurchaseorder");
 
 const rootResolver = {
   ...projectResolver,
@@ -50,6 +51,7 @@ const rootResolver = {
   ...mmRequisitionResolver,
   ...mmInternalIndentResolver,
   ...counterResolver,
+  ...mmPurchaseOrderResolver,
 };
 
 module.exports = rootResolver;
