@@ -13,6 +13,8 @@ const Caved = require("../../models/caved");
 const VehicleType = require("../../models/vehicletype");
 const Approval = require("../../models/approval");
 const mmRequisition = require("../../models/mmrequisition");
+const Supplier = require("../../models/supplier");
+const mmInternalIndent = require("../../models/mminternalindent");
 const { convertISODateToTimestamp } = require("../../helper/timestamp");
 
 const project = async (projectId) => {
@@ -327,6 +329,51 @@ const mmrequisition = async (mmrequisitionId) => {
   }
 };
 
+const supplier = async (supplierId) => {
+  try {
+    const supplier = await Supplier.findOne({
+      _id: supplierId,
+    });
+    return {
+      ...supplier._doc,
+      _id: supplier.id,
+      supplierTypes: suppliertypes.bind(this, supplier._doc.supplierTypes),
+      createdAt: convertISODateToTimestamp(supplier._doc.createdAt),
+      updatedAt: convertISODateToTimestamp(supplier._doc.updatedAt),
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+
+const mminternalindent = async (mminternalindentId) => {
+  try {
+    const mminternalindent = await mmInternalIndent.findOne({
+      _id: mminternalindentId,
+    });
+    return {
+      ...mminternalindent._doc,
+      _id: mminternalindent.id,
+      createdByUser: user.bind(this, mminternalindent._doc.createdByUser),
+      approvalsNeeded: approvals.bind(
+        this,
+        mminternalindent._doc.approvalsNeeded
+      ),
+      camp: camp.bind(this, mminternalindent._doc.camp),
+      items: itemobjects.bind(this, mmrequisition._doc.items),
+      requisition: mmrequisition.bind(this, mmrequisition._doc.requisition),
+      supplierTypes: suppliertypes.bind(
+        this,
+        mminternalindent._doc.supplierTypes
+      ),
+      createdAt: convertISODateToTimestamp(mminternalindent._doc.createdAt),
+      updatedAt: convertISODateToTimestamp(mminternalindent._doc.updatedAt),
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+
 const transformProject = (project) => {
   return {
     ...project._doc,
@@ -572,6 +619,24 @@ const transformmmInternalIndent = (mmInternalIndent) => {
   };
 };
 
+const transformmmPurchaseOrder = (mmPurchaseOrder) => {
+  return {
+    ...mmPurchaseOrder._doc,
+    _id: mmPurchaseOrder.id,
+    camp: camp.bind(this, mmPurchaseOrder._doc.camp),
+    items: itemobjects.bind(this, mmPurchaseOrder._doc.items),
+    createdByUser: user.bind(this, mmPurchaseOrder._doc.createdByUser),
+    approvalsNeeded: approvals.bind(this, mmPurchaseOrder._doc.approvalsNeeded),
+    supplier: supplier.bind(this, mmPurchaseOrder.supplier),
+    internalIndent: mminternalindent.bind(
+      this,
+      mmPurchaseOrder._doc.internalIndent
+    ),
+    createdAt: convertISODateToTimestamp(mmPurchaseOrder._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(mmPurchaseOrder._doc.updatedAt),
+  };
+};
+
 exports.transformProject = transformProject;
 exports.transformCamp = transformCamp;
 exports.transformDesignation = transformDesignation;
@@ -595,3 +660,4 @@ exports.transformApproval = transformApproval;
 exports.transformItemObject = transformItemObject;
 exports.transformmmRequisition = transformmmRequisition;
 exports.transformmmInternalIndent = transformmmInternalIndent;
+exports.transformmmPurchaseOrder = transformmmPurchaseOrder;

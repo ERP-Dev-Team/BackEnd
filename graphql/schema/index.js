@@ -302,6 +302,20 @@ module.exports = buildSchema(`
         value: Int!
     }
 
+    type mmPurchaseOrder {
+        _id: ID!
+        status: String!
+        createdByUser: User!
+        purchaseOrderNumber: Int!
+        supplier: Supplier
+        camp: Camp
+        items: [ItemObject!]
+        internalIndent: mmInternalIndent!
+        approvalsNeeded: [Approval!]
+        createdAt: String!
+        updatedAt: String!
+    }
+
     input ProjectInput {
         name: String!
         status: String!
@@ -521,6 +535,16 @@ module.exports = buildSchema(`
         approvalsNeeded: [ID!]
     }
 
+    input mmPurchaseOrderInput {
+        status: String!
+        createdByUser: ID!
+        supplier: ID
+        camp: ID
+        items: [ID!]
+        internalIndent: ID!
+        approvalsNeeded: [ID!]
+    }
+
     type RootQuery{
         camps: [Camp!]
         projects: [Project!]
@@ -544,6 +568,7 @@ module.exports = buildSchema(`
         mmrequisitions:[mmRequisition!]
         mminternalindents:[mmInternalIndent!]
         counters: [Counter!]
+        mmpurchaseorders: [mmPurchaseOrder!]
 
         login(userName: String!, password: String!): AuthData!
     }
@@ -617,6 +642,8 @@ module.exports = buildSchema(`
         createmmInternalIndent(mminternalIndentInput:mmInternalIndentInput):mmInternalIndent,
         updatemmInternalIndent(_id:ID!,status:String!,camp:ID!,items:[ID!]):mmInternalIndent,
 
+        createmmPurchaseOrder(mmpurchaseOrderInput:mmPurchaseOrderInput):mmPurchaseOrder,
+        updatemmPurchaseOrder(_id:ID!,status: String!,camp: ID!, items:[ID!],supplier:ID):mmPurchaseOrder,
     }
 
     schema{
