@@ -3,7 +3,7 @@ const formatError = new FormatError([
   {
     name: "INVALID_LOGIN",
     message: "Invalid username or password",
-    statusCode: 400,
+    statusCode: 200,
   },
 ]);
 module.exports = { formatError, FormatError };
