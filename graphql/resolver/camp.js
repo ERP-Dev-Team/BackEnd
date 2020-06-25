@@ -13,6 +13,17 @@ module.exports = {
       throw err;
     }
   },
+  camp: async (args) => {
+    try {
+      const camp = await Camp.findOne({ _id: args._id });
+      if (camp == undefined) {
+        throw new Error("No camp found.");
+      }
+      return transformCamp(camp);
+    } catch (err) {
+      throw err;
+    }
+  },
   createCamp: async (args) => {
     try {
       const camp = new Camp({
@@ -61,6 +72,23 @@ module.exports = {
         throw err;
       }
       return transformCamp(campUpdated);
+    } catch (err) {
+      throw err;
+    }
+  },
+  deleteCamp: async (args) => {
+    try {
+      const camp = await Camp.find({ _id: args._id });
+      if (camp == undefined) {
+        throw new Error("No camp found.");
+      }
+      let campDelete;
+      try {
+        let campDelete = await Camp.findByIdAndDelete(args._id);
+        return transformCamp(campDelete);
+      } catch (err) {
+        throw err;
+      }
     } catch (err) {
       throw err;
     }
