@@ -16,6 +16,17 @@ module.exports = {
       throw err;
     }
   },
+  unit: async (args) => {
+    try {
+      const unit = await Unit.findOne({ _id: args._id });
+      if (unit == undefined) {
+        throw new Error("No unit found.");
+      }
+      return transformUnit(unit);
+    } catch (err) {
+      throw err;
+    }
+  },
   createUnit: async (args) => {
     try {
       const unit = new Unit({
@@ -51,6 +62,23 @@ module.exports = {
         throw err;
       }
       return transformUnit(unitUpdated);
+    } catch (err) {
+      throw err;
+    }
+  },
+  deleteUnit: async (args) => {
+    try {
+      const unit = await Unit.find({ _id: args._id });
+      if (unit == undefined) {
+        throw new Error("No unit found.");
+      }
+      let unitDelete;
+      try {
+        unitDelete = await Unit.findByIdAndDelete(args._id);
+        return transformUnit(unitDelete);
+      } catch (err) {
+        throw err;
+      }
     } catch (err) {
       throw err;
     }

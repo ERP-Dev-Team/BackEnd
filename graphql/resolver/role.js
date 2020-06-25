@@ -16,6 +16,17 @@ module.exports = {
       throw err;
     }
   },
+  role: async (args) => {
+    try {
+      const role = await Role.findOne({ _id: args._id });
+      if (role == undefined) {
+        throw new Error("No role found.");
+      }
+      return transformRole(role);
+    } catch (err) {
+      throw err;
+    }
+  },
   createRole: async (args) => {
     try {
       const role = new Role({
@@ -51,6 +62,23 @@ module.exports = {
         throw err;
       }
       return transformRole(roleUpdated);
+    } catch (err) {
+      throw err;
+    }
+  },
+  deleteRole: async (args) => {
+    try {
+      const role = await Role.find({ _id: args._id });
+      if (role == undefined) {
+        throw new Error("No role found.");
+      }
+      let roleDelete;
+      try {
+        roleDelete = await Role.findByIdAndDelete(args._id);
+        return transformRole(roleDelete);
+      } catch (err) {
+        throw err;
+      }
     } catch (err) {
       throw err;
     }

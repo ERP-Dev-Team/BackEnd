@@ -546,17 +546,29 @@ module.exports = buildSchema(`
     }
 
     type RootQuery{
-        camps: [Camp!]
         projects: [Project!]
+        project(_id:ID!): Project!
+
+        camps: [Camp!]
+        camp(_id:ID!): Camp!
+
+        roles:[Role!]
+        role(_id:ID!):Role!
+       
         designations: [Designation!]
+        designation(_id:ID!):Designation!
+
         units:[Unit!]
+        unit(_id:ID!):Unit!
+
         offices:[Office!]
         suppliertypes:[SupplierType!]
         itemcategories:[ItemCategory!]
         worktypes:[WorkType!]
         suppliers:[Supplier!]
         items:[Item!]
-        roles:[Role!]
+        item(_id:ID!):Item!
+       
         modules:[Module!]
         users:[User!]
         caveds:[Caved!]
@@ -574,17 +586,21 @@ module.exports = buildSchema(`
     }
 
     type RootMutation{
-        createProject(projectInput: ProjectInput): Project,
-        updateProject(_id: ID!, name: String, status: String,startDate: String, endDate: String): Project,
+        createProject(projectInput: ProjectInput): Project!,
+        updateProject(_id: ID!, name: String, status: String,startDate: String, endDate: String): Project!,
+        deleteProject(_id:ID!): Project!,
 
-        createCamp(campInput: CampInput): Camp,
-        updateCamp(_id: ID!, name: String,project: String, status: String,startDate: String, endDate: String): Camp,
+        createCamp(campInput: CampInput): Camp!,
+        updateCamp(_id: ID!, name: String,project: String, status: String,startDate: String, endDate: String): Camp!,
+        deleteCamp(_id:ID!): Camp!,
 
-        createDesignation(designationInput: DesignationInput): Designation,
-        updateDesignation(_id: ID!, name:String!): Designation,
+        createDesignation(designationInput: DesignationInput): Designation!,
+        updateDesignation(_id: ID!, name:String!): Designation!,
+        deleteDesignation(_id: ID!):Designation!,
 
-        createUnit(unitInput: UnitInput): Unit,
-        updateUnit(_id: ID!, name:String!): Unit,
+        createUnit(unitInput: UnitInput): Unit!,
+        updateUnit(_id: ID!, name:String!): Unit!,
+        deleteUnit(_id: ID!):Unit!,
 
         createOffice(officeInput: OfficeInput): Office,
         updateOffice(_id:String!, name: String!,phone1: String, phone2: String,email: String,contactPerson: String, address1: String,address2: String,city: String, state: String, country: String,zipcode: String): Office,
@@ -602,10 +618,12 @@ module.exports = buildSchema(`
         updateSupplier(_id: ID!, name:String, contactName:String, email:String, phone1:String,phone2:String, address1:String, address2: String,city: String,state: String, country:String, zipcode:String, panNumber:String,gstNumber:String,cstNumber:String,accountBankName:String,accountBranchName:String,accountBranchCity:String,accountNumber:String,accountIIFSCCode:String,accountHolderName:String,accountPaymentFavour:String,supplierTypes:[ID!]): Supplier,
 
         createItem(itemInput: ItemInput): Item,
-        updateItem(_id: ID!, name:String, description: String, partNumber: String, unit:ID, hsnNumber: String, itemCode: String, itemCategory:ID): Item
+        updateItem(_id: ID!, name:String, description: String, partNumber: String, unit:ID, hsnNumber: String, itemCode: String, itemCategory:ID): Item,
+        deleteItem(_id: ID!):Item!,
 
         createRole(roleInput: RoleInput): Role,
         updateRole(_id: ID!, name:String): Role,
+        deleteRole(_id: ID!):Role,
 
         createModule(moduleInput: ModuleInput): Module,
         updateModule(_id: ID!, name:String, rolesAllowed:[ID]): Module,
