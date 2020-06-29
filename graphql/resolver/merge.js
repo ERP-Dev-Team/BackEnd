@@ -226,7 +226,7 @@ const imodules = async (moduleIds) => {
       return {
         ...imodule._doc,
         _id: imodule.id,
-        rolesAllowed: roles.bind(this, imodule._doc.rolesAllowed),
+        caved: caved.bind(this, imodule._doc.caved),
         createdAt: convertISODateToTimestamp(imodule._doc.createdAt),
         updatedAt: convertISODateToTimestamp(imodule._doc.updatedAt),
       };
@@ -480,7 +480,7 @@ const transformModule = (imodule) => {
   return {
     ...imodule._doc,
     _id: imodule.id,
-    rolesAllowed: roles.bind(this, imodule._doc.rolesAllowed),
+    caved: caved.bind(this, imodule._doc.caved),
     createdAt: convertISODateToTimestamp(imodule._doc.createdAt),
     updatedAt: convertISODateToTimestamp(imodule._doc.updatedAt),
   };
@@ -637,6 +637,20 @@ const transformmmPurchaseOrder = (mmPurchaseOrder) => {
   };
 };
 
+const transformAuthData = (
+  userName,
+  token,
+  tokenExpiration,
+  modulesAllowed
+) => {
+  return {
+    userName: userName,
+    token: token,
+    tokenExpiration: tokenExpiration,
+    modulesAllowed: imodules.bind(this, modulesAllowed),
+  };
+};
+
 exports.transformProject = transformProject;
 exports.transformCamp = transformCamp;
 exports.transformDesignation = transformDesignation;
@@ -661,3 +675,4 @@ exports.transformItemObject = transformItemObject;
 exports.transformmmRequisition = transformmmRequisition;
 exports.transformmmInternalIndent = transformmmInternalIndent;
 exports.transformmmPurchaseOrder = transformmmPurchaseOrder;
+exports.transformAuthData = transformAuthData;
