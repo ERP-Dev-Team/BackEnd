@@ -2,6 +2,7 @@ const User = require("../../models/user");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { getJWTKey } = require("../../helper/private");
+const { transformAuthData } = require("./merge");
 var { formatError, FormatError } = require("../errors/index");
 // pass the errorName on the context
 const errorName = formatError.errorName;
@@ -24,12 +25,13 @@ module.exports = {
         superRole: user.superRole,
         designation: user.designation,
         rolesAllowed: user.rolesAllowed,
+        modulesAllowed: user.modulesAllowed,
       },
       getJWTKey(),
       {
         expiresIn: "1h",
       }
     );
-    return { userName: user.userName, token: token, tokenExpiration: 1 };
+    return transformAuthData(user.userName, token, 1, user.modulesAllowed);
   },
 };

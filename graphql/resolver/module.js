@@ -1,4 +1,5 @@
 const Module = require("../../models/module");
+const Caved = require("../../models/caved");
 
 const { transformModule } = require("./merge");
 
@@ -18,9 +19,11 @@ module.exports = {
   },
   createModule: async (args) => {
     try {
+      var caved = new Caved();
+      caved = await caved.save();
       const module = new Module({
         name: args.moduleInput.name,
-        rolesAllowed: args.moduleInput.rolesAllowed
+        caved: caved._doc._id,
       });
 
       let createdModule;
@@ -45,7 +48,7 @@ module.exports = {
       try {
         moduleUpdated = await Module.findOneAndUpdate(
           { _id: args._id },
-          { $set: { name: args.name, rolesAllowed: args.rolesAllowed  } },
+          { $set: { name: args.name } },
           { new: true } //returns new document else will return document before update
         ).exec();
       } catch (err) {
