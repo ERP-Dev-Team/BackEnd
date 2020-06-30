@@ -591,7 +591,7 @@ module.exports = buildSchema(`
         deleteProject(_id:ID!): Project!,
 
         createCamp(campInput: CampInput): Camp!,
-        updateCamp(_id: ID!, name: String,project: String, status: String,startDate: String, endDate: String): Camp!,
+        updateCamp(_id: ID!, name: String,project: ID!, status: String,startDate: String, endDate: String): Camp!,
         deleteCamp(_id:ID!): Camp!,
 
         createDesignation(designationInput: DesignationInput): Designation!,
