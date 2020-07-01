@@ -564,6 +564,7 @@ module.exports = buildSchema(`
         offices:[Office!]
         suppliertypes:[SupplierType!]
         itemcategories:[ItemCategory!]
+        itemcategory(_id:ID!):ItemCategory
         worktypes:[WorkType!]
         suppliers:[Supplier!]
         items:[Item!]
@@ -571,6 +572,7 @@ module.exports = buildSchema(`
        
         modules:[Module!]
         users:[User!]
+        user(_id:ID!):User!
         caveds:[Caved!]
         permissions:[Permission]
         vehicletypes:[VehicleType!]

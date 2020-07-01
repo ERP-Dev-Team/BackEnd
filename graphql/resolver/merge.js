@@ -65,12 +65,16 @@ const camp = async (campId) => {
 const designation = async (designationId) => {
   try {
     const designation = await Designation.findOne({ _id: designationId });
-    return {
-      ...designation._doc,
-      _id: designation.id,
-      createdAt: convertISODateToTimestamp(designation._doc.createdAt),
-      updatedAt: convertISODateToTimestamp(designation._doc.updatedAt),
-    };
+    if (designation) {
+      return {
+        ...designation._doc,
+        _id: designation.id,
+        createdAt: convertISODateToTimestamp(designation._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(designation._doc.updatedAt),
+      };
+    } else {
+      return undefined;
+    }
   } catch (err) {
     throw err;
   }
