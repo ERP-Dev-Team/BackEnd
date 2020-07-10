@@ -12,6 +12,13 @@ module.exports = buildSchema(`
         updatedAt: String!
     }
 
+    type ProjectDashboard {
+        openProjects: Int!
+        pausedProjects: Int!
+        closedProjects: Int!
+        terminatedProjects: Int!
+    }
+
     type Camp {
         _id: ID!
         name: String!
@@ -548,6 +555,7 @@ module.exports = buildSchema(`
     type RootQuery{
         projects: [Project!]
         project(_id:ID!): Project!
+        projectDashboard: ProjectDashboard
 
         camps: [Camp!]
         camp(_id:ID!): Camp!

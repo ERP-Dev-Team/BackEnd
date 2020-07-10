@@ -16,6 +16,30 @@ module.exports = {
       throw err;
     }
   },
+  projectDashboard: async () => {
+    var openProjects = 0;
+    var closedProjects = 0;
+    var pausedProjects = 0;
+    var terminatedProjects = 0;
+    try{
+      openProjects = await Project.find({status:"Open"}).count();
+      closedProjects = await Project.find({status:"Closed"}).count();
+      pausedProjects = await Project.find({status:"Paused"}).count();
+      terminatedProjects = await Project.find({status:"Terminated"}).count();
+    }catch(err){
+    }
+
+    try{
+      return {
+        openProjects: openProjects,
+        closedProjects: closedProjects,
+        pausedProjects: pausedProjects,
+        terminatedProjects: terminatedProjects,
+      };
+    }catch(err){
+      throw err;
+    }
+  },
   project: async (args) => {
     try {
       const project = await Project.findOne({ _id: args._id });

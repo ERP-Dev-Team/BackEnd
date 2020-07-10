@@ -7,14 +7,12 @@ const graphQlSchema = require("./graphql/schema/index");
 const graphQlResolvers = require("./graphql/resolver/index");
 const isAuth = require("./middleware/isAuth");
 const cors = require("cors");
-const { formatError, FormatError } = require("./graphql/errors/index");
 const Module = require("./models/module");
 const Caved = require("./models/caved");
 const User = require("./models/user");
 const Role = require("./models/role");
 const bcrypt = require("bcrypt");
 const { transformModule } = require("./graphql/resolver/merge");
-const errorName = formatError.errorName;
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -25,10 +23,6 @@ app.use(
     schema: graphQlSchema,
     rootValue: graphQlResolvers,
     graphiql: true,
-    context: { errorName },
-    formatError: (err) => {
-      return formatError.getError(err);
-    },
   })
 );
 
