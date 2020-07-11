@@ -8,9 +8,15 @@ pipeline {
       }
     }
 
-    stage('curren') {
+    stage('install dependencies') {
       steps {
-        pwd()
+        bat 'npm install'
+      }
+    }
+
+    stage('deploy') {
+      steps {
+        bat 'npm start'
       }
     }
 
