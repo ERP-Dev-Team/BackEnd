@@ -62,6 +62,7 @@ module.exports = {
               name: args.name,
               status: args.status,
               project: args.project,
+              address: args.address,
               startDate: args.startDate,
               endDate: args.endDate,
             },
