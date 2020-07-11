@@ -1,15 +1,16 @@
 pipeline {
   agent any
   stages {
-    stage('Build') {
+    stage('git clone') {
       steps {
-        sh 'npm install'
+        git(branch: 'master', url: 'https://github.com/ERP-Dev-Team/BackEnd.git')
+        bat 'cd BackEnd'
       }
     }
 
-    stage('Deploy') {
+    stage('curren') {
       steps {
-        sh 'npm start'
+        pwd()
       }
     }
 
