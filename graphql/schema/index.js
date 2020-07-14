@@ -460,6 +460,46 @@ module.exports = buildSchema(`
         campAllowed: [ID!]
     }
 
+    input UserEditInput {
+        _id: ID!
+        firstName: String!
+        lastName: String
+        email: String
+        phone1: String
+        phone2: String
+        phoneIMEI: String
+        address1: String
+        address2: String
+        city: String
+        state: String
+        country: String
+        zipcode: String
+        joiningPlace: String
+        joiningDate: String
+        dateOfBirth: String
+        qualification: String
+        salary: String
+        batta: String
+        salaryEffectiveDate: String
+        salaryOld: String
+        battaOld: String
+        loginAllowed: Boolean
+        refPerson: String
+        refPersonPhone: String
+        refPersonAddress: String
+        IMEIAllowed: Boolean
+        bankAccountNumber: String
+        bankName: String
+        bankBranchName: String
+        bankBranchCity: String
+        bankIIFSCCode: String
+        bankAccountHolderName: String
+        designation: ID
+        rolesAllowed: [ID!]
+        modulesAllowed: [ID!]
+        campAllowed: [ID!]
+    }
+
     input CavedInput {
         create: [ID!]!
         approval: [ID!]
@@ -639,7 +679,7 @@ module.exports = buildSchema(`
         updateModule(_id: ID!, name:String): Module,
 
         createUser(userInput: UserInput): User,
-        updateUser(_id:ID!, firstName: String!, lastName: String, email: String, phone1:String, phone2: String, phoneIMEI:String, address1: String, address2: String, city: String, state: String, country: String, zipcode: String, joiningPlace: String, joiningDate: String, dateOfBirth: String, qualification: String, salary: String, batta: String, salaryEffectiveDate: String, salaryOld: String, battaOld: String, loginAllowed: Boolean, refPerson: String, refPersonPhone: String, refPersonAddress: String, IMEIAllowed: Boolean,bankAccountNumber: String,bankName: String, bankBranchName: String, bankBranchCity: String, bankIIFSCCode: String, bankAccountHolderName: String, designation:ID, rolesAllowed:[ID!],modulesAllowed:[ID!],campAllowed:[ID!]): User,
+        updateUser(userEditInput: UserEditInput): User,
 
         createCaved(cavedInput: CavedInput): Caved,
         updateCaved(_id:ID!,create: [ID!]!, approval: [ID!], view: [ID!]!, edit: [ID!], delete:[ID!]): Caved
