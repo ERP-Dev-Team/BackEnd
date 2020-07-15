@@ -190,6 +190,7 @@ module.exports = buildSchema(`
         token: String!
         tokenExpiration: Int!
         modulesAllowed: [Module!]
+        userModuleObjects: [UserModuleObject]
     }
 
     type Caved {
@@ -322,6 +323,16 @@ module.exports = buildSchema(`
         approvalsNeeded: [Approval!]
         createdAt: String!
         updatedAt: String!
+    }
+
+    type UserModuleObject {
+        _id: ID!
+        name: String!
+        create: Boolean!
+        edit: Boolean!
+        view: Boolean!
+        delete: Boolean!
+        approval: Boolean!
     }
 
     input ProjectInput {
