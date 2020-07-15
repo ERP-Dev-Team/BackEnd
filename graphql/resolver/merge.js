@@ -15,7 +15,9 @@ const Approval = require("../../models/approval");
 const mmRequisition = require("../../models/mmrequisition");
 const Supplier = require("../../models/supplier");
 const mmInternalIndent = require("../../models/mminternalindent");
+const { createHashmap } = require("../../helper/util");
 const { convertISODateToTimestamp } = require("../../helper/timestamp");
+const { db } = require("../../models/project");
 
 const project = async (projectId) => {
   try {
@@ -641,17 +643,98 @@ const transformmmPurchaseOrder = (mmPurchaseOrder) => {
   };
 };
 
-const transformAuthData = (
+const transformAuthDataNew = async (
+  userName,
+  modulesAllowed) => {
+  var UserModuleObjects = [];
+  const user = await User.findOne({ userName: userName });
+  const userRoleIds = user._doc.rolesAllowed;
+  const modules = await Module.find({ _id: { $in: modulesAllowed } });
+  for (var i = 0; i < modules.length; i++) {
+    var moduleCaved = await Caved.findOne({ _id: modules[i].caved });
+    var dbRolesAllowedToCreate = moduleCaved.create;
+    var isCreateAllowed = false;
+    dbRolesAllowedToCreate.forEach((dbRole) => {
+      userRoleIds.forEach((userRole) => {
+        if (dbRole + "" === userRole + "") {
+          isCreateAllowed = true;
+        }
+      })
+    });
+
+    var dbRolesAllowedToEdit = moduleCaved.edit;
+    var isEditAllowed = false;
+    dbRolesAllowedToEdit.forEach((dbRole) => {
+      userRoleIds.forEach((userRole) => {
+        if (dbRole + "" === userRole + "") {
+          isEditAllowed = true;
+        }
+      })
+    });
+
+    var dbRolesAllowedToView = moduleCaved.view;
+    var isViewAllowed = false;
+    dbRolesAllowedToView.forEach((dbRole) => {
+      userRoleIds.forEach((userRole) => {
+        if (dbRole + "" === userRole + "") {
+          isViewAllowed = true;
+        }
+      })
+    });
+
+    var dbRolesAllowedToDelete = moduleCaved.delete;
+    var isDeleteAllowed = false;
+    dbRolesAllowedToDelete.forEach((dbRole) => {
+      userRoleIds.forEach((userRole) => {
+        if (dbRole + "" === userRole + "") {
+          isDeleteAllowed = true;
+        }
+      })
+    });
+
+    var dbRolesAllowedToApproval = moduleCaved.approval;
+    var isApprovalAllowed = false;
+    dbRolesAllowedToApproval.forEach((dbRole) => {
+      userRoleIds.forEach((userRole) => {
+        if (dbRole + "" === userRole + "") {
+          isApprovalAllowed = true;
+        }
+      })
+    });
+
+
+    var UserModuleObject = {
+      _id: modules[i]._id,
+      name: modules[i].name,
+      create: isCreateAllowed,
+      edit: isEditAllowed,
+      view: isViewAllowed,
+      delete: isDeleteAllowed,
+      approval: isApprovalAllowed,
+    };
+    //console.log(UserModuleObject);
+
+    UserModuleObjects.push(UserModuleObject);
+  }
+
+  return UserModuleObjects;
+
+}
+
+const transformAuthData = async (
   userName,
   token,
   tokenExpiration,
   modulesAllowed
 ) => {
+  var res = await transformAuthDataNew(userName, modulesAllowed);
+
   return {
     userName: userName,
     token: token,
     tokenExpiration: tokenExpiration,
     modulesAllowed: imodules.bind(this, modulesAllowed),
+    userModuleObjects: res,
   };
 };
 

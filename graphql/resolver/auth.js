@@ -27,6 +27,6 @@ module.exports = {
         expiresIn: "1h",
       }
     );
-    return transformAuthData(user.userName, token, 1, user.modulesAllowed);
+    return await transformAuthData(user.userName, token, 1, user.modulesAllowed);
   },
 };
