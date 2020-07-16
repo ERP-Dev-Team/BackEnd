@@ -512,9 +512,18 @@ module.exports = buildSchema(`
     }
 
     input CavedInput {
-        create: [ID!]!
+        create: [ID!]
         approval: [ID!]
-        view: [ID!]!
+        view: [ID!]
+        edit: [ID!]
+        delete: [ID!]
+    }
+
+    input CavedEditInput {
+        _id:  ID!
+        create: [ID!]
+        approval: [ID!]
+        view: [ID!]
         edit: [ID!]
         delete: [ID!]
     }
@@ -693,7 +702,7 @@ module.exports = buildSchema(`
         updateUser(userEditInput: UserEditInput): User,
 
         createCaved(cavedInput: CavedInput): Caved,
-        updateCaved(_id:ID!,create: [ID!]!, approval: [ID!], view: [ID!]!, edit: [ID!], delete:[ID!]): Caved
+        updateCaved(cavedEditInput: CavedEditInput): Caved
     
         createPermission(permissionInput: PermissionInput): Permission,
 
