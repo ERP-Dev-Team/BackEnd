@@ -180,7 +180,7 @@ module.exports = buildSchema(`
         designation: Designation
         rolesAllowed: [Role!]
         modulesAllowed: [Module!]
-        campAllowed: [Camp!]
+        campsAllowed: [Camp!]
         createdAt: String!
         updatedAt: String!
     }
@@ -468,7 +468,7 @@ module.exports = buildSchema(`
         designation: ID
         rolesAllowed: [ID!]
         modulesAllowed: [ID!]
-        campAllowed: [ID!]
+        campsAllowed: [ID!]
     }
 
     input UserEditInput {
@@ -508,7 +508,7 @@ module.exports = buildSchema(`
         designation: ID
         rolesAllowed: [ID!]
         modulesAllowed: [ID!]
-        campAllowed: [ID!]
+        campsAllowed: [ID!]
     }
 
     input CavedInput {
@@ -639,9 +639,11 @@ module.exports = buildSchema(`
         item(_id:ID!):Item!
        
         modules:[Module!]
+        getModuleCavedById(_id:ID!):Caved!
         users:[User!]
         user(_id:ID!):User!
         caveds:[Caved!]
+        caved(_id:ID!):Caved!
         permissions:[Permission]
         vehicletypes:[VehicleType!]
         vehicles:[Vehicle!]

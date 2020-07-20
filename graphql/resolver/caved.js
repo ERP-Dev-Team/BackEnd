@@ -14,6 +14,14 @@ module.exports = {
       throw err;
     }
   },
+  caved: async (args) => {
+    try {
+      const caved = await Caved.findById(args._id);
+      return transformCaved(caved);
+    } catch (err) {
+      throw err;
+    }
+  },
   createCaved: async (args, req) => {
     try {
       const caved = new Caved({

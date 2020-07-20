@@ -1,7 +1,7 @@
 const Module = require("../../models/module");
 const Caved = require("../../models/caved");
 
-const { transformModule } = require("./merge");
+const { transformModule,transformCaved } = require("./merge");
 
 module.exports = {
   modules: async () => {
@@ -14,6 +14,23 @@ module.exports = {
         return transformModule(module);
       });
     } catch (err) {
+      throw err;
+    }
+  },
+  getModuleCavedById: async (args) => {
+    try {
+      const module = await Module.findById(args._id);
+      if(module){
+        const caved = await Caved.findById(module._doc.caved);
+        if(caved){
+          return transformCaved(caved);
+        }else{
+          throw new Error("Caved not found");  
+        }
+      }else{
+        throw new Error("Module not found");
+      }
+    }catch(err){
       throw err;
     }
   },

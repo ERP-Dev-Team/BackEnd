@@ -132,7 +132,7 @@ module.exports = {
               designation: args.userEditInput.designation,
               rolesAllowed: args.userEditInput.rolesAllowed,
               modulesAllowed: args.userEditInput.modulesAllowed,
-              campAllowed: args.userEditInput.campsAllowed,
+              campsAllowed: args.userEditInput.campsAllowed,
             },
           },
           { new: true } //returns new document else will return document before update
