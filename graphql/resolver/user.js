@@ -94,7 +94,7 @@ module.exports = {
       let userUpdated;
       try {
         userUpdated = await User.findOneAndUpdate(
-          { _id: args.userEditInput._id },
+          { _id: args._id },
           {
             $set: {
               firstName: args.userEditInput.firstName,

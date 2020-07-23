@@ -472,7 +472,7 @@ module.exports = buildSchema(`
     }
 
     input UserEditInput {
-        _id: ID!
+        userName: String!
         firstName: String!
         lastName: String
         email: String
@@ -495,6 +495,8 @@ module.exports = buildSchema(`
         salaryOld: String
         battaOld: String
         loginAllowed: Boolean
+        lastLogin: String
+        lastLoginDevice: String
         refPerson: String
         refPersonPhone: String
         refPersonAddress: String
@@ -701,7 +703,7 @@ module.exports = buildSchema(`
         updateModule(_id: ID!, name:String): Module,
 
         createUser(userInput: UserInput): User,
-        updateUser(userEditInput: UserEditInput): User,
+        updateUser(_id: ID!, userEditInput: UserEditInput): User,
 
         createCaved(cavedInput: CavedInput): Caved,
         updateCaved(cavedEditInput: CavedEditInput): Caved
