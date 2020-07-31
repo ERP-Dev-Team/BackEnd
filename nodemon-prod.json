@@ -1,0 +1,8 @@
+{
+    "env": {
+        "MONGO_USER": "erpadmin",
+        "MONGO_PASSWORD": "8977119266",
+        "MONGO_DB": "erp",
+        "MONGO_ENDPOINT": "scpl.opcl.net:27017"
+    }
+}
