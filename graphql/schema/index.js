@@ -335,6 +335,48 @@ module.exports = buildSchema(`
         approval: Boolean!
     }
 
+    type Device {
+        _id: ID!
+        make: String
+        model: String
+        OS: String
+        upTime: String
+        cellNumber: String
+        IMEI: String!
+        userAssigned: User
+        lastUsedUser: User
+        networkName: String
+        networkType: String
+        networkStrength: String
+        batteryPercentage: String
+        lastKnownLatitude: String
+        lastKnownLongitude: String
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type Attendance {
+        _id: ID!
+        user: User!
+        camp: Camp
+        loginTimestamp: String
+        loginPhoto: String
+        logoutPhoto: String
+        shift: String
+        logoutTimestamp: String
+        batta: String
+        workType: WorkType
+        loginLatitude: String
+        loginLongitude: String
+        logoutLatitude: String
+        logoutLongitude: String
+        quantity: String
+        device: Device
+        approvalsNeeded: [Approval]
+        createdAt: String!
+        updatedAt: String!
+    }
+
     input ProjectInput {
         name: String!
         status: String!
@@ -614,6 +656,65 @@ module.exports = buildSchema(`
         approvalsNeeded: [ID!]
     }
 
+    input DeviceInput {
+        make: String
+        model: String
+        cellNumber: String
+        IMEI: String!
+        userAssigned: ID
+    }
+
+    input EditDeviceInput {
+        make: String
+        model: String
+        OS: String
+        upTime: String
+        cellNumber: String
+        lastUsedUser: ID
+        networkName: String
+        networkType: String
+        networkStrength: String
+        batteryPercentage: String
+        lastKnownLatitude: String
+        lastKnownLongitude: String
+    }
+
+    input AttendanceInput {
+        user: ID!
+        camp: ID
+        loginTimestamp: String
+        loginPhoto: String
+        logoutPhoto: String
+        shift: String
+        logoutTimestamp: String
+        batta: String
+        workType: WorkType
+        loginLatitude: String
+        loginLongitude: String
+        logoutLatitude: String
+        logoutLongitude: String
+        quantity: String
+        device: ID
+        approvalsNeeded: [ID]
+    }
+
+    input EditAttendanceInput {
+        camp: ID
+        loginTimestamp: String
+        loginPhoto: String
+        logoutPhoto: String
+        shift: String
+        logoutTimestamp: String
+        batta: String
+        workType: WorkType
+        loginLatitude: String
+        loginLongitude: String
+        logoutLatitude: String
+        logoutLongitude: String
+        quantity: String
+        device: ID
+    }
+
     type RootQuery{
         projects: [Project!]
         project(_id:ID!): Project!
@@ -655,6 +756,9 @@ module.exports = buildSchema(`
         mminternalindents:[mmInternalIndent!]
         counters: [Counter!]
         mmpurchaseorders: [mmPurchaseOrder!]
+
+        devices: [Device!]
+        device(_id:ID!): Device
 
         login(userName: String!, password: String!): AuthData!
     }
@@ -736,6 +840,9 @@ module.exports = buildSchema(`
 
         createmmPurchaseOrder(mmpurchaseOrderInput:mmPurchaseOrderInput):mmPurchaseOrder,
         updatemmPurchaseOrder(_id:ID!,status: String!,camp: ID!, items:[ID!],supplier:ID):mmPurchaseOrder,
+
+        createDevice(deviceInput: DeviceInput): Device,
+        updateDevice(_id:ID!,editDeviceInput:EditDeviceInput): Device
     }
 
     schema{
