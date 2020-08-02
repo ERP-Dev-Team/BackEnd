@@ -36,13 +36,16 @@ const project = async (projectId) => {
 };
 const worktype = async (workTypeId) => {
   try {
-    const workType = await Project.findOne({ _id: workTypeId });
-    return {
-      ...workType._doc,
-      _id: workType.id,
-      createdAt: convertISODateToTimestamp(workType._doc.createdAt),
-      updatedAt: convertISODateToTimestamp(workType._doc.updatedAt),
-    };
+    const workType = await WorkType.findOne({ _id: workTypeId });
+    if (workType) {
+      return {
+        ...workType._doc,
+        _id: workType.id,
+        unit: unit.bind(this, workType._doc.unit),
+        createdAt: convertISODateToTimestamp(workType._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(workType._doc.updatedAt),
+      };
+    }
   } catch (err) {
     throw err;
   }
@@ -793,7 +796,9 @@ const transformAttendance = (attendance) => {
       this,
       attendance._doc.approvalsNeeded
     ),
-    workType: worktype.bind(this, attendance._dov.workType),
+    user:user.bind(this,attendance._doc.user),
+    camp:camp.bind(this,attendance._doc.camp),
+    workType: worktype.bind(this, attendance._doc.workType),
     createdAt: convertISODateToTimestamp(attendance._doc.createdAt),
     updatedAt: convertISODateToTimestamp(attendance._doc.updatedAt),
   };

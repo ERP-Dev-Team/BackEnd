@@ -14,7 +14,7 @@ module.exports = {
             throw err;
         }
     },
-    createAttendnace: async (args) => {
+    createAttendance: async (args) => {
         try {
             const attendance = new Attendance({
                 user: args.attendanceInput.user,

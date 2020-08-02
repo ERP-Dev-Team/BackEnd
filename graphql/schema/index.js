@@ -688,7 +688,7 @@ module.exports = buildSchema(`
         shift: String
         logoutTimestamp: String
         batta: String
-        workType: WorkType
+        workType: ID
         loginLatitude: String
         loginLongitude: String
         logoutLatitude: String
@@ -706,7 +706,7 @@ module.exports = buildSchema(`
         shift: String
         logoutTimestamp: String
         batta: String
-        workType: WorkType
+        workType: ID
         loginLatitude: String
         loginLongitude: String
         logoutLatitude: String
@@ -759,6 +759,8 @@ module.exports = buildSchema(`
 
         devices: [Device!]
         device(_id:ID!): Device
+
+        attendance(_id:ID!):Attendance
 
         login(userName: String!, password: String!): AuthData!
     }
@@ -842,7 +844,10 @@ module.exports = buildSchema(`
         updatemmPurchaseOrder(_id:ID!,status: String!,camp: ID!, items:[ID!],supplier:ID):mmPurchaseOrder,
 
         createDevice(deviceInput: DeviceInput): Device,
-        updateDevice(_id:ID!,editDeviceInput:EditDeviceInput): Device
+        updateDevice(_id:ID!,editDeviceInput:EditDeviceInput): Device,
+
+        createAttendance(attendanceInput:AttendanceInput): Attendance,
+        updateAttendance(_id:ID!,editAttendanceInput:EditAttendanceInput): Attendance,
     }
 
     schema{
