@@ -25,13 +25,13 @@ app.use(isAuth);
 app.post('/attendance/upload', upload.single('photo'), function (req, res, next) {
   if (req.file.path) {
     var releativePath = extractAttendnaceRelativePath(req.file.path);
-    var photoPath = process.env.API_ENDPOINT + '/attendance/image/' + releativePath;
+    var photoPath = '/erp/image/' + releativePath;
     res.status(200).json({ photoLocation: photoPath }).end();
   } else {
     res.status(500).end();
   }
 })
-app.use('/attendance/image', express.static(process.env.ATTENDANCE_PHOTO_PATH));
+app.use('/erp/image', express.static(process.env.ATTENDANCE_PHOTO_PATH));
 app.use(
   "/api",
   graphQlHttp({

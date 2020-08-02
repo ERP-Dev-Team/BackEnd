@@ -17,7 +17,7 @@ function extractAttendnaceRelativePath(path) {
         var slugs = path.split('/');
         if (slugs) {
             for (var i = 0; i < slugs.length; i++) {
-                if (slugs[i] === 'attendance') {
+                if (slugs[i] === 'erp') {
                     if (slugs[i + 1] === 'images') {
                         return slugs[i + 2] + '/' + slugs[i + 3];
                     }

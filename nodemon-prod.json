@@ -5,6 +5,6 @@
         "MONGO_DB": "erp",
         "MONGO_ENDPOINT": "scpl.opcl.net:27017",
         "API_ENDPOINT": "scpl.opcl.net:3000",
-        "ATTENDANCE_PHOTO_PATH": "/Users/vamsi/Documents/NodeJS Projects/attendance/images/"
+        "ATTENDANCE_PHOTO_PATH": "/Users/vamsi/Documents/NodeJS Projects/erp/images/"
     }
 }
