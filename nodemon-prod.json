@@ -3,6 +3,8 @@
         "MONGO_USER": "erpadmin",
         "MONGO_PASSWORD": "8977119266",
         "MONGO_DB": "erp",
-        "MONGO_ENDPOINT": "scpl.opcl.net:27017"
+        "MONGO_ENDPOINT": "scpl.opcl.net:27017",
+        "API_ENDPOINT": "scpl.opcl.net:3000",
+        "ATTENDANCE_PHOTO_PATH": "/Users/vamsi/Documents/NodeJS Projects/attendance/images/"
     }
 }
