@@ -15,6 +15,7 @@ const bcrypt = require("bcrypt");
 var multer = require('multer');
 const path = require('path');
 const { storageEngine } = require('./helper/storageEngine');
+const { extractAttendnaceRelativePath } = require('./helper/util');
 var upload = multer({ storage: storageEngine });
 const { transformModule } = require("./graphql/resolver/merge");
 
@@ -22,11 +23,15 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(isAuth);
 app.post('/attendance/upload', upload.single('photo'), function (req, res, next) {
-  // req.files is array of `photos` files
-  // req.body will contain the text fields, if there were any
-  res.status(200).send();
+  if (req.file.path) {
+    var releativePath = extractAttendnaceRelativePath(req.file.path);
+    var photoPath = process.env.API_ENDPOINT + '/attendance/image/' + releativePath;
+    res.status(200).json({ photoLocation: photoPath }).end();
+  } else {
+    res.status(500).end();
+  }
 })
-app.use('/attendance/images', express.static(process.env.ATTENDANCE_PHOTO_PATH));
+app.use('/attendance/image', express.static(process.env.ATTENDANCE_PHOTO_PATH));
 app.use(
   "/api",
   graphQlHttp({
