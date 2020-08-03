@@ -15,6 +15,8 @@ const Approval = require("../../models/approval");
 const mmRequisition = require("../../models/mmrequisition");
 const Supplier = require("../../models/supplier");
 const mmInternalIndent = require("../../models/mminternalindent");
+const Device = require("../../models/device");
+const WorkType = require("../../models/worktype");
 const { createHashmap } = require("../../helper/util");
 const { convertISODateToTimestamp } = require("../../helper/timestamp");
 const { db } = require("../../models/project");
@@ -28,6 +30,22 @@ const project = async (projectId) => {
       createdAt: convertISODateToTimestamp(project._doc.createdAt),
       updatedAt: convertISODateToTimestamp(project._doc.updatedAt),
     };
+  } catch (err) {
+    throw err;
+  }
+};
+const worktype = async (workTypeId) => {
+  try {
+    const workType = await WorkType.findOne({ _id: workTypeId });
+    if (workType) {
+      return {
+        ...workType._doc,
+        _id: workType.id,
+        unit: unit.bind(this, workType._doc.unit),
+        createdAt: convertISODateToTimestamp(workType._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(workType._doc.updatedAt),
+      };
+    }
   } catch (err) {
     throw err;
   }
@@ -280,16 +298,36 @@ const approval = async (approvalId) => {
 const user = async (userId) => {
   try {
     const user = await User.findOne({ _id: userId });
-    return {
-      ...user._doc,
-      _id: user.id,
-      designation: designation.bind(this, user._doc.designation),
-      rolesAllowed: roles.bind(this, user._doc.rolesAllowed),
-      modulesAllowed: imodules.bind(this, user._doc.modulesAllowed),
-      campsAllowed: camps.bind(this, user._doc.campsAllowed),
-      createdAt: convertISODateToTimestamp(user._doc.createdAt),
-      updatedAt: convertISODateToTimestamp(user._doc.updatedAt),
-    };
+    if (user) {
+      return {
+        ...user._doc,
+        _id: user.id,
+        designation: designation.bind(this, user._doc.designation),
+        rolesAllowed: roles.bind(this, user._doc.rolesAllowed),
+        modulesAllowed: imodules.bind(this, user._doc.modulesAllowed),
+        campsAllowed: camps.bind(this, user._doc.campsAllowed),
+        createdAt: convertISODateToTimestamp(user._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(user._doc.updatedAt),
+      };
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+const device = async (deviceId) => {
+  try {
+    const device = await Device.findOne({ _id: deviceId });
+    if (device) {
+      return {
+        ...device._doc,
+        _id: device.id,
+        userAssigned: user.bind(this, device._doc.userAssigned),
+        lastUsedUser: user.bind(this, device._doc.lastUsedUser),
+        createdAt: convertISODateToTimestamp(device._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(device._doc.updatedAt),
+      };
+    }
   } catch (err) {
     throw err;
   }
@@ -738,6 +776,34 @@ const transformAuthData = async (
   };
 };
 
+const transformDevice = (device) => {
+  return {
+    ...device._doc,
+    _id: device.id,
+    userAssigned: user.bind(this, device._doc.userAssigned),
+    lastUsedUser: user.bind(this, device._doc.lastUsedUser),
+    createdAt: convertISODateToTimestamp(device._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(device._doc.updatedAt),
+  };
+};
+
+const transformAttendance = (attendance) => {
+  return {
+    ...attendance._doc,
+    _id: attendance.id,
+    device: device.bind(this, attendance._doc.device),
+    approvalsNeeded: approvals.bind(
+      this,
+      attendance._doc.approvalsNeeded
+    ),
+    user:user.bind(this,attendance._doc.user),
+    camp:camp.bind(this,attendance._doc.camp),
+    workType: worktype.bind(this, attendance._doc.workType),
+    createdAt: convertISODateToTimestamp(attendance._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(attendance._doc.updatedAt),
+  };
+};
+
 exports.transformProject = transformProject;
 exports.transformCamp = transformCamp;
 exports.transformDesignation = transformDesignation;
@@ -763,3 +829,5 @@ exports.transformmmRequisition = transformmmRequisition;
 exports.transformmmInternalIndent = transformmmInternalIndent;
 exports.transformmmPurchaseOrder = transformmmPurchaseOrder;
 exports.transformAuthData = transformAuthData;
+exports.transformDevice = transformDevice;
+exports.transformAttendance = transformAttendance;
