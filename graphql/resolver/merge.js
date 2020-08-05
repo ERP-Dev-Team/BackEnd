@@ -796,11 +796,27 @@ const transformAttendance = (attendance) => {
       this,
       attendance._doc.approvalsNeeded
     ),
-    user:user.bind(this,attendance._doc.user),
-    camp:camp.bind(this,attendance._doc.camp),
+    user: user.bind(this, attendance._doc.user),
+    camp: camp.bind(this, attendance._doc.camp),
     workType: worktype.bind(this, attendance._doc.workType),
     createdAt: convertISODateToTimestamp(attendance._doc.createdAt),
     updatedAt: convertISODateToTimestamp(attendance._doc.updatedAt),
+  };
+};
+
+const transformDPR = (dpr) => {
+  return {
+    ...dpr._doc,
+    _id: dpr.id,
+    approvalsNeeded: approvals.bind(
+      this,
+      dpr._doc.approvalsNeeded
+    ),
+    createdBy: user.bind(this, dpr._doc.createdBy),
+    camp: camp.bind(this, dpr._doc.camp),
+    workType: worktype.bind(this, dpr._doc.workType),
+    createdAt: convertISODateToTimestamp(dpr._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(dpr._doc.updatedAt),
   };
 };
 
@@ -831,3 +847,4 @@ exports.transformmmPurchaseOrder = transformmmPurchaseOrder;
 exports.transformAuthData = transformAuthData;
 exports.transformDevice = transformDevice;
 exports.transformAttendance = transformAttendance;
+exports.transformDPR = transformDPR;

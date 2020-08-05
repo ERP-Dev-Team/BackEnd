@@ -26,6 +26,7 @@ const counterResolver = require("./counter");
 const mmPurchaseOrderResolver = require("./mmpurchaseorder");
 const deviceResolver = require("./device");
 const attendanceResolver = require("./attendance");
+const dprResolver = require("./dpr");
 
 const rootResolver = {
   ...projectResolver,
@@ -56,6 +57,7 @@ const rootResolver = {
   ...mmPurchaseOrderResolver,
   ...attendanceResolver,
   ...deviceResolver,
+  ...dprResolver,
 };
 
 module.exports = rootResolver;

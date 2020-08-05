@@ -377,6 +377,24 @@ module.exports = buildSchema(`
         updatedAt: String!
     }
 
+    type DPR {
+        _id: ID!
+        camp: Camp
+        workType: WorkType
+        workDescription: String
+        length: String
+        breadth: String
+        height: String
+        cummulative: String
+        createdBy: User
+        photoLocation: String
+        locationLatitude: String
+        locationLongitude: String
+        approvalsNeeded: [Approval]
+        createdAt: String!
+        updatedAt: String!
+    }
+
     input ProjectInput {
         name: String!
         status: String!
@@ -715,6 +733,35 @@ module.exports = buildSchema(`
         device: ID
     }
 
+    input DPRInput {
+        camp: ID
+        workType: ID
+        workDescription: String
+        length: String
+        breadth: String
+        height: String
+        cummulative: String
+        createdBy: ID
+        photoLocation: String
+        locationLatitude: String
+        locationLongitude: String
+        approvalsNeeded: [ID]
+    }
+
+    input DPREditInput{
+        camp: ID
+        workType: ID
+        workDescription: String
+        length: String
+        breadth: String
+        height: String
+        cummulative: String
+        createdBy: ID
+        photoLocation: String
+        locationLatitude: String
+        locationLongitude: String
+    }
+
     type RootQuery{
         projects: [Project!]
         project(_id:ID!): Project!
@@ -761,6 +808,11 @@ module.exports = buildSchema(`
         device(_id:ID!): Device
 
         attendance(_id:ID!):Attendance
+
+        dprs: [DPR]
+        dpr(_id:ID): DPR
+
+        approval(_id:ID!): Approval
 
         login(userName: String!, password: String!): AuthData!
     }
@@ -848,6 +900,10 @@ module.exports = buildSchema(`
 
         createAttendance(attendanceInput:AttendanceInput): Attendance,
         updateAttendance(_id:ID!,editAttendanceInput:EditAttendanceInput): Attendance,
+
+        createDPR(dprInput:DPRInput):DPR,
+        updateDPR(_id:ID!,dprEditInput:DPREditInput): DPR,
+        deleteDPR(_id:ID):DPR,
     }
 
     schema{
