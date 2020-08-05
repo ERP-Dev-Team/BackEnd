@@ -32,7 +32,7 @@ module.exports = {
                 logoutLongitude: args.attendanceInput.logoutLongitude,
                 quantity: args.attendanceInput.loginPhoto,
                 device: args.attendanceInput.device,
-                approval: args.attendanceInput.approval,
+                approvalsNeeded: args.attendanceInput.approvalsNeeded,
             });
 
             let createdAttendance;
