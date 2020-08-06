@@ -17,9 +17,9 @@ const Supplier = require("../../models/supplier");
 const mmInternalIndent = require("../../models/mminternalindent");
 const Device = require("../../models/device");
 const WorkType = require("../../models/worktype");
-const { createHashmap } = require("../../helper/util");
+const Labour = require("../../models/labour");
 const { convertISODateToTimestamp } = require("../../helper/timestamp");
-const { db } = require("../../models/project");
+
 
 const project = async (projectId) => {
   try {
@@ -820,6 +820,17 @@ const transformDPR = (dpr) => {
   };
 };
 
+const transformLabour = (labour) => {
+  return {
+    ...labour._doc,
+    _id: labour.id,
+    supplier: supplier.bind(this, labour._doc.supplier),
+    camp: camp.bind(this, labour._doc.camp),
+    createdAt: convertISODateToTimestamp(labour._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(labour._doc.updatedAt),
+  };
+};
+
 exports.transformProject = transformProject;
 exports.transformCamp = transformCamp;
 exports.transformDesignation = transformDesignation;
@@ -848,3 +859,4 @@ exports.transformAuthData = transformAuthData;
 exports.transformDevice = transformDevice;
 exports.transformAttendance = transformAttendance;
 exports.transformDPR = transformDPR;
+exports.transformLabour = transformLabour;
