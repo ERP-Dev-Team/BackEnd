@@ -97,7 +97,14 @@ async function initModules() {
     "DESIGNATION",
     "VEHICLE",
     "SUPPLIER",
-    "MMREQUISITION",
+    "MATERIAL MANAGEMENT REQUISITION",
+    "MATERIAL MANAGEMENT INTERNAL INDENT",
+    "MATERIAL MANAGEMENT PURCHASE ORDER",
+    "MATERIAL MANAGEMENT GOODS RECEIVED NOTE",
+    "DPR",
+    "LABOUR",
+    "NMR WORK",
+
   ];
   modulesList.forEach(async (moduleName) => {
     await createModule(moduleName);

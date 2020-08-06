@@ -16,6 +16,17 @@ module.exports = {
       throw err;
     }
   },
+  supplier: async (args) => {
+    try {
+      const supplier = await Supplier.findById(args._id);
+      if (!supplier) {
+        throw new Error('no supplier found');
+      }
+      return transformSupplier(supplier);
+    } catch (err) {
+      throw err;
+    }
+  },
   createSupplier: async (args) => {
     try {
       const supplier = new Supplier({
@@ -65,27 +76,27 @@ module.exports = {
         supplierUpdated = await Supplier.findOneAndUpdate(
           { _id: args._id },
           { $set: { 
-            name: args.name,
-            contactname: args.contactname,
-            email: args.email,
-            phone1: args.phone1,
-            address1: args.address1,
-            address2: args.address2,
-            city: args.city,
-            state:args.state,
-            country:args.country,
-            zipcode:args.zipcode,
-            panNumber:args.panNumber,
-            gstNumber: args.gstNumber,
-            cstNumber: args.cstNumber,
-            accountBankName: args.accountBankName,
-            accountBranchName: args.accountBranchName,
-            accountBranchCity: args.accountBranchCity,
-            accountNumber: args.accountNumber,
-            accountIIFSCCode: args.accountIIFSCCode,
-            accountHolderName: args.accountHolderName,
-            accountPaymentFavour: args.accountPaymentFavour,
-            supplierTypes: args.supplierTypes
+            name: args.supplierEditInput.name,
+            contactname: args.supplierEditInput.contactname,
+            email: args.supplierEditInput.email,
+            phone1: args.supplierEditInput.phone1,
+            address1: args.supplierEditInput.address1,
+            address2: args.supplierEditInput.address2,
+            city: args.supplierEditInput.city,
+            state:args.supplierEditInput.state,
+            country:args.supplierEditInput.country,
+            zipcode:args.supplierEditInput.zipcode,
+            panNumber:args.supplierEditInput.panNumber,
+            gstNumber: args.supplierEditInput.gstNumber,
+            cstNumber: args.supplierEditInput.cstNumber,
+            accountBankName: args.supplierEditInput.accountBankName,
+            accountBranchName: args.supplierEditInput.accountBranchName,
+            accountBranchCity: args.supplierEditInput.accountBranchCity,
+            accountNumber: args.supplierEditInput.accountNumber,
+            accountIIFSCCode: args.supplierEditInput.accountIIFSCCode,
+            accountHolderName: args.supplierEditInput.accountHolderName,
+            accountPaymentFavour: args.supplierEditInput.accountPaymentFavour,
+            supplierTypes: args.supplierEditInput.supplierTypes
             } },
           { new: true } //returns new document else will return document before update
         ).exec();

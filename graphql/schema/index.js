@@ -395,6 +395,17 @@ module.exports = buildSchema(`
         updatedAt: String!
     }
 
+    type Labour {
+        _id:ID!
+        name: String!
+        camp:Camp
+        idPhotoLocation: String
+        wage: Int
+        type: String
+        createdAt: String!
+        updatedAt: String!
+    }
+
     input ProjectInput {
         name: String!
         status: String!
@@ -762,6 +773,48 @@ module.exports = buildSchema(`
         locationLongitude: String
     }
 
+    input LabourInput {
+        supplier: ID!
+        name:String!
+        idPhotoLocation: String
+        camp: ID
+        wage: Int
+        type: String
+    }
+
+    input LabourEditInput {
+        name:String!
+        idPhotoLocation: String
+        camp: ID
+        wage: Int
+        type: String
+    }
+
+    input SupplierEditInput{
+        name:String
+        contactName:String
+        email:String
+        phone1:String
+        phone2:String
+        address1:String
+        address2: String
+        city: String
+        state: String
+        country:String
+        zipcode:String
+        panNumber:String
+        gstNumber:String
+        cstNumber:String
+        accountBankName:String
+        accountBranchName:String
+        accountBranchCity:String
+        accountNumber:String
+        accountIIFSCCode:String
+        accountHolderName:String
+        accountPaymentFavour:String
+        supplierTypes:[ID!]
+    }
+
     type RootQuery{
         projects: [Project!]
         project(_id:ID!): Project!
@@ -781,10 +834,12 @@ module.exports = buildSchema(`
 
         offices:[Office!]
         suppliertypes:[SupplierType!]
+        suppliertype(_id:ID!):SupplierType
         itemcategories:[ItemCategory!]
         itemcategory(_id:ID!):ItemCategory
         worktypes:[WorkType!]
         suppliers:[Supplier!]
+        supplier(_id:ID!):Supplier
         items:[Item!]
         item(_id:ID!):Item!
        
@@ -810,9 +865,12 @@ module.exports = buildSchema(`
         attendance(_id:ID!):Attendance
 
         dprs: [DPR]
-        dpr(_id:ID): DPR
+        dpr(_id:ID!): DPR
 
         approval(_id:ID!): Approval
+
+        labourers: [Labour]
+        labour(_id:ID!): Labour
 
         login(userName: String!, password: String!): AuthData!
     }
@@ -847,7 +905,7 @@ module.exports = buildSchema(`
         updateWorkType(_id: ID!, name:String, unit: ID): WorkType
 
         createSupplier(supplierInput: SupplierInput): Supplier,
-        updateSupplier(_id: ID!, name:String, contactName:String, email:String, phone1:String,phone2:String, address1:String, address2: String,city: String,state: String, country:String, zipcode:String, panNumber:String,gstNumber:String,cstNumber:String,accountBankName:String,accountBranchName:String,accountBranchCity:String,accountNumber:String,accountIIFSCCode:String,accountHolderName:String,accountPaymentFavour:String,supplierTypes:[ID!]): Supplier,
+        updateSupplier(_id: ID!,supplierEditInput:SupplierEditInput): Supplier,
 
         createItem(itemInput: ItemInput): Item,
         updateItem(_id: ID!, name:String, description: String, partNumber: String, unit:ID, hsnNumber: String, itemCode: String, itemCategory:ID): Item,
@@ -904,6 +962,11 @@ module.exports = buildSchema(`
         createDPR(dprInput:DPRInput):DPR,
         updateDPR(_id:ID!,dprEditInput:DPREditInput): DPR,
         deleteDPR(_id:ID):DPR,
+
+        createLabour(labourInput:LabourInput): Labour,
+        updateLabour(_id:ID!,labourEditInput: LabourEditInput): Labour,
+        deleteLabour(_id:ID): Labour,
+
     }
 
     schema{
