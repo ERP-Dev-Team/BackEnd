@@ -1891,7 +1891,7 @@
 							"mode": "graphql",
 							"graphql": {
 								"query": "mutation createWorkType($workTypeInput:WorkTypeInput){\n  createWorkType(workTypeInput:$workTypeInput){\n    _id,\n    name,\n    unit{name},\n    createdAt,\n    updatedAt\n  }\n}",
-								"variables": "{\n  \"workTypeInput\":  {\n    \"name\": \"GSB\",\n    \"unit\": \"5f28e34f4075c3797bd0360c\"\n  }\n}"
+								"variables": "{\n  \"workTypeInput\":  {\n    \"name\": \"GSB\",\n    \"unit\": \"5f2b9347b32ce6c81a785814\"\n  }\n}"
 							}
 						},
 						"url": {
@@ -1937,7 +1937,58 @@
 		},
 		{
 			"name": "nmrwork",
-			"item": [],
+			"item": [
+				{
+					"name": "create a nmrwork",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createNMRWork($nmrWorkInput:NMRWorkInput){\n  createNMRWork(nmrWorkInput:$nmrWorkInput){\n    _id,\n    supplier{_id,name},\n    workType{_id,name},\n    remark,\n    remark,\n    camp{_id,name},\n    labourInvolved{_id,name},\n    indentNumber,\n    status,\n    shift,\n    finalCost,\n    approvalsNeeded{_id,role{_id,name}},\n    createdAt,\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"nmrWorkInput\": {\n  \"supplier\": \"5f2cc1dfa8ff021cd46690bb\",\n    \"workType\": \"5f2cc1ffa8ff021cd46690bc\",\n    \"camp\": \"5f2b92f8b32ce6c81a78580c\",\n    \"labourInvolved\": [\"5f2cb4318fb33c136ecf81c6\"],\n    \"status\": \"PENDING\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a nmr work",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\n  nmrwork(_id:\"5f386b82f0a633140b6829f3\"){\n    _id,\n    supplier{name},\n    workType{name}\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
 			"protocolProfileBehavior": {}
 		},
 		{
@@ -2240,6 +2291,87 @@
 							"graphql": {
 								"query": "mutation updateLabout($labourId:ID!,$labourInput:LabourEditInput){\n  updateLabour(_id:$labourId,labourEditInput:$labourInput){\n    _id,\n    name,\n    camp{\n      _id,\n      name\n    },\n    idPhotoLocation,\n    wage,\n    type,\n    createdAt,\n    updatedAt\n  }\n  \n}",
 								"variables": "{\n  \"labourId\": \"5f2b739390c15718a6b47ccf\",\n  \"labourInput\": {\n    \"name\": \"LABOUR NAMEHERE\",\n    \"camp\": \"5f25a8357e39275f1ce90f1c\",\n    \"wage\": 600,\n    \"type\": \"MALE\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "labourWork",
+			"item": [
+				{
+					"name": "get a labourwork",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\n  labourwork(_id:\"5f2cb49c8fb33c136ecf81c7\"){\n     _id\n    quantity\n    labour {\n      name\n    }\n    loginPhoto\n    logoutPhoto\n    loginLatitude\n    loginLongitude\n    logoutLatitude\n    logoutLongitude\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create a labour work",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createLabourWork($labourWorkInput: LabourWorkInput) {\n  createLabourWork(labourWorkInput: $labourWorkInput) {\n    _id\n    quantity\n    labour {\n      name\n    }\n    loginPhoto\n    logoutPhoto\n    loginLatitude\n    loginLongitude\n    logoutLatitude\n    logoutLongitude\n    createdAt\n    updatedAt\n  }\n}\n",
+								"variables": "{\n  \"labourWorkInput\": {\n    \"quantity\": 100,\n  \"labour\": \"5f2cb4318fb33c136ecf81c6\"\n  \n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a labour work",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation{\n  deleteLabourWork(_id:\"5f2cb54fbca2e513f83164d5\")\n  {\n    _id,\n    quantity,\n    labour{name},\n    loginPhoto\n  }\n}\n",
+								"variables": ""
 							}
 						},
 						"url": {

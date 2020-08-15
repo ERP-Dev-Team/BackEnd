@@ -28,6 +28,8 @@ const deviceResolver = require("./device");
 const attendanceResolver = require("./attendance");
 const dprResolver = require("./dpr");
 const labourResolver = require("./labour");
+const labourWorkResolver = require("./labourwork");
+const nmrWorkResolver = require("./nmrwork");
 
 const rootResolver = {
   ...projectResolver,
@@ -60,6 +62,8 @@ const rootResolver = {
   ...deviceResolver,
   ...dprResolver,
   ...labourResolver,
+  ...labourWorkResolver,
+  ...nmrWorkResolver,
 };
 
 module.exports = rootResolver;

@@ -34,6 +34,38 @@ const project = async (projectId) => {
     throw err;
   }
 };
+const labour = async (labourId) => {
+  try {
+    const labour = await Labour.findOne({ _id: labourId });
+    return {
+      ...labour._doc,
+      _id: labour.id,
+      supplier: supplier.bind(this, labour._doc.supplier),
+      camp: camp.bind(this, labour._doc.camp),
+      createdAt: convertISODateToTimestamp(labour._doc.createdAt),
+      updatedAt: convertISODateToTimestamp(labour._doc.updatedAt),
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+const labourers = async (labourIds) => {
+  try {
+    const labourers = await Labour.find({ _id: labourIds });
+    return labourers.map((labour) => {
+      return {
+        ...labour._doc,
+        _id: labour.id,
+        supplier: supplier.bind(this, labour._doc.supplier),
+        camp: camp.bind(this, labour._doc.camp),
+        createdAt: convertISODateToTimestamp(labour._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(labour._doc.updatedAt),
+      };
+    });
+  } catch (err) {
+    throw err;
+  }
+};
 const worktype = async (workTypeId) => {
   try {
     const workType = await WorkType.findOne({ _id: workTypeId });
@@ -831,6 +863,34 @@ const transformLabour = (labour) => {
   };
 };
 
+const transformLabourWork = (labourWork) => {
+  return {
+    ...labourWork._doc,
+    _id: labourWork.id,
+    labour: labour.bind(this, labourWork._doc.labour),
+    createdAt: convertISODateToTimestamp(labourWork._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(labourWork._doc.updatedAt),
+  };
+};
+
+const transformNMRWork = (nmrWork) => {
+  return {
+    ...nmrWork._doc,
+    _id: nmrWork.id,
+    labour: labour.bind(this, nmrWork._doc.labour),
+    supplier: supplier.bind(this, nmrWork._doc.supplier),
+    workType: worktype.bind(this, nmrWork._doc.workType),
+    camp: camp.bind(this, nmrWork._doc.camp),
+    labourInvolved: labourers.bind(this, nmrWork._doc.labourInvolved),
+    approvalsNeeded: approvals.bind(
+      this,
+      nmrWork._doc.approvalsNeeded
+    ),
+    createdAt: convertISODateToTimestamp(nmrWork._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(nmrWork._doc.updatedAt),
+  };
+};
+
 exports.transformProject = transformProject;
 exports.transformCamp = transformCamp;
 exports.transformDesignation = transformDesignation;
@@ -860,3 +920,5 @@ exports.transformDevice = transformDevice;
 exports.transformAttendance = transformAttendance;
 exports.transformDPR = transformDPR;
 exports.transformLabour = transformLabour;
+exports.transformLabourWork = transformLabourWork;
+exports.transformNMRWork = transformNMRWork;
