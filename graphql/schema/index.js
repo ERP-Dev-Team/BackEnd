@@ -400,8 +400,38 @@ module.exports = buildSchema(`
         name: String!
         camp:Camp
         idPhotoLocation: String
-        wage: Int
+        wage: Float
         type: String
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type LabourWork {
+        _id: ID!
+        quantity: Float
+        labour: Labour
+        loginPhoto: String
+        logoutPhoto: String
+        loginLatitude: String
+        loginLongitude: String
+        logoutLatitude: String
+        logoutLongitude: String
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type NMRWork {
+        _id: ID!
+        supplier: Supplier
+        workType: WorkType
+        remark: String
+        camp: Camp
+        labourInvolved: [Labour]
+        indentNumber: Int!
+        status: String
+        shift: String
+        finalCost: Float
+        approvalsNeeded: [Approval]
         createdAt: String!
         updatedAt: String!
     }
@@ -778,7 +808,7 @@ module.exports = buildSchema(`
         name:String!
         idPhotoLocation: String
         camp: ID
-        wage: Int
+        wage: Float
         type: String
     }
 
@@ -786,7 +816,7 @@ module.exports = buildSchema(`
         name:String!
         idPhotoLocation: String
         camp: ID
-        wage: Int
+        wage: Float
         type: String
     }
 
@@ -813,6 +843,29 @@ module.exports = buildSchema(`
         accountHolderName:String
         accountPaymentFavour:String
         supplierTypes:[ID!]
+    }
+
+    input LabourWorkInput {
+        quantity: Float
+        labour: ID
+        loginPhoto: String
+        logoutPhoto: String
+        loginLatitude: String
+        loginLongitude: String
+        logoutLatitude: String
+        logoutLongitude: String
+    }
+
+    input NMRWorkInput {
+        supplier: ID
+        workType: ID
+        remark: String
+        camp: ID
+        labourInvolved: [ID]
+        status: String
+        shift: String
+        finalCost: Float
+        approvalsNeeded: [ID]
     }
 
     type RootQuery{
@@ -871,6 +924,10 @@ module.exports = buildSchema(`
 
         labourers: [Labour]
         labour(_id:ID!): Labour
+
+        labourwork(_id:ID!): LabourWork
+        nmrworks(supplier:ID!): [NMRWork]
+        nmrwork(_id:ID!): NMRWork
 
         login(userName: String!, password: String!): AuthData!
     }
@@ -966,6 +1023,12 @@ module.exports = buildSchema(`
         createLabour(labourInput:LabourInput): Labour,
         updateLabour(_id:ID!,labourEditInput: LabourEditInput): Labour,
         deleteLabour(_id:ID): Labour,
+
+        createLabourWork(labourWorkInput:LabourWorkInput):LabourWork,
+        deleteLabourWork(_id:ID!):LabourWork,
+
+        createNMRWork(nmrWorkInput:NMRWorkInput): NMRWork,
+        deleteNMRWork(_id:ID!): NMRWork,
 
     }
 
