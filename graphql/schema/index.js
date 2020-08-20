@@ -186,10 +186,11 @@ module.exports = buildSchema(`
     }
 
     type AuthData {
-        userName: ID!
-        token: String!
-        tokenExpiration: Int!
+        userName: ID
+        token: String
+        tokenExpiration: Int
         modulesAllowed: [Module!]
+        campsAllowed: [Camp!]
         userModuleObjects: [UserModuleObject]
     }
 
@@ -929,7 +930,7 @@ module.exports = buildSchema(`
         nmrworks(supplier:ID!): [NMRWork]
         nmrwork(_id:ID!): NMRWork
 
-        login(userName: String!, password: String!): AuthData!
+        login(userName: String!, password: String!, IMEI: String): AuthData!
     }
 
     type RootMutation{
