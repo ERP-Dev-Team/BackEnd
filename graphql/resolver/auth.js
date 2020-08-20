@@ -1,32 +1,40 @@
 const User = require("../../models/user");
+const Device = require("../../models/device");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { getJWTKey } = require("../../helper/private");
+const { getToken } = require("../../helper/private");
 const { transformAuthData } = require("./merge");
 
 module.exports = {
-  login: async ({ userName, password }) => {
+  login: async ({ userName, password, IMEI }) => {
     const user = await User.findOne({ userName: userName });
     if (!user) {
-       throw new Error("User does not exist");
+      throw new Error("User does not exist");
     }
     const isEqual = await bcrypt.compare(password, user.password);
     if (!isEqual) {
-       throw new Error("Password is incorrect");
+      throw new Error("Password is incorrect");
     }
-    const token = jwt.sign(
-      {
-        userName: user.userName,
-        superRole: user.superRole,
-        designation: user.designation,
-        rolesAllowed: user.rolesAllowed,
-        modulesAllowed: user.modulesAllowed,
-      },
-      getJWTKey(),
-      {
-        expiresIn: "1h",
+    var token = "Not intialised";
+    if (IMEI) {
+      const isIMEIAllowed = user.IMEIAllowed;
+      if (isIMEIAllowed) {
+        token = getToken(user);
+      } else {
+        // const device = await Device.findOne({ IMEI: IMEI });
+        // if (device) {
+        //   console.dir(device);
+        //   const userAssignedId = device.userAssigned;
+        //   if (userAssignedId+'' === user._id+'') {
+            token = getToken(user);
+        //   }
+        // } else {
+        //   throw new Error("Device not found");
+        // }
       }
-    );
-    return await transformAuthData(user.userName, token, 1, user.modulesAllowed);
+    } else {
+      token = getToken(user);
+    }
+
+    return await transformAuthData(user.userName, token, 1, user.modulesAllowed,user.campsAllowed);
   },
 };

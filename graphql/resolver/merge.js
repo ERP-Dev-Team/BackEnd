@@ -795,7 +795,8 @@ const transformAuthData = async (
   userName,
   token,
   tokenExpiration,
-  modulesAllowed
+  modulesAllowed,
+  campsAllowed
 ) => {
   var res = await transformAuthDataNew(userName, modulesAllowed);
 
@@ -804,6 +805,7 @@ const transformAuthData = async (
     token: token,
     tokenExpiration: tokenExpiration,
     modulesAllowed: imodules.bind(this, modulesAllowed),
+    campsAllowed: camps.bind(this,campsAllowed),
     userModuleObjects: res,
   };
 };
