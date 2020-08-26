@@ -1,0 +1,2417 @@
+{
+	"info": {
+		"_postman_id": "c65bff09-1866-4e10-ab79-1962ae9604b0",
+		"name": "ERP",
+		"description": "# Introduction\nWhat does your API do?\n\n# Overview\nThings that the developers should know about\n\n# Authentication\nWhat is the preferred way of using the API?\n\n# Error Codes\nWhat errors and status codes can a user expect?\n\n# Rate limit\nIs there a limit to the number of requests an user can send?",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "login",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query loginUser($userName:  String!, $password: String!){\r\n        login(userName: $userName,password: $password){\r\n         userName,\r\n         token,\r\n         tokenExpiration,\r\n         modulesAllowed{name,caved{create{_id,name},approval{_id,name},view{_id,name},edit{_id,name},delete{_id,name}}}\r\n  \t\t\tuserModuleObjects{\r\n          _id,\r\n          name,\r\n          create,\r\n          edit,\r\n          view,\r\n          delete,\r\n          approval\r\n          \r\n        }      \r\n  }\r\n}",
+								"variables": "{\r\n    \"userName\":\"admin\",\r\n    \"password\":\"admin1234\"\r\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "project",
+			"item": [
+				{
+					"name": "Query all projects",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\r\n  projects{_id,name,status,startDate,endDate,createdAt,updatedAt}\r\n}",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation create a project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation createProjectFunction(\r\n        $projectName: String!\r\n        $status: String!\r\n        $startDate: String\r\n        $endDate: String\r\n      ) {\r\n        createProject(\r\n          projectInput: {\r\n            name: $projectName\r\n            status: $status\r\n            startDate: $startDate\r\n            endDate: $endDate\r\n          }\r\n        ) {\r\n          name\r\n          status\r\n          startDate\r\n          endDate\r\n        }\r\n      }",
+								"variables": "{\r\n    \"projectName\": \"Test Project 103\",\r\n    \"status\": \"Open\",\r\n    \"startDate\": \"1593483133\",\r\n    \"endDate\": \"1593483134\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query a project",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getProjectById($projectId:ID!){\r\n  project(_id:$projectId){_id,name,status,startDate,endDate,createdAt,updatedAt}\r\n}",
+								"variables": "{\r\n    \"projectId\":\"5ee567f92ac1e8416062a2d5\"\r\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation edit a project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation editProjectFunction(\r\n        $projectName: String!\r\n        $status: String!\r\n        $startDate: String\r\n        $endDate: String\r\n        $projectId: ID!\r\n      ) {\r\n        updateProject(\r\n            _id: $projectId\r\n            name: $projectName\r\n            status: $status\r\n            startDate: $startDate\r\n            endDate: $endDate\r\n          \r\n        ) {\r\n          name\r\n          status\r\n          startDate\r\n          endDate\r\n        }\r\n      }",
+								"variables": "{\r\n    \"projectId\": \"5efa9fe119f6632afec85589\",\r\n    \"projectName\": \"Test Project 100\",\r\n    \"status\": \"Closed\",\r\n    \"startDate\": \"1593483133\",\r\n    \"endDate\": \"1593483134\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dashboard",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n  projectDashboard{\n    openProjects,\n    pausedProjects,\n    closedProjects,\n    terminatedProjects\n  }\n}",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "camp",
+			"item": [
+				{
+					"name": "Query a camp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getCampById($campId:ID!){\r\n  camp(_id:$campId){_id,name,status,startDate,endDate,project{name,status,startDate,endDate,createdAt,updatedAt},createdAt,updatedAt}\r\n}",
+								"variables": "{\r\n    \"campId\":\"5eee9e035160139c77ea6f1c\"\r\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation create a camp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation createCampFunction(\r\n        $campName: String!\r\n        $status: String!\r\n        $startDate: String\r\n        $projectId: ID!\r\n        $endDate: String\r\n      ) {\r\n        createCamp(\r\n          campInput: {\r\n            name: $campName\r\n            status: $status\r\n            project: $projectId\r\n            startDate: $startDate\r\n            endDate: $endDate\r\n          }\r\n        ) {\r\n          name\r\n          status\r\n          startDate\r\n          endDate\r\n        }\r\n      }",
+								"variables": "{\r\n    \"campName\": \"Test Camp 106\",\r\n    \"status\": \"Active\",\r\n    \"startDate\": \"1593483133\",\r\n    \"endDate\": \"1593483134\",\r\n    \"projectId\": \"5ee567f92ac1e8416062a2d5\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query all camp",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\r\n  camps{_id,name,status,project{name,status,startDate,endDate,createdAt,updatedAt},startDate,endDate,createdAt,updatedAt}\r\n}",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation edit a camp",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation editCampFunction(\r\n        $campName: String!\r\n        $status: String!\r\n        $startDate: String\r\n        $endDate: String\r\n        $projectId: ID!\r\n        $campId: ID!\r\n      ) {\r\n        updateCamp(\r\n            _id: $campId\r\n            project: $projectId\r\n            name: $campName\r\n            status: $status\r\n            startDate: $startDate\r\n            endDate: $endDate\r\n        ) {\r\n          name\r\n          status\r\n          project{name,status,startDate,endDate,createdAt,updatedAt}\r\n          startDate\r\n          endDate\r\n        }\r\n      }",
+								"variables": "{\r\n    \"campId\":\"5efaa48019f6632afec8558f\",\r\n    \"projectId\": \"5ee567f92ac1e8416062a2d5\",\r\n    \"campName\": \"Test Camp 103\",\r\n    \"status\": \"Inactive\",\r\n    \"startDate\": \"1593483133\",\r\n    \"endDate\": \"1593483134\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "role",
+			"item": [
+				{
+					"name": "Query all role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\r\n  roles{_id,name,createdAt,updatedAt}\r\n}",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation create a role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation createRoleFunction(\r\n        $roleName: String!\r\n      ) {\r\n        createRole(\r\n          roleInput: {\r\n            name: $roleName\r\n          }\r\n        ) {\r\n          _id,\r\n          name\r\n        }\r\n      }",
+								"variables": "{\r\n    \"roleName\": \"Test Role 105\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation edit a role",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation updateRoleFunction(\r\n        $roleName: String!\r\n        $roleId:ID!\r\n      ) {\r\n        updateRole(\r\n            _id:$roleId\r\n            name: $roleName\r\n        \r\n        ) {\r\n          _id,\r\n          name\r\n        }\r\n      }",
+								"variables": "{\r\n    \"roleName\": \"Test Role 105 Update\",\r\n    \"roleId\": \"5efab57d19f6632afec85593\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query a role",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getRoleById($roleId:ID!){\r\n  role(_id:$roleId){_id,name,createdAt,updatedAt}\r\n}",
+								"variables": "{\r\n    \"roleId\":\"5ee569372ac1e8416062a2dd\"\r\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "designation",
+			"item": [
+				{
+					"name": "Query a designation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getDesignationById($designationId:ID!){\r\n  designation(_id:$designationId){_id,name,createdAt,updatedAt}\r\n}",
+								"variables": "{\r\n    \"designationId\":\"5ee568702ac1e8416062a2d7\"\r\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation create a designation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation createDesignationFunction(\r\n        $designationName: String!\r\n      ) {\r\n        createDesignation(\r\n          designationInput: {\r\n            name: $designationName\r\n          }\r\n        ) {\r\n          _id,\r\n          name\r\n        }\r\n      }",
+								"variables": "{\r\n    \"designationName\": \"Test Designation 103\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation edit a designation",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation updateDesignationFunction(\r\n        $designationName: String!\r\n        $designationId:ID!\r\n      ) {\r\n        updateDesignation(\r\n            _id:$designationId\r\n            name: $designationName\r\n        \r\n        ) {\r\n          _id,\r\n          name\r\n        }\r\n      }",
+								"variables": "{\r\n    \"designationName\": \"Test Designation 101 Update\",\r\n    \"designationId\": \"5efab6d119f6632afec85595\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query all designation",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\r\n  designations{_id,name,createdAt,updatedAt}\r\n}",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "itemcategory",
+			"item": [
+				{
+					"name": "Query all itemcategory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\r\n itemcategories{_id,name}\r\n}",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation create a itemcategory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation createItemCategoryFunction(\r\n        $itemCategoryName: String!\r\n      ) {\r\n        createItemCategory(\r\n          itemCategoryInput: {\r\n            name: $itemCategoryName\r\n          }\r\n        ) {\r\n          _id,\r\n          name\r\n        }\r\n      }",
+								"variables": "{\r\n    \"itemCategoryName\": \"MACHINERIES\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "mumbai.opcl.net:3000/api",
+							"host": [
+								"mumbai",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation edit a itemcategory",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation updateItemCategoryFunction(\r\n        $itemCategoryName: String!\r\n        $itemCategoryId: ID!\r\n      ) {\r\n        updateItemCategory(\r\n            name: $itemCategoryName\r\n            _id:$itemCategoryId\r\n        ) {\r\n          _id,\r\n          name\r\n        }\r\n      }",
+								"variables": "{\r\n    \"itemCategoryName\": \"Test Item Category 101 Update\",\r\n    \"itemCategoryId\": \"5efabb2f19f6632afec85598\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query a itemcategory",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getItemCategoryById($itemCategoryId:ID!){\r\n  itemcategory(_id:$itemCategoryId){_id,name,createdAt,updatedAt}\r\n}",
+								"variables": "{\r\n    \"itemCategoryId\":\"5ee568ba2ac1e8416062a2da\"\r\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "item",
+			"item": [
+				{
+					"name": "Query all item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\r\n  items {\r\n    _id\r\n    name\r\n    description\r\n    partNumber\r\n    unit {\r\n      _id\r\n      name\r\n    }\r\n    hsnNumber\r\n    itemCode\r\n    itemCategory {\r\n      _id\r\n      name\r\n    }\r\n    createdAt\r\n    updatedAt\r\n  }\r\n}",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation create a item",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createItemFunction($itemName: String!, $itemCode: String!, $hsnNumber: String, $partNumber: String, $description: String, $unitId: ID!, $itemCategoryId: ID!) {\r\n  createItem(itemInput: {name: $itemName, unit: $unitId, itemCategory: $itemCategoryId, itemCode: $itemCode, partNumber: $partNumber, hsnNumber: $hsnNumber, description: $description}) {\r\n    _id\r\n    name\r\n    description\r\n    partNumber\r\n    unit {\r\n      _id\r\n      name\r\n    }\r\n    hsnNumber\r\n    itemCode\r\n    itemCategory {\r\n      _id\r\n      name\r\n    }\r\n    createdAt\r\n    updatedAt\r\n  }\r\n}",
+								"variables": "{\r\n    \"itemName\": \"Test Item 15\",\r\n    \"itemCode\": \"Test Item Code 15\",\r\n    \"unitId\": \"5ee5688e2ac1e8416062a2d8\",\r\n    \"itemCategoryId\": \"5ee568ba2ac1e8416062a2da\",\r\n    \"description\": \"Test\",\r\n    \"partNumber\": \"101\",\r\n    \"hsnNumber\": \"101\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation edit a item",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateItemFunction($itemName: String!, $itemCode: String!, $hsnNumber: String, $partNumber: String, $description: String, $unitId: ID!, $itemCategoryId: ID!, $itemId: ID!) {\r\n  updateItem(_id: $itemId, name: $itemName, unit: $unitId, itemCategory: $itemCategoryId, itemCode: $itemCode, partNumber: $partNumber, hsnNumber: $hsnNumber, description: $description) {\r\n    _id\r\n    name\r\n    description\r\n    partNumber\r\n    unit {\r\n      _id\r\n      name\r\n    }\r\n    hsnNumber\r\n    itemCode\r\n    itemCategory {\r\n      _id\r\n      name\r\n    }\r\n    createdAt\r\n    updatedAt\r\n  }\r\n}\r\n",
+								"variables": "{\r\n    \"itemName\": \"Test Item 16\",\r\n    \"itemCode\": \"Test Item Code 16\",\r\n    \"unitId\": \"5ee5688e2ac1e8416062a2d8\",\r\n    \"itemCategoryId\": \"5ee568ba2ac1e8416062a2da\",\r\n    \"description\": \"Test\",\r\n    \"partNumber\": \"101\",\r\n    \"hsnNumber\": \"101\",\r\n    \"itemId\": \"5efc18296764175bae1cd6e2\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query a item",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getItemById($itemId: ID!) {\r\n  item(_id: $itemId) {\r\n    _id\r\n    name\r\n    description\r\n    partNumber\r\n    unit {\r\n      _id\r\n      name\r\n    }\r\n    hsnNumber\r\n    itemCode\r\n    itemCategory {\r\n      _id\r\n      name\r\n    }\r\n    createdAt\r\n    updatedAt\r\n  }\r\n}",
+								"variables": "{\r\n    \"itemId\":\"5ee569232ac1e8416062a2dc\"\r\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "unit",
+			"item": [
+				{
+					"name": "Query all units",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\r\n units{_id,name}\r\n}",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation create a unit",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation createUnitFunction(\r\n        $unitName: String!\r\n      ) {\r\n        createUnit(\r\n          unitInput: {\r\n            name: $unitName\r\n          }\r\n        ) {\r\n          _id,\r\n          name\r\n        }\r\n      }",
+								"variables": "{\r\n    \"unitName\": \"Test Unit 101\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation edit a unit",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"type": "text",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6ImFkbWluIiwic3VwZXJSb2xlIjoiU1VQRVJBRE1JTiIsInJvbGVzQWxsb3dlZCI6W10sImlhdCI6MTU5MTMyMDg5NiwiZXhwIjoxNTkxMzI0NDk2fQ.OH_8q-AeBOPzT2PLoAUAzfSVpXV-RAHHTNGePS4KEI8",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": " mutation updateUnitFunction(\r\n        $unitName: String!\r\n        $unitId:ID!\r\n      ) {\r\n        updateUnit(\r\n            _id:$unitId\r\n            name: $unitName\r\n        \r\n        ) {\r\n          _id,\r\n          name\r\n        }\r\n      }",
+								"variables": "{\r\n    \"unitName\": \"Test Unit 103 update\",\r\n    \"unitId\": \"5efab48b19f6632afec85592\"\r\n} "
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query a unit",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getUnitById($unitId:ID!){\r\n  unit(_id:$unitId){_id,name,createdAt,updatedAt}\r\n}",
+								"variables": "{\r\n    \"unitId\":\"5ee5688e2ac1e8416062a2d8\"\r\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Query all users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\r\n  users{\r\n    _id,\r\n    userName,\r\n    password,\r\n    firstName,\r\n    lastName,\r\n    email,\r\n    phone1,\r\n    phone2,\r\n    phoneIMEI,\r\n    address1,\r\n    address2,\r\n    city,\r\n    state,\r\n    country,\r\n    zipcode,\r\n    joiningPlace,\r\n    joiningDate,\r\n    dateOfBirth,\r\n    qualification,\r\n    salary,\r\n    batta,\r\n    salaryEffectiveDate,\r\n    salaryOld,\r\n    battaOld,\r\n    loginAllowed,\r\n    lastLogin,\r\n    lastLoginDevice,\r\n    refPerson,\r\n    refPersonPhone,\r\n    refPersonAddress,\r\n    IMEIAllowed,\r\n    bankAccountNumber,\r\n    bankName,\r\n    bankBranchCity,\r\n    bankIIFSCCode,\r\n    bankAccountHolderName,\r\n    designation{\r\n      _id,\r\n      name\r\n    },\r\n    rolesAllowed{\r\n      _id,\r\n      name\r\n    },\r\n    modulesAllowed{\r\n      _id,\r\n      name,\r\n    },\r\n    campsAllowed{\r\n      _id,\r\n      name\r\n    },\r\n    createdAt,\r\n    updatedAt\r\n  }\r\n}\r\n",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Query a user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getUserById($userId: ID!){\r\n  user(_id:$userId){\r\n    _id,\r\n    userName,\r\n    password,\r\n    firstName,\r\n    lastName,\r\n    email,\r\n    phone1,\r\n    phone2,\r\n    phoneIMEI,\r\n    address1,\r\n    address2,\r\n    city,\r\n    state,\r\n    country,\r\n    zipcode,\r\n    joiningPlace,\r\n    joiningDate,\r\n    dateOfBirth,\r\n    qualification,\r\n    salary,\r\n    batta,\r\n    salaryEffectiveDate,\r\n    salaryOld,\r\n    battaOld,\r\n    loginAllowed,\r\n    lastLogin,\r\n    lastLoginDevice,\r\n    refPerson,\r\n    refPersonPhone,\r\n    refPersonAddress,\r\n    IMEIAllowed,\r\n    bankAccountNumber,\r\n    bankName,\r\n    bankBranchCity,\r\n    bankIIFSCCode,\r\n    bankAccountHolderName,\r\n    designation{\r\n      _id,\r\n      name\r\n    },\r\n    rolesAllowed{\r\n      _id,\r\n      name\r\n    },\r\n    modulesAllowed{\r\n      _id,\r\n      name,\r\n    },\r\n    campAllowed{\r\n      _id,\r\n      name\r\n    },\r\n    createdAt,\r\n    updatedAt\r\n  }\r\n}\r\n",
+								"variables": "{\r\n    \"userId\" : \"5ee5696d2ac1e8416062a2de\"\r\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation create a user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createUserFunction($userName:String!, $password:String!,$firstName:String!){\r\n  createUser(userInput:{userName:$userName,password:$password,firstName:$firstName,loginAllowed:true,IMEIAllowed:false}){\r\n    userName,\r\n    password,\r\n    firstName\r\n  }\r\n}",
+								"variables": "{\r\n    \"userName\":\"TestUser\",\r\n    \"password\":\"Test\",\r\n    \"firstName\":\"First Name\"\r\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation edit a user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateUserFunction($userId:ID!,$firstName:String!){\r\n  updateUser(userEditInput:{_id:$userId,firstName:$firstName,loginAllowed:true,IMEIAllowed:false}){\r\n    userName,\r\n    password,\r\n    firstName\r\n  }\r\n}",
+								"variables": "{\r\n    \"userId\":\"5f0d2c83a8b1910368e4206b\",\r\n    \"userName\":\"vamsi\",\r\n    \"firstName\":\"Vamsi K\"\r\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Module",
+			"item": [
+				{
+					"name": "Query all modules",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\r\n  modules {\r\n    _id,\r\n    name\r\n    caved {\r\n      _id,\r\n      create {\r\n        _id\r\n        name\r\n      }\r\n      approval {\r\n        _id\r\n        name\r\n      }\r\n      view {\r\n        _id\r\n        name\r\n      }\r\n      edit {\r\n        _id\r\n        name\r\n      }\r\n      delete {\r\n        _id\r\n        name\r\n      }\r\n    }\r\n  }\r\n}",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "mumbai.opcl.net:3000/api",
+							"host": [
+								"mumbai",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mutation edit a caved",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateCavedFuncion($cavedId:ID!,$roleId:ID!){\r\n  updateCaved(_id:$cavedId,create:[$roleId],view:[$roleId]){\r\n    _id\r\n    create{name},\r\n    approval{name},\r\n    view{name},\r\n    edit{name},\r\n    delete{name}\r\n  }\r\n}",
+								"variables": "{\r\n    \"cavedId\":\"5ef93b14431d1b1bc0a905b1\",\r\n    \"roleId\":\"5ef7ad71e0fac4323985b9b8\"\r\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get caved by module id",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getCavedById($cavedId: ID!) {\n  caved(_id: $cavedId) {\n    _id\n    create {\n      name\n    }\n    approval {\n      name\n    }\n    view {\n      name\n    }\n    edit {\n      name\n    }\n    delete {\n      name\n    }\n  }\n}",
+								"variables": "{\n  \"cavedId\":\"5f0fb38371759a179875aeeb\"\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "caved",
+			"item": [
+				{
+					"name": "edit caved",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateCaved($cavedId: ID!,$createRoles: [ID!],$editRoles: [ID!]){\n  updateCaved(cavedEditInput:{_id:$cavedId,create:$createRoles,approval:[],view:$editRoles,edit:$editRoles,delete:[]}){\n    _id\n    create{name},\n    approval{name},\n    view{name},\n    edit{name},\n    delete{name}\n  }\n}",
+								"variables": "{\n    \"cavedId\":\"5f0fb38371759a179875aeeb\",\n    \"createRoles\":[\"5f0fb38471759a179875aef6\"],\n    \"editRoles\":[\"5f0fb38471759a179875aef6\"]\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get caved",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getCavedById($cavedId: ID!) {\n  caved(_id: $cavedId) {\n    _id\n    create {\n      name\n    }\n    approval {\n      name\n    }\n    view {\n      name\n    }\n    edit {\n      name\n    }\n    delete {\n      name\n    }\n  }\n}",
+								"variables": "{\n  \"cavedId\":\"5f0fb38371759a179875aeeb\"\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "mmrequisition",
+			"item": [
+				{
+					"name": "query all reqs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\n  mmrequisitions{_id,status,createdByUser{userName,designation{name}},camp{name,project{name}},items{item{name}}}\n}",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create a req",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createmmRequisition($status:String!,$createdBy:ID!,$description:String!,$camp:ID,$items:[ID!]){\n  createmmRequisition(mmrequisitionInput:{status:$status,createdByUser:$createdBy,description:$description,camp:$camp,items:$items}){\n    _id,\n    status,\n    createdByUser{userName},\n    items{item{name},quantity},\n    camp{name}\n  }\n}",
+								"variables": "{\n    \"status\":\"CREATED\",\n    \"createdBy\":\"5f23a7d27e39275f1ce90f1b\",\n    \"description\":\"test\",\n    \"camp\":\"5f25a8357e39275f1ce90f1c\",\n    \"items\":[\"5f28e3b94075c3797bd03611\"]\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "device",
+			"item": [
+				{
+					"name": "get all device",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\n  devices{_id,\n  OS,\n  upTime,\n    cellNumber,\n    IMEI,\n    userAssigned{firstName},\n    lastUsedUser{firstName},\n    createdAt,\n    updatedAt,\n    batteryPercentage,\n    networkStrength,\n    networkName,\n    lastKnownLatitude,\n    lastKnownLongitude\n  }\n}",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a device",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\n  device(_id:\"5f24c7a6e699aa16d75e1550\"){\n    IMEI\n  }\n}",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add a device",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation addDevice($IMEI: String!){\n  createDevice(deviceInput:{IMEI:$IMEI})\n  {\n    _id,\n    IMEI\n  }\n}",
+								"variables": "{\n  \"IMEI\":\"352066060926231\"\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a device",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "\nmutation updateDevice($deviceId:ID!,$deviceEditInput:EditDeviceInput!){\n  updateDevice(_id:$deviceId,editDeviceInput:$deviceEditInput){\n    _id,IMEI,lastUsedUser{firstName}\n  }\n}",
+								"variables": "{\n  \"deviceId\": \"5f24c7a6e699aa16d75e1550\",\n  \"deviceEditInput\": {\n    \"OS\": \"Android\"\n    \n  }\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a device",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "attendance",
+			"item": [
+				{
+					"name": "get attendance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n  attendance(_id: \"5f25ab8be2a5f509d8aa8fcb\") {\n    user {\n      firstName\n    }\n    camp {\n      name\n    }\n    loginTimestamp\n    shift\n  }\n}",
+								"variables": ""
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create attendance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createAttenddance($attendance: AttendanceInput) {\n  createAttendance(attendanceInput: $attendance) {\n    _id\n    user {\n      firstName\n    }\n    camp {\n      name\n    }\n    loginTimestamp\n    shift\n  }\n}",
+								"variables": "{\n  \"attendance\": {\n    \"user\": \"5f23a7d27e39275f1ce90f1b\",\n    \"camp\": \"5f25a8357e39275f1ce90f1c\",\n    \"loginTimestamp\": \"1596303472\",\n    \"logoutTimestamp\": \"1596303472\",\n    \"shift\": \"DAY\"\n  }\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update attendance",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateAttenddance($attedanceId:ID!,$attendance: EditAttendanceInput) {\n  updateAttendance(_id:$attedanceId,editAttendanceInput: $attendance) {\n    _id\n    user {\n      firstName\n    }\n    camp {\n      name\n    }\n    loginTimestamp\n    shift\n  }\n}",
+								"variables": "{\n  \"attedanceId\": \"5f25ab8be2a5f509d8aa8fcb\",\n  \"attendance\": {\n    \"camp\": \"5f25a8357e39275f1ce90f1c\",\n    \"loginTimestamp\": \"159630342\",\n    \"logoutTimestamp\": \"1596303472\",\n    \"shift\": \"DAY\"\n  }\n}"
+							},
+							"options": {
+								"graphql": {}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "item object",
+			"item": [
+				{
+					"name": "create itemobject",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation{\n  createItemObject(itemObjectInput:{quantity:100.50,item:\"5f28e3824075c3797bd0360f\"}){\n    _id,\n    item{name},\n    quantity\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "approval",
+			"item": [
+				{
+					"name": "create approval",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createApproval($approvalInput:ApprovalInput){\n  createApproval(approvalInput:$approvalInput){\n    _id,\n    role{name},\n    note,\n    camp{name},\n    isApproved,\n    createdAt,\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"approvalInput\": {\n    \"role\": \"5f28e54d4075c3797bd03613\",\n    \"note\": \"Everything is good\",\n    \"camp\": \"5f25a8357e39275f1ce90f1c\",\n    \"isApproved\": false\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a approval",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n  approval(_id:\"\"){\n    _id,\n    role{name},\n    note,\n    camp{name},\n    isApproved,\n    createdAt,\n    updatedAt\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a approval",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateApproval($approvalId:ID!,$note:String,$isApproved:Boolean!){\n  updateApproval(_id:$approvalId,note:$note,isApproved:$isApproved){\n    _id,\n    role{name},\n    note,\n    camp{name},\n    isApproved,\n    createdAt,\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"approvalId\":\"5f2a36b693da2721b15ac565\",\n  \"note\":\"Fine\",\n  \"isApproved\": true \n}"
+							}
+						},
+						"url": {
+							"raw": "chicago.opcl.net:3000/api",
+							"host": [
+								"chicago",
+								"opcl",
+								"net"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "dpr",
+			"item": [
+				{
+					"name": "view all dprs",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n  dprs {\n    _id\n    camp {\n      name\n    }\n    workType {\n      name\n    }\n    workDescription\n    length\n    breadth\n    height\n    cummulative\n    createdBy {\n      firstName\n    }\n    approvalsNeeded {\n      role {\n        name\n      }\n    }\n    createdAt\n    updatedAt\n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create a dpr",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createDPR($dprInput: DPRInput) {\n  createDPR(dprInput: $dprInput) {\n    _id\n    camp {\n      name\n    }\n    workType {\n      name\n    }\n    workDescription\n    length\n    breadth\n    height\n    cummulative\n    createdBy {\n      firstName\n    }\n    approvalsNeeded {\n      role{name}\n    }\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"dprInput\": {\n    \"camp\": \"5f25a8357e39275f1ce90f1c\",\n    \"workDescription\":  \"Description\",\n    \"createdBy\": \"5f23a7d27e39275f1ce90f1b\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a dpr",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n  dpr(_id:\"5f2a27ca9ddd491c379a0670\") {\n    _id\n    camp {\n      name\n    }\n    workType {\n      name\n    }\n    workDescription\n    length\n    breadth\n    height\n    cummulative\n    createdBy {\n      firstName\n    }\n    approvalsNeeded {\n      role {\n        name\n      }\n    }\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update dpr",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateDPR($dprId:ID!,$dprInput: DPREditInput) {\n  updateDPR(_id:$dprId,dprEditInput: $dprInput) {\n    _id\n    camp {\n      name\n    }\n    workType {\n      name\n    }\n    workDescription\n    length\n    breadth\n    height\n    cummulative\n    createdBy {\n      firstName\n    }\n    approvalsNeeded {\n      role{name}\n    }\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"dprId\": \"5f2a27ca9ddd491c379a0670\",\n  \"dprInput\": {\n    \"camp\": \"5f25a8357e39275f1ce90f1c\",\n    \"workDescription\": \"Description\",\n    \"createdBy\": \"5f23a7d27e39275f1ce90f1b\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "worktype",
+			"item": [
+				{
+					"name": "get all work types",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n  worktypes{\n    _id,\n    name,\n    unit{name},\n    createdAt,\n    updatedAt\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create a work type",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createWorkType($workTypeInput:WorkTypeInput){\n  createWorkType(workTypeInput:$workTypeInput){\n    _id,\n    name,\n    unit{name},\n    createdAt,\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"workTypeInput\":  {\n    \"name\": \"GSB\",\n    \"unit\": \"5f2b9347b32ce6c81a785814\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a work type",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateWorkType($id:ID!,$name:String,$unit:ID){\n  updateWorkType(_id:$id,name:$name,unit:$unit){\n    _id,\n    name,\n    unit{name},\n    createdAt,\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"id\":\"5f2a32cf533b191c9b6e01cd\",\n  \"name\":\"GSB\",\n  \"unit\":\"5f28e34f4075c3797bd0360c\"\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "nmrwork",
+			"item": [
+				{
+					"name": "create a nmrwork",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createNMRWork($nmrWorkInput:NMRWorkInput){\n  createNMRWork(nmrWorkInput:$nmrWorkInput){\n    _id,\n    supplier{_id,name},\n    workType{_id,name},\n    remark,\n    remark,\n    camp{_id,name},\n    labourInvolved{_id,name},\n    indentNumber,\n    status,\n    shift,\n    finalCost,\n    approvalsNeeded{_id,role{_id,name}},\n    createdAt,\n    updatedAt\n  }\n}",
+								"variables": "{\n  \"nmrWorkInput\": {\n  \"supplier\": \"5f2cc1dfa8ff021cd46690bb\",\n    \"workType\": \"5f2cc1ffa8ff021cd46690bc\",\n    \"camp\": \"5f2b92f8b32ce6c81a78580c\",\n    \"labourInvolved\": [\"5f2cb4318fb33c136ecf81c6\"],\n    \"status\": \"PENDING\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a nmr work",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\n  nmrwork(_id:\"5f386b82f0a633140b6829f3\"){\n    _id,\n    supplier{name},\n    workType{name}\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "supplier",
+			"item": [
+				{
+					"name": "get all suppliers",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n  suppliers {\n    _id\n    name\n    contactname\n    email\n    phone1\n    address1\n    address2\n    city\n    state\n    country\n    zipcode\n    panNumber\n    gstNumber\n    cstNumber\n    accountBankName\n    accountBranchName\n    accountBranchCity\n    accountNumber\n    accountIIFSCCode\n    accountHolderName\n    accountPaymentFavour\n    supplierTypes {\n        _id,\n      name\n    }\n    updatedAt\n    createdAt\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create a supplier",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createSupplier($supplierInput:SupplierInput){\n  createSupplier(supplierInput:$supplierInput){\n    _id,\n    name,\n    contactname,\n      _id\n    name\n    contactname\n    email\n    phone1\n    address1\n    address2\n    city\n    state\n    country\n    zipcode\n    panNumber\n    gstNumber\n    cstNumber\n    accountBankName\n    accountBranchName\n    accountBranchCity\n    accountNumber\n    accountIIFSCCode\n    accountHolderName\n    accountPaymentFavour\n    supplierTypes {\n        _id,\n      name\n    }\n    updatedAt\n    createdAt\n  \n  }\n}\n",
+								"variables": "{\n  \"supplierInput\": {\n    \"name\": \"SAND 2 SUPPLIER\",\n    \"supplierTypes\": [\"5f2b640faf15ea11c6fe3de7\"]\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a supplier",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\n  supplier(_id:\"5f2b69ccdc2c71141c702d16\"){\n_id\n    name\n    contactname\n    email\n    phone1\n    address1\n    address2\n    city\n    state\n    country\n    zipcode\n    panNumber\n    gstNumber\n    cstNumber\n    accountBankName\n    accountBranchName\n    accountBranchCity\n    accountNumber\n    accountIIFSCCode\n    accountHolderName\n    accountPaymentFavour\n    supplierTypes {\n      name\n    }\n    updatedAt\n    createdAt\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit a supplier",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateSupplier($supID:ID!,$supplierInput:SupplierEditInput!){\n  updateSupplier(_id:$supID,supplierEditInput:$supplierInput){\n    _id,\n    name,\n    contactname,\n      _id\n    name\n    contactname\n    email\n    phone1\n    address1\n    address2\n    city\n    state\n    country\n    zipcode\n    panNumber\n    gstNumber\n    cstNumber\n    accountBankName\n    accountBranchName\n    accountBranchCity\n    accountNumber\n    accountIIFSCCode\n    accountHolderName\n    accountPaymentFavour\n    supplierTypes {\n      name\n    }\n    updatedAt\n    createdAt\n  \n  }\n}\n",
+								"variables": "{\n  \"supID\": \"5f2b69e4dc2c71141c702d17\",\n  \"supplierInput\": {\n    \"name\": \"SAND 3 SUP\",\n    \"supplierTypes\": [\"5f2b640faf15ea11c6fe3de7\"]\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "supplier type",
+			"item": [
+				{
+					"name": "get all supplier types",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n  suppliertypes{\n    _id,\n    name,\n    createdAt,\n    updatedAt\n  }\n}\n\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create a supplier type",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation{\n  createSupplierType(supplierTypeInput:{name:\"SAND\"}){\n    _id,\n    name\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a supplier type",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "{\n  suppliertype(_id:\"5f2b640faf15ea11c6fe3de7\"){\n    _id,\n    name,\n    createdAt,\n    updatedAt\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "edit a supplier type",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation{\n  updateSupplierType(_id:\"5f2b640faf15ea11c6fe3de7\",name:\"SAND\"){\n    _id,\n    name\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "labour",
+			"item": [
+				{
+					"name": "get all labour",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query {\n  labourers{\n    _id,\n    name,\n    camp{\n      _id,\n      name\n    },\n    idPhotoLocation,\n    wage,\n    type,\n    createdAt,\n    updatedAt\n  }\n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get a labour",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query getLabour($labourId:ID!){\n  labour(_id:$labourId){\n    _id,\n    name,\n    camp{\n      _id,\n      name\n    },\n    idPhotoLocation,\n    wage,\n    type,\n    createdAt,\n    updatedAt\n  }\n  \n}",
+								"variables": "{\n  \"labourId\": \"5f2b739390c15718a6b47ccf\"\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create a labour",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createLabout($labourInput:LabourInput){\n  createLabour(labourInput:$labourInput){\n    _id,\n    name,\n    camp{\n      _id,\n      name\n    },\n    idPhotoLocation,\n    wage,\n    type,\n    createdAt,\n    updatedAt\n  }\n  \n}",
+								"variables": "{\n  \"labourInput\": {\n    \"supplier\": \"5f2b69ccdc2c71141c702d16\",\n    \"name\": \"LABOUR NAMEHERE\",\n    \"camp\": \"5f25a8357e39275f1ce90f1c\",\n    \"wage\": 600,\n    \"type\": \"MALE\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update a labour",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updateLabout($labourId:ID!,$labourInput:LabourEditInput){\n  updateLabour(_id:$labourId,labourEditInput:$labourInput){\n    _id,\n    name,\n    camp{\n      _id,\n      name\n    },\n    idPhotoLocation,\n    wage,\n    type,\n    createdAt,\n    updatedAt\n  }\n  \n}",
+								"variables": "{\n  \"labourId\": \"5f2b739390c15718a6b47ccf\",\n  \"labourInput\": {\n    \"name\": \"LABOUR NAMEHERE\",\n    \"camp\": \"5f25a8357e39275f1ce90f1c\",\n    \"wage\": 600,\n    \"type\": \"MALE\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "labourWork",
+			"item": [
+				{
+					"name": "get a labourwork",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query{\n  labourwork(_id:\"5f2cb49c8fb33c136ecf81c7\"){\n     _id\n    quantity\n    labour {\n      name\n    }\n    loginPhoto\n    logoutPhoto\n    loginLatitude\n    loginLongitude\n    logoutLatitude\n    logoutLongitude\n    createdAt\n    updatedAt\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create a labour work",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createLabourWork($labourWorkInput: LabourWorkInput) {\n  createLabourWork(labourWorkInput: $labourWorkInput) {\n    _id\n    quantity\n    labour {\n      name\n    }\n    loginPhoto\n    logoutPhoto\n    loginLatitude\n    loginLongitude\n    logoutLatitude\n    logoutLongitude\n    createdAt\n    updatedAt\n  }\n}\n",
+								"variables": "{\n  \"labourWorkInput\": {\n    \"quantity\": 100,\n  \"labour\": \"5f2cb4318fb33c136ecf81c6\"\n  \n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a labour work",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation{\n  deleteLabourWork(_id:\"5f2cb54fbca2e513f83164d5\")\n  {\n    _id,\n    quantity,\n    labour{name},\n    loginPhoto\n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "34612708-8e2e-4a51-9d43-5345614c4cea",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "52470558-1d62-4e9b-a1e0-c8e376512357",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

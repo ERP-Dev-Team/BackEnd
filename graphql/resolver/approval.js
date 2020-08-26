@@ -3,6 +3,21 @@ const Approval = require("../../models/approval");
 const { transformApproval } = require("./merge");
 
 module.exports = {
+  approval: async (args, req) => { 
+    try{
+      try {
+        const approval = await Approval.findOne({ _id: args._id });
+        if (approval == undefined) {
+            throw new Error("No approval found.");
+        }
+        return transformApproval(approval);
+    } catch (err) {
+        throw err;
+    }
+    }catch(err){
+      throw err;
+    }
+  },
   createApproval: async (args, req) => {
     try {
       const approval = new Approval({

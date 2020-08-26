@@ -15,9 +15,11 @@ const Approval = require("../../models/approval");
 const mmRequisition = require("../../models/mmrequisition");
 const Supplier = require("../../models/supplier");
 const mmInternalIndent = require("../../models/mminternalindent");
-const { createHashmap } = require("../../helper/util");
+const Device = require("../../models/device");
+const WorkType = require("../../models/worktype");
+const Labour = require("../../models/labour");
 const { convertISODateToTimestamp } = require("../../helper/timestamp");
-const { db } = require("../../models/project");
+
 
 const project = async (projectId) => {
   try {
@@ -28,6 +30,54 @@ const project = async (projectId) => {
       createdAt: convertISODateToTimestamp(project._doc.createdAt),
       updatedAt: convertISODateToTimestamp(project._doc.updatedAt),
     };
+  } catch (err) {
+    throw err;
+  }
+};
+const labour = async (labourId) => {
+  try {
+    const labour = await Labour.findOne({ _id: labourId });
+    return {
+      ...labour._doc,
+      _id: labour.id,
+      supplier: supplier.bind(this, labour._doc.supplier),
+      camp: camp.bind(this, labour._doc.camp),
+      createdAt: convertISODateToTimestamp(labour._doc.createdAt),
+      updatedAt: convertISODateToTimestamp(labour._doc.updatedAt),
+    };
+  } catch (err) {
+    throw err;
+  }
+};
+const labourers = async (labourIds) => {
+  try {
+    const labourers = await Labour.find({ _id: labourIds });
+    return labourers.map((labour) => {
+      return {
+        ...labour._doc,
+        _id: labour.id,
+        supplier: supplier.bind(this, labour._doc.supplier),
+        camp: camp.bind(this, labour._doc.camp),
+        createdAt: convertISODateToTimestamp(labour._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(labour._doc.updatedAt),
+      };
+    });
+  } catch (err) {
+    throw err;
+  }
+};
+const worktype = async (workTypeId) => {
+  try {
+    const workType = await WorkType.findOne({ _id: workTypeId });
+    if (workType) {
+      return {
+        ...workType._doc,
+        _id: workType.id,
+        unit: unit.bind(this, workType._doc.unit),
+        createdAt: convertISODateToTimestamp(workType._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(workType._doc.updatedAt),
+      };
+    }
   } catch (err) {
     throw err;
   }
@@ -280,16 +330,36 @@ const approval = async (approvalId) => {
 const user = async (userId) => {
   try {
     const user = await User.findOne({ _id: userId });
-    return {
-      ...user._doc,
-      _id: user.id,
-      designation: designation.bind(this, user._doc.designation),
-      rolesAllowed: roles.bind(this, user._doc.rolesAllowed),
-      modulesAllowed: imodules.bind(this, user._doc.modulesAllowed),
-      campsAllowed: camps.bind(this, user._doc.campsAllowed),
-      createdAt: convertISODateToTimestamp(user._doc.createdAt),
-      updatedAt: convertISODateToTimestamp(user._doc.updatedAt),
-    };
+    if (user) {
+      return {
+        ...user._doc,
+        _id: user.id,
+        designation: designation.bind(this, user._doc.designation),
+        rolesAllowed: roles.bind(this, user._doc.rolesAllowed),
+        modulesAllowed: imodules.bind(this, user._doc.modulesAllowed),
+        campsAllowed: camps.bind(this, user._doc.campsAllowed),
+        createdAt: convertISODateToTimestamp(user._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(user._doc.updatedAt),
+      };
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+const device = async (deviceId) => {
+  try {
+    const device = await Device.findOne({ _id: deviceId });
+    if (device) {
+      return {
+        ...device._doc,
+        _id: device.id,
+        userAssigned: user.bind(this, device._doc.userAssigned),
+        lastUsedUser: user.bind(this, device._doc.lastUsedUser),
+        createdAt: convertISODateToTimestamp(device._doc.createdAt),
+        updatedAt: convertISODateToTimestamp(device._doc.updatedAt),
+      };
+    }
   } catch (err) {
     throw err;
   }
@@ -725,7 +795,8 @@ const transformAuthData = async (
   userName,
   token,
   tokenExpiration,
-  modulesAllowed
+  modulesAllowed,
+  campsAllowed
 ) => {
   var res = await transformAuthDataNew(userName, modulesAllowed);
 
@@ -734,7 +805,91 @@ const transformAuthData = async (
     token: token,
     tokenExpiration: tokenExpiration,
     modulesAllowed: imodules.bind(this, modulesAllowed),
+    campsAllowed: camps.bind(this,campsAllowed),
     userModuleObjects: res,
+  };
+};
+
+const transformDevice = (device) => {
+  return {
+    ...device._doc,
+    _id: device.id,
+    userAssigned: user.bind(this, device._doc.userAssigned),
+    lastUsedUser: user.bind(this, device._doc.lastUsedUser),
+    createdAt: convertISODateToTimestamp(device._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(device._doc.updatedAt),
+  };
+};
+
+const transformAttendance = (attendance) => {
+  return {
+    ...attendance._doc,
+    _id: attendance.id,
+    device: device.bind(this, attendance._doc.device),
+    approvalsNeeded: approvals.bind(
+      this,
+      attendance._doc.approvalsNeeded
+    ),
+    user: user.bind(this, attendance._doc.user),
+    camp: camp.bind(this, attendance._doc.camp),
+    workType: worktype.bind(this, attendance._doc.workType),
+    createdAt: convertISODateToTimestamp(attendance._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(attendance._doc.updatedAt),
+  };
+};
+
+const transformDPR = (dpr) => {
+  return {
+    ...dpr._doc,
+    _id: dpr.id,
+    approvalsNeeded: approvals.bind(
+      this,
+      dpr._doc.approvalsNeeded
+    ),
+    createdBy: user.bind(this, dpr._doc.createdBy),
+    camp: camp.bind(this, dpr._doc.camp),
+    workType: worktype.bind(this, dpr._doc.workType),
+    createdAt: convertISODateToTimestamp(dpr._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(dpr._doc.updatedAt),
+  };
+};
+
+const transformLabour = (labour) => {
+  return {
+    ...labour._doc,
+    _id: labour.id,
+    supplier: supplier.bind(this, labour._doc.supplier),
+    camp: camp.bind(this, labour._doc.camp),
+    createdAt: convertISODateToTimestamp(labour._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(labour._doc.updatedAt),
+  };
+};
+
+const transformLabourWork = (labourWork) => {
+  return {
+    ...labourWork._doc,
+    _id: labourWork.id,
+    labour: labour.bind(this, labourWork._doc.labour),
+    createdAt: convertISODateToTimestamp(labourWork._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(labourWork._doc.updatedAt),
+  };
+};
+
+const transformNMRWork = (nmrWork) => {
+  return {
+    ...nmrWork._doc,
+    _id: nmrWork.id,
+    labour: labour.bind(this, nmrWork._doc.labour),
+    supplier: supplier.bind(this, nmrWork._doc.supplier),
+    workType: worktype.bind(this, nmrWork._doc.workType),
+    camp: camp.bind(this, nmrWork._doc.camp),
+    labourInvolved: labourers.bind(this, nmrWork._doc.labourInvolved),
+    approvalsNeeded: approvals.bind(
+      this,
+      nmrWork._doc.approvalsNeeded
+    ),
+    createdAt: convertISODateToTimestamp(nmrWork._doc.createdAt),
+    updatedAt: convertISODateToTimestamp(nmrWork._doc.updatedAt),
   };
 };
 
@@ -763,3 +918,9 @@ exports.transformmmRequisition = transformmmRequisition;
 exports.transformmmInternalIndent = transformmmInternalIndent;
 exports.transformmmPurchaseOrder = transformmmPurchaseOrder;
 exports.transformAuthData = transformAuthData;
+exports.transformDevice = transformDevice;
+exports.transformAttendance = transformAttendance;
+exports.transformDPR = transformDPR;
+exports.transformLabour = transformLabour;
+exports.transformLabourWork = transformLabourWork;
+exports.transformNMRWork = transformNMRWork;

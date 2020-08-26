@@ -186,10 +186,11 @@ module.exports = buildSchema(`
     }
 
     type AuthData {
-        userName: ID!
-        token: String!
-        tokenExpiration: Int!
+        userName: ID
+        token: String
+        tokenExpiration: Int
         modulesAllowed: [Module!]
+        campsAllowed: [Camp!]
         userModuleObjects: [UserModuleObject]
     }
 
@@ -333,6 +334,107 @@ module.exports = buildSchema(`
         view: Boolean!
         delete: Boolean!
         approval: Boolean!
+    }
+
+    type Device {
+        _id: ID!
+        make: String
+        model: String
+        OS: String
+        upTime: String
+        cellNumber: String
+        IMEI: String!
+        userAssigned: User
+        lastUsedUser: User
+        networkName: String
+        networkType: String
+        networkStrength: String
+        batteryPercentage: String
+        lastKnownLatitude: String
+        lastKnownLongitude: String
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type Attendance {
+        _id: ID!
+        user: User!
+        camp: Camp
+        loginTimestamp: String
+        loginPhoto: String
+        logoutPhoto: String
+        shift: String
+        logoutTimestamp: String
+        batta: String
+        workType: WorkType
+        loginLatitude: String
+        loginLongitude: String
+        logoutLatitude: String
+        logoutLongitude: String
+        quantity: String
+        device: Device
+        approvalsNeeded: [Approval]
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type DPR {
+        _id: ID!
+        camp: Camp
+        workType: WorkType
+        workDescription: String
+        length: String
+        breadth: String
+        height: String
+        cummulative: String
+        createdBy: User
+        photoLocation: String
+        locationLatitude: String
+        locationLongitude: String
+        approvalsNeeded: [Approval]
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type Labour {
+        _id:ID!
+        name: String!
+        camp:Camp
+        idPhotoLocation: String
+        wage: Float
+        type: String
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type LabourWork {
+        _id: ID!
+        quantity: Float
+        labour: Labour
+        loginPhoto: String
+        logoutPhoto: String
+        loginLatitude: String
+        loginLongitude: String
+        logoutLatitude: String
+        logoutLongitude: String
+        createdAt: String!
+        updatedAt: String!
+    }
+
+    type NMRWork {
+        _id: ID!
+        supplier: Supplier
+        workType: WorkType
+        remark: String
+        camp: Camp
+        labourInvolved: [Labour]
+        indentNumber: Int!
+        status: String
+        shift: String
+        finalCost: Float
+        approvalsNeeded: [Approval]
+        createdAt: String!
+        updatedAt: String!
     }
 
     input ProjectInput {
@@ -614,6 +716,159 @@ module.exports = buildSchema(`
         approvalsNeeded: [ID!]
     }
 
+    input DeviceInput {
+        make: String
+        model: String
+        cellNumber: String
+        IMEI: String!
+        userAssigned: ID
+    }
+
+    input EditDeviceInput {
+        make: String
+        model: String
+        OS: String
+        upTime: String
+        cellNumber: String
+        lastUsedUser: ID
+        networkName: String
+        networkType: String
+        networkStrength: String
+        batteryPercentage: String
+        lastKnownLatitude: String
+        lastKnownLongitude: String
+    }
+
+    input AttendanceInput {
+        user: ID!
+        camp: ID
+        loginTimestamp: String
+        loginPhoto: String
+        logoutPhoto: String
+        shift: String
+        logoutTimestamp: String
+        batta: String
+        workType: ID
+        loginLatitude: String
+        loginLongitude: String
+        logoutLatitude: String
+        logoutLongitude: String
+        quantity: String
+        device: ID
+        approvalsNeeded: [ID]
+    }
+
+    input EditAttendanceInput {
+        camp: ID
+        loginTimestamp: String
+        loginPhoto: String
+        logoutPhoto: String
+        shift: String
+        logoutTimestamp: String
+        batta: String
+        workType: ID
+        loginLatitude: String
+        loginLongitude: String
+        logoutLatitude: String
+        logoutLongitude: String
+        quantity: String
+        device: ID
+    }
+
+    input DPRInput {
+        camp: ID
+        workType: ID
+        workDescription: String
+        length: String
+        breadth: String
+        height: String
+        cummulative: String
+        createdBy: ID
+        photoLocation: String
+        locationLatitude: String
+        locationLongitude: String
+        approvalsNeeded: [ID]
+    }
+
+    input DPREditInput{
+        camp: ID
+        workType: ID
+        workDescription: String
+        length: String
+        breadth: String
+        height: String
+        cummulative: String
+        createdBy: ID
+        photoLocation: String
+        locationLatitude: String
+        locationLongitude: String
+    }
+
+    input LabourInput {
+        supplier: ID!
+        name:String!
+        idPhotoLocation: String
+        camp: ID
+        wage: Float
+        type: String
+    }
+
+    input LabourEditInput {
+        name:String!
+        idPhotoLocation: String
+        camp: ID
+        wage: Float
+        type: String
+    }
+
+    input SupplierEditInput{
+        name:String
+        contactName:String
+        email:String
+        phone1:String
+        phone2:String
+        address1:String
+        address2: String
+        city: String
+        state: String
+        country:String
+        zipcode:String
+        panNumber:String
+        gstNumber:String
+        cstNumber:String
+        accountBankName:String
+        accountBranchName:String
+        accountBranchCity:String
+        accountNumber:String
+        accountIIFSCCode:String
+        accountHolderName:String
+        accountPaymentFavour:String
+        supplierTypes:[ID!]
+    }
+
+    input LabourWorkInput {
+        quantity: Float
+        labour: ID
+        loginPhoto: String
+        logoutPhoto: String
+        loginLatitude: String
+        loginLongitude: String
+        logoutLatitude: String
+        logoutLongitude: String
+    }
+
+    input NMRWorkInput {
+        supplier: ID
+        workType: ID
+        remark: String
+        camp: ID
+        labourInvolved: [ID]
+        status: String
+        shift: String
+        finalCost: Float
+        approvalsNeeded: [ID]
+    }
+
     type RootQuery{
         projects: [Project!]
         project(_id:ID!): Project!
@@ -633,10 +888,12 @@ module.exports = buildSchema(`
 
         offices:[Office!]
         suppliertypes:[SupplierType!]
+        suppliertype(_id:ID!):SupplierType
         itemcategories:[ItemCategory!]
         itemcategory(_id:ID!):ItemCategory
         worktypes:[WorkType!]
         suppliers:[Supplier!]
+        supplier(_id:ID!):Supplier
         items:[Item!]
         item(_id:ID!):Item!
        
@@ -656,7 +913,24 @@ module.exports = buildSchema(`
         counters: [Counter!]
         mmpurchaseorders: [mmPurchaseOrder!]
 
-        login(userName: String!, password: String!): AuthData!
+        devices: [Device!]
+        device(_id:ID!): Device
+
+        attendance(_id:ID!):Attendance
+
+        dprs: [DPR]
+        dpr(_id:ID!): DPR
+
+        approval(_id:ID!): Approval
+
+        labourers: [Labour]
+        labour(_id:ID!): Labour
+
+        labourwork(_id:ID!): LabourWork
+        nmrworks(supplier:ID!): [NMRWork]
+        nmrwork(_id:ID!): NMRWork
+
+        login(userName: String!, password: String!, IMEI: String): AuthData!
     }
 
     type RootMutation{
@@ -689,7 +963,7 @@ module.exports = buildSchema(`
         updateWorkType(_id: ID!, name:String, unit: ID): WorkType
 
         createSupplier(supplierInput: SupplierInput): Supplier,
-        updateSupplier(_id: ID!, name:String, contactName:String, email:String, phone1:String,phone2:String, address1:String, address2: String,city: String,state: String, country:String, zipcode:String, panNumber:String,gstNumber:String,cstNumber:String,accountBankName:String,accountBranchName:String,accountBranchCity:String,accountNumber:String,accountIIFSCCode:String,accountHolderName:String,accountPaymentFavour:String,supplierTypes:[ID!]): Supplier,
+        updateSupplier(_id: ID!,supplierEditInput:SupplierEditInput): Supplier,
 
         createItem(itemInput: ItemInput): Item,
         updateItem(_id: ID!, name:String, description: String, partNumber: String, unit:ID, hsnNumber: String, itemCode: String, itemCategory:ID): Item,
@@ -736,6 +1010,27 @@ module.exports = buildSchema(`
 
         createmmPurchaseOrder(mmpurchaseOrderInput:mmPurchaseOrderInput):mmPurchaseOrder,
         updatemmPurchaseOrder(_id:ID!,status: String!,camp: ID!, items:[ID!],supplier:ID):mmPurchaseOrder,
+
+        createDevice(deviceInput: DeviceInput): Device,
+        updateDevice(_id:ID!,editDeviceInput:EditDeviceInput): Device,
+
+        createAttendance(attendanceInput:AttendanceInput): Attendance,
+        updateAttendance(_id:ID!,editAttendanceInput:EditAttendanceInput): Attendance,
+
+        createDPR(dprInput:DPRInput):DPR,
+        updateDPR(_id:ID!,dprEditInput:DPREditInput): DPR,
+        deleteDPR(_id:ID):DPR,
+
+        createLabour(labourInput:LabourInput): Labour,
+        updateLabour(_id:ID!,labourEditInput: LabourEditInput): Labour,
+        deleteLabour(_id:ID): Labour,
+
+        createLabourWork(labourWorkInput:LabourWorkInput):LabourWork,
+        deleteLabourWork(_id:ID!):LabourWork,
+
+        createNMRWork(nmrWorkInput:NMRWorkInput): NMRWork,
+        deleteNMRWork(_id:ID!): NMRWork,
+
     }
 
     schema{

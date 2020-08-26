@@ -12,11 +12,26 @@ const Caved = require("./models/caved");
 const User = require("./models/user");
 const Role = require("./models/role");
 const bcrypt = require("bcrypt");
+var multer = require('multer');
+const path = require('path');
+const { storageEngine } = require('./helper/storageEngine');
+const { extractAttendnaceRelativePath } = require('./helper/util');
+var upload = multer({ storage: storageEngine });
 const { transformModule } = require("./graphql/resolver/merge");
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(isAuth);
+app.post('/attendance/upload', upload.single('photo'), function (req, res, next) {
+  if (req.file.path) {
+    var releativePath = extractAttendnaceRelativePath(req.file.path);
+    var photoPath = '/erp/image/' + releativePath;
+    res.status(200).json({ photoLocation: photoPath }).end();
+  } else {
+    res.status(500).end();
+  }
+})
+app.use('/erp/image', express.static(process.env.ATTENDANCE_PHOTO_PATH));
 app.use(
   "/api",
   graphQlHttp({
@@ -82,7 +97,14 @@ async function initModules() {
     "DESIGNATION",
     "VEHICLE",
     "SUPPLIER",
-    "MMREQUISITION",
+    "MATERIAL MANAGEMENT REQUISITION",
+    "MATERIAL MANAGEMENT INTERNAL INDENT",
+    "MATERIAL MANAGEMENT PURCHASE ORDER",
+    "MATERIAL MANAGEMENT GOODS RECEIVED NOTE",
+    "DPR",
+    "LABOUR",
+    "NMR WORK",
+
   ];
   modulesList.forEach(async (moduleName) => {
     await createModule(moduleName);
