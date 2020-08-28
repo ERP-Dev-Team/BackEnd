@@ -40,10 +40,16 @@ app.use(
     graphiql: true,
   })
 );
+var mongo_endpoint_prefix = "";
+if (process.env.MONGO_SRV === true) {
+  mongo_endpoint_prefix = "mongodb+srv";
+} else{
+  mongo_endpoint_prefix = "mongodb";
+}
 
 mongoose
   .connect(
-    `mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_ENDPOINT}/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
+    `${mongo_endpoint_prefix}://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_ENDPOINT}/${process.env.MONGO_DB}?retryWrites=true&w=majority`,
     { useFindAndModify: false }
   )
   .then(async () => {
