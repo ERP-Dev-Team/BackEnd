@@ -3,7 +3,7 @@
         "MONGO_USER": "erpadmin",
         "MONGO_PASSWORD": "8977119266",
         "MONGO_DB": "erp",
-        "MONGO_SRV": false,
+        "MONGO_PREFIX": "mongodb",
         "MONGO_ENDPOINT": "chicago.opcl.net:27017",
         "API_ENDPOINT": "chicago.opcl.net:3000",
         "ATTENDANCE_PHOTO_PATH": "/Users/vamsi/Documents/NodeJS Projects/erp/images/"
