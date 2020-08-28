@@ -4,7 +4,7 @@
         "MONGO_PASSWORD": "8977119266",
         "MONGO_DB": "erp",
         "MONGO_ENDPOINT": "cluster0.rbuqd.mongodb.net",
-        "MONGO_SRV": true,
+        "MONGO_PREFIX": "mongodb+srv",
         "API_ENDPOINT": "scpl.opcl.net:3000",
         "ATTENDANCE_PHOTO_PATH": "/Users/vamsi/Documents/NodeJS Projects/erp/images/"
     }
