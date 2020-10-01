@@ -1,5 +1,5 @@
 const SupplierType = require('../../models/suppliertype');
-
+const Role = require("../../models/role");
 const { transformSupplierType } = require('./merge');
 
 module.exports = {
@@ -63,5 +63,43 @@ module.exports = {
       }
       return transformSupplierType(supplierTypeUpdated);
     } catch (err) { throw err; }
+  },
+  deleteSupplierType: async (args,req) =>{
+    try{
+      if (req.isAuth) {
+        var rolesAllowed = req.rolesAllowed;
+        var isAdmin = false;
+        for (var i = 0; i < rolesAllowed.length; i++) {
+          try {
+            var roleDb = await Role.findById(rolesAllowed[i])
+            if (roleDb) {
+
+              if (roleDb.name == 'ADMIN') {
+                isAdmin = true;
+                break;
+              }
+            }
+          } catch (err) { }
+        }
+        if (!isAdmin) {
+          throw new Error('Not authorized');
+        }
+      } else {
+        throw new Error('Not authorized');
+      }
+      const supplierType = await SupplierType.find({ _id: args._id });
+      if (supplierType == undefined) {
+        throw new Error("No supplier type found.");
+      }
+      let supplierTypeDelete;
+      try {
+        supplierTypeDelete = await SupplierType.findByIdAndDelete(args._id);
+        return transformSupplierType(supplierTypeDelete);
+      } catch (err) {
+        throw err;
+      }
+    }catch(err){
+      throw err;
+    }
   }
 }

@@ -955,12 +955,15 @@ module.exports = buildSchema(`
     
         createSupplierType(supplierTypeInput: SupplierTypeInput): SupplierType,
         updateSupplierType(_id: ID!, name:String!): SupplierType,
+        deleteSupplierType(_id:ID!): SupplierType,
 
         createItemCategory(itemCategoryInput: ItemCategoryInput): ItemCategory,
         updateItemCategory(_id: ID!, name:String!): ItemCategory,
+        deleteItemCategory(_id:ID!):ItemCategory,
 
         createWorkType(workTypeInput: WorkTypeInput): WorkType,
-        updateWorkType(_id: ID!, name:String, unit: ID): WorkType
+        updateWorkType(_id: ID!, name:String, unit: ID): WorkType,
+        deleteWorkType(_id:ID!):WorkType,
 
         createSupplier(supplierInput: SupplierInput): Supplier,
         updateSupplier(_id: ID!,supplierEditInput:SupplierEditInput): Supplier,
