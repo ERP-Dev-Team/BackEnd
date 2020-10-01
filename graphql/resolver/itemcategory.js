@@ -1,4 +1,6 @@
 const ItemCategory = require("../../models/itemcategory");
+const Module = require("../../models/module");
+const Role = require("../../models/role");
 
 const { transformItemCategory } = require("./merge");
 
@@ -62,6 +64,51 @@ module.exports = {
         throw err;
       }
       return transformItemCategory(itemCategoryUpdated);
+    } catch (err) {
+      throw err;
+    }
+  },
+  deleteItemCategory: async (args,req) => {
+    try {
+      if (req.isAuth) {
+        var cavedObject = await Module.findOne({name:"ITEM"});
+        if(cavedObject){
+        
+        var rolesAllowed = req.rolesAllowed;
+        var isAdmin = false;
+        for (var i = 0; i < rolesAllowed.length; i++) {
+          try {
+            var roleDb = await Role.findById(rolesAllowed[i])
+            if (roleDb) {
+              console.log(roleDb.name);
+              if (roleDb.name == 'ADMIN') {
+                isAdmin = true;
+                break;
+              }
+            }
+          } catch (err) { }
+        }
+        if (!isAdmin) {
+          throw new Error('Not authorized.');
+        }
+      }else{
+        throw new Error('Internal Error, msg: Caved not found.');
+      }
+      } else {
+        throw new Error('Not authorized.');
+      }
+
+      const item = await ItemCategory.find({ _id: args._id });
+      if (item == undefined) {
+        throw new Error("No item category found.");
+      }
+      let itemDelete;
+      try {
+        itemDelete = await ItemCategory.findByIdAndDelete(args._id);
+        return transformItemCategory(itemDelete);
+      } catch (err) {
+        throw err;
+      }
     } catch (err) {
       throw err;
     }
