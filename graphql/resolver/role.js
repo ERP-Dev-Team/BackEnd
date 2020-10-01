@@ -1,5 +1,4 @@
 const Role = require("../../models/role");
-
 const { transformRole } = require("./merge");
 
 module.exports = {
@@ -66,8 +65,29 @@ module.exports = {
       throw err;
     }
   },
-  deleteRole: async (args) => {
+  deleteRole: async (args, req) => {
     try {
+      if (req.isAuth) {
+        var rolesAllowed = req.rolesAllowed;
+        var isAdmin = false;
+        for (var i = 0; i < rolesAllowed.length; i++) {
+          try {
+            var roleDb = await Role.findById(rolesAllowed[i])
+            if (roleDb) {
+
+              if (roleDb.name == 'ADMIN') {
+                isAdmin = true;
+                break;
+              }
+            }
+          } catch (err) { }
+        }
+        if (!isAdmin) {
+          throw new Error('Not authorized');
+        }
+      } else {
+        throw new Error('Not authorized');
+      }
       const role = await Role.find({ _id: args._id });
       if (role == undefined) {
         throw new Error("No role found.");

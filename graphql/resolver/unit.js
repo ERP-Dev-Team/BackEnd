@@ -1,4 +1,6 @@
 const Unit = require("../../models/unit");
+const Role = require("../../models/role");
+
 
 const { transformUnit } = require("./merge");
 
@@ -66,8 +68,29 @@ module.exports = {
       throw err;
     }
   },
-  deleteUnit: async (args) => {
+  deleteUnit: async (args,req) => {
     try {
+      if (req.isAuth) {
+        var rolesAllowed = req.rolesAllowed;
+        var isAdmin = false;
+        for (var i = 0; i < rolesAllowed.length; i++) {
+          try {
+            var roleDb = await Role.findById(rolesAllowed[i])
+            if (roleDb) {
+
+              if (roleDb.name == 'ADMIN') {
+                isAdmin = true;
+                break;
+              }
+            }
+          } catch (err) { }
+        }
+        if (!isAdmin) {
+          throw new Error('Not authorized');
+        }
+      } else {
+        throw new Error('Not authorized');
+      }
       const unit = await Unit.find({ _id: args._id });
       if (unit == undefined) {
         throw new Error("No unit found.");

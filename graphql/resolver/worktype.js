@@ -1,5 +1,5 @@
 const WorkType = require("../../models/worktype");
-
+const Role = require("../../models/role");
 const { transformWorkType } = require("./merge");
 
 module.exports = {
@@ -53,4 +53,42 @@ module.exports = {
       throw err;
     }
   },
+  deleteWorkType: async (args, req) => {
+    try {
+      if (req.isAuth) {
+        var rolesAllowed = req.rolesAllowed;
+        var isAdmin = false;
+        for (var i = 0; i < rolesAllowed.length; i++) {
+          try {
+            var roleDb = await Role.findById(rolesAllowed[i])
+            if (roleDb) {
+
+              if (roleDb.name == 'ADMIN') {
+                isAdmin = true;
+                break;
+              }
+            }
+          } catch (err) { }
+        }
+        if (!isAdmin) {
+          throw new Error('Not authorized');
+        }
+      } else {
+        throw new Error('Not authorized');
+      }
+      const workType = await WorkType.find({ _id: args._id });
+      if (workType == undefined) {
+        throw new Error("No work type found.");
+      }
+      let workTypeDeleted;
+      try {
+        workTypeDeleted = await WorkType.findByIdAndDelete(args._id);
+        return transformWorkType(workTypeDeleted);
+      } catch (err) {
+        throw new Error("failed to delete work type");
+      }
+    } catch (err) {
+      throw err;
+    }
+  }
 };

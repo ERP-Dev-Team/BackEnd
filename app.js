@@ -86,12 +86,11 @@ async function initAdmin() {
     }
   }
 }
-
+//#09/29/20 @K.V.K cmt:remove roles from intialisation as roles should only be created and modified by admin
 async function initModules() {
   const modulesList = [
     "PROJECT",
     "CAMP",
-    "ROLE",
     "ITEM",
     "UNIT",
     "DESIGNATION",
